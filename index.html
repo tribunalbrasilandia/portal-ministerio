@@ -786,6 +786,24 @@
                 </div>
                 
                 <div class="admin-grid">
+                    <!-- Sistema de Nomeações -->
+                    <div class="bg-yellow-600/20 rounded-lg p-6 border border-yellow-500/50 hover:bg-yellow-600/30 transition-all cursor-pointer" onclick="abrirSistemaNomeacoes()">
+                        <div class="text-center">
+                            <div class="text-4xl mb-4">👑</div>
+                            <h3 class="text-lg font-bold text-white mb-2">Sistema de Nomeações</h3>
+                            <p class="text-yellow-200 text-sm">Nomear cargos hierárquicos</p>
+                        </div>
+                    </div>
+
+                    <!-- Hierarquia Judicial -->
+                    <div class="bg-blue-600/20 rounded-lg p-6 border border-blue-500/50 hover:bg-blue-600/30 transition-all cursor-pointer" onclick="abrirHierarquiaJudicial()">
+                        <div class="text-center">
+                            <div class="text-4xl mb-4">🏛️</div>
+                            <h3 class="text-lg font-bold text-white mb-2">Hierarquia Judicial</h3>
+                            <p class="text-blue-200 text-sm">Visualizar estrutura completa</p>
+                        </div>
+                    </div>
+
                     <!-- Cadastrar Usuário -->
                     <div class="bg-green-600/20 rounded-lg p-6 border border-green-500/50 hover:bg-green-600/30 transition-all cursor-pointer" onclick="abrirCadastroUsuario()">
                         <div class="text-center">
@@ -796,20 +814,29 @@
                     </div>
 
                     <!-- Gerenciar Usuários -->
-                    <div class="bg-blue-600/20 rounded-lg p-6 border border-blue-500/50 hover:bg-blue-600/30 transition-all cursor-pointer" onclick="abrirGerenciarUsuarios()">
+                    <div class="bg-purple-600/20 rounded-lg p-6 border border-purple-500/50 hover:bg-purple-600/30 transition-all cursor-pointer" onclick="abrirGerenciarUsuarios()">
                         <div class="text-center">
                             <div class="text-4xl mb-4">👥</div>
                             <h3 class="text-lg font-bold text-white mb-2">Gerenciar Usuários</h3>
-                            <p class="text-blue-200 text-sm">Editar e remover usuários</p>
+                            <p class="text-purple-200 text-sm">Editar e remover usuários</p>
                         </div>
                     </div>
 
                     <!-- Logs do Sistema -->
-                    <div class="bg-purple-600/20 rounded-lg p-6 border border-purple-500/50 hover:bg-purple-600/30 transition-all cursor-pointer" onclick="abrirLogsSistema()">
+                    <div class="bg-red-600/20 rounded-lg p-6 border border-red-500/50 hover:bg-red-600/30 transition-all cursor-pointer" onclick="abrirLogsSistema()">
                         <div class="text-center">
                             <div class="text-4xl mb-4">📊</div>
                             <h3 class="text-lg font-bold text-white mb-2">Logs do Sistema</h3>
-                            <p class="text-purple-200 text-sm">Monitorar atividades</p>
+                            <p class="text-red-200 text-sm">Monitorar atividades</p>
+                        </div>
+                    </div>
+
+                    <!-- Configurações Avançadas -->
+                    <div class="bg-indigo-600/20 rounded-lg p-6 border border-indigo-500/50 hover:bg-indigo-600/30 transition-all cursor-pointer" onclick="abrirConfiguracoes()">
+                        <div class="text-center">
+                            <div class="text-4xl mb-4">⚙️</div>
+                            <h3 class="text-lg font-bold text-white mb-2">Configurações</h3>
+                            <p class="text-indigo-200 text-sm">Configurações do sistema</p>
                         </div>
                     </div>
                 </div>
@@ -1870,15 +1897,219 @@
             'alexandre.moraes': {
                 nome: 'Alexandre de Moraes',
                 senha: 'STF2025@Seguro',
-                cargo: 'administrador',
-                titulo: 'Ministro do STF',
-                permissoes: ['todas', 'admin'],
-                isAdmin: true
+                cargo: '1_juiz_federal',
+                titulo: '1º Juiz Federal - Presidente do STF/STJ/STB',
+                permissoes: ['todas', 'admin', 'nomeacoes', 'maxima_autoridade'],
+                isAdmin: true,
+                nivel_hierarquico: 1,
+                pode_nomear: ['2_juiz_federal', '3_juiz_federal', '1_desembargador', '2_desembargador', '3_desembargador']
             }
         };
 
         // Registros OAB para primeiro acesso
         let registrosOAB = JSON.parse(localStorage.getItem('registrosOAB')) || {};
+
+        // Estrutura Hierárquica do Sistema Judicial
+        const estruturaJudicial = {
+            '1_juiz_federal': {
+                nome: '1º Juiz Federal',
+                titulo: '1º Juiz Federal - Presidente do STF/STJ/STB',
+                descricao: 'Máxima Autoridade Judiciária',
+                nivel: 1,
+                icon: '👑',
+                permissoes: ['todas', 'admin', 'nomeacoes', 'maxima_autoridade'],
+                pode_nomear: ['2_juiz_federal', '3_juiz_federal', '1_desembargador', '2_desembargador', '3_desembargador']
+            },
+            '2_juiz_federal': {
+                nome: '2º Juiz Federal',
+                titulo: '2º Juiz Federal - Nomeado pelo 1º Juiz Federal',
+                descricao: 'Presidente do STF',
+                nivel: 2,
+                icon: '⚖️',
+                permissoes: ['federal', 'stf', 'nomeacoes_limitadas'],
+                pode_nomear: []
+            },
+            '3_juiz_federal': {
+                nome: '3º Juiz Federal',
+                titulo: '3º Juiz Federal - Nomeado pelo 1º Juiz Federal',
+                descricao: 'Presidente do STF',
+                nivel: 2,
+                icon: '⚖️',
+                permissoes: ['federal', 'stf', 'nomeacoes_limitadas'],
+                pode_nomear: []
+            },
+            '1_desembargador': {
+                nome: '1º Desembargador',
+                titulo: '1º Desembargador - Nomeado pelo 1º Juiz Federal',
+                descricao: 'Tribunal de Justiça',
+                nivel: 3,
+                icon: '🏛️',
+                permissoes: ['desembargo', 'recursos', 'segunda_instancia'],
+                pode_nomear: []
+            },
+            '2_desembargador': {
+                nome: '2º Desembargador',
+                titulo: '2º Desembargador - Nomeado pelo 1º Juiz Federal',
+                descricao: 'Tribunal de Justiça',
+                nivel: 3,
+                icon: '🏛️',
+                permissoes: ['desembargo', 'recursos', 'segunda_instancia'],
+                pode_nomear: []
+            },
+            '3_desembargador': {
+                nome: '3º Desembargador',
+                titulo: '3º Desembargador - Nomeado pelo 1º Juiz Federal',
+                descricao: 'Tribunal de Justiça',
+                nivel: 3,
+                icon: '🏛️',
+                permissoes: ['desembargo', 'recursos', 'segunda_instancia'],
+                pode_nomear: []
+            },
+            '1_juiz_estadual': {
+                nome: '1º Juiz Estadual',
+                titulo: '1º Juiz Estadual - 1ª Instância',
+                descricao: 'Civil/Criminal/Eleitoral/Trânsito',
+                nivel: 4,
+                icon: '👨‍⚖️',
+                permissoes: ['primeira_instancia', 'civil', 'criminal', 'eleitoral', 'transito'],
+                pode_nomear: []
+            },
+            '2_juiz_estadual': {
+                nome: '2º Juiz Estadual',
+                titulo: '2º Juiz Estadual - 1ª Instância',
+                descricao: 'Civil/Criminal/Eleitoral/Trânsito',
+                nivel: 4,
+                icon: '👨‍⚖️',
+                permissoes: ['primeira_instancia', 'civil', 'criminal', 'eleitoral', 'transito'],
+                pode_nomear: []
+            },
+            '3_juiz_estadual': {
+                nome: '3º Juiz Estadual',
+                titulo: '3º Juiz Estadual - 1ª Instância',
+                descricao: 'Civil/Criminal/Eleitoral/Trânsito',
+                nivel: 4,
+                icon: '👨‍⚖️',
+                permissoes: ['primeira_instancia', 'civil', 'criminal', 'eleitoral', 'transito'],
+                pode_nomear: []
+            },
+            '4_juiz_estadual': {
+                nome: '4º Juiz Estadual',
+                titulo: '4º Juiz Estadual - 1ª Instância',
+                descricao: 'Civil/Criminal/Eleitoral/Trânsito',
+                nivel: 4,
+                icon: '👨‍⚖️',
+                permissoes: ['primeira_instancia', 'civil', 'criminal', 'eleitoral', 'transito'],
+                pode_nomear: []
+            },
+            '1_procurador_geral_republica': {
+                nome: '1º Procurador Geral da República',
+                titulo: '1º Procurador Geral da República',
+                descricao: 'Presidente do Ministério Público',
+                nivel: 5,
+                icon: '🏛️',
+                permissoes: ['ministerio_publico', 'acusacao', 'investigacao'],
+                pode_nomear: []
+            },
+            '2_procurador_geral_justica': {
+                nome: '2º Procurador Geral de Justiça',
+                titulo: '2º Procurador Geral de Justiça - 1ª Instância',
+                descricao: 'Ministério Público Estadual',
+                nivel: 6,
+                icon: '🏛️',
+                permissoes: ['ministerio_publico', 'acusacao', 'investigacao'],
+                pode_nomear: []
+            },
+            '3_procurador_geral_justica': {
+                nome: '3º Procurador Geral de Justiça',
+                titulo: '3º Procurador Geral de Justiça - 1ª Instância',
+                descricao: 'Ministério Público Estadual',
+                nivel: 6,
+                icon: '🏛️',
+                permissoes: ['ministerio_publico', 'acusacao', 'investigacao'],
+                pode_nomear: []
+            },
+            '1_promotor': {
+                nome: '1º Promotor',
+                titulo: '1º Promotor - Líder da Promotoria Geral',
+                descricao: 'Promotoria Geral',
+                nivel: 7,
+                icon: '👨‍💼',
+                permissoes: ['promotoria', 'acusacao', 'investigacao'],
+                pode_nomear: []
+            },
+            '2_promotor': {
+                nome: '2º Promotor',
+                titulo: '2º Promotor - 1ª Instância',
+                descricao: 'Promotoria',
+                nivel: 8,
+                icon: '👨‍💼',
+                permissoes: ['promotoria', 'acusacao'],
+                pode_nomear: []
+            },
+            '3_promotor': {
+                nome: '3º Promotor',
+                titulo: '3º Promotor - 1ª Instância',
+                descricao: 'Promotoria',
+                nivel: 8,
+                icon: '👨‍💼',
+                permissoes: ['promotoria', 'acusacao'],
+                pode_nomear: []
+            },
+            '4_promotor': {
+                nome: '4º Promotor',
+                titulo: '4º Promotor - 1ª Instância',
+                descricao: 'Promotoria',
+                nivel: 8,
+                icon: '👨‍💼',
+                permissoes: ['promotoria', 'acusacao'],
+                pode_nomear: []
+            },
+            '5_promotor': {
+                nome: '5º Promotor',
+                titulo: '5º Promotor - 1ª Instância',
+                descricao: 'Promotoria',
+                nivel: 8,
+                icon: '👨‍💼',
+                permissoes: ['promotoria', 'acusacao'],
+                pode_nomear: []
+            },
+            '6_promotor': {
+                nome: '6º Promotor',
+                titulo: '6º Promotor - 1ª Instância',
+                descricao: 'Promotoria',
+                nivel: 8,
+                icon: '👨‍💼',
+                permissoes: ['promotoria', 'acusacao'],
+                pode_nomear: []
+            },
+            '1_oficial_justica_2_instancia': {
+                nome: '1º Oficial de Justiça - 2ª Instância',
+                titulo: '1º Oficial de Justiça - 2ª Instância',
+                descricao: 'Cumprimento de Mandados',
+                nivel: 9,
+                icon: '👮‍♂️',
+                permissoes: ['mandados', 'intimacoes', 'cumprimento'],
+                pode_nomear: []
+            },
+            '1_oficial_justica_1_instancia': {
+                nome: '1º Oficial de Justiça - 1ª Instância',
+                titulo: '1º Oficial de Justiça - 1ª Instância',
+                descricao: 'Cumprimento de Mandados',
+                nivel: 10,
+                icon: '👮‍♂️',
+                permissoes: ['mandados', 'intimacoes', 'cumprimento'],
+                pode_nomear: []
+            },
+            'advogado': {
+                nome: 'Advogado/Defensor',
+                titulo: 'Advogado(a)/Defensor(a)',
+                descricao: 'Defesa e Representação',
+                nivel: 11,
+                icon: '👨‍💼',
+                permissoes: ['defesa', 'peticoes', 'honorarios'],
+                pode_nomear: []
+            }
+        };
 
         // Função para salvar dados
         function salvarDados() {
@@ -2080,11 +2311,41 @@
                                 <label class="block text-white font-bold mb-2">Cargo</label>
                                 <select id="admin-cargo" class="w-full p-3 rounded-lg bg-gray-900 border border-green-500/50 text-white" required>
                                     <option value="">Selecione...</option>
-                                    <option value="magistrado">👨‍⚖️ Magistrado (Juiz)</option>
-                                    <option value="promotor">🏛️ Promotor de Justiça</option>
-                                    <option value="advogado">👨‍💼 Advogado</option>
-                                    <option value="escrivao">📝 Escrivão Judicial</option>
-                                    <option value="oficial">👮‍♂️ Oficial de Justiça</option>
+                                    <optgroup label="🏛️ PODER JUDICIÁRIO FEDERAL">
+                                        <option value="2_juiz_federal">⚖️ 2º Juiz Federal</option>
+                                        <option value="3_juiz_federal">⚖️ 3º Juiz Federal</option>
+                                    </optgroup>
+                                    <optgroup label="🏛️ DESEMBARGADORES">
+                                        <option value="1_desembargador">🏛️ 1º Desembargador</option>
+                                        <option value="2_desembargador">🏛️ 2º Desembargador</option>
+                                        <option value="3_desembargador">🏛️ 3º Desembargador</option>
+                                    </optgroup>
+                                    <optgroup label="👨‍⚖️ JUÍZES ESTADUAIS">
+                                        <option value="1_juiz_estadual">👨‍⚖️ 1º Juiz Estadual</option>
+                                        <option value="2_juiz_estadual">👨‍⚖️ 2º Juiz Estadual</option>
+                                        <option value="3_juiz_estadual">👨‍⚖️ 3º Juiz Estadual</option>
+                                        <option value="4_juiz_estadual">👨‍⚖️ 4º Juiz Estadual</option>
+                                    </optgroup>
+                                    <optgroup label="🏛️ MINISTÉRIO PÚBLICO">
+                                        <option value="1_procurador_geral_republica">🏛️ 1º Procurador Geral da República</option>
+                                        <option value="2_procurador_geral_justica">🏛️ 2º Procurador Geral de Justiça</option>
+                                        <option value="3_procurador_geral_justica">🏛️ 3º Procurador Geral de Justiça</option>
+                                    </optgroup>
+                                    <optgroup label="👨‍💼 PROMOTORES">
+                                        <option value="1_promotor">👨‍💼 1º Promotor - Líder</option>
+                                        <option value="2_promotor">👨‍💼 2º Promotor</option>
+                                        <option value="3_promotor">👨‍💼 3º Promotor</option>
+                                        <option value="4_promotor">👨‍💼 4º Promotor</option>
+                                        <option value="5_promotor">👨‍💼 5º Promotor</option>
+                                        <option value="6_promotor">👨‍💼 6º Promotor</option>
+                                    </optgroup>
+                                    <optgroup label="👮‍♂️ OFICIAIS DE JUSTIÇA">
+                                        <option value="1_oficial_justica_2_instancia">👮‍♂️ 1º Oficial - 2ª Instância</option>
+                                        <option value="1_oficial_justica_1_instancia">👮‍♂️ 1º Oficial - 1ª Instância</option>
+                                    </optgroup>
+                                    <optgroup label="👨‍💼 ADVOCACIA">
+                                        <option value="advogado">👨‍💼 Advogado/Defensor</option>
+                                    </optgroup>
                                 </select>
                             </div>
                             <div>
@@ -2220,8 +2481,292 @@
             }
         }
 
+        // Sistema de Nomeações
+        function abrirSistemaNomeacoes() {
+            if (!usuarioLogado || !usuarioLogado.permissoes.includes('nomeacoes')) {
+                alert('⚠️ Você não tem permissão para nomear cargos!');
+                return;
+            }
+
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center overflow-y-auto';
+            
+            let cargosDisponiveis = '';
+            const podeNomear = usuarioLogado.pode_nomear || [];
+            
+            if (podeNomear.length === 0) {
+                cargosDisponiveis = '<p class="text-white text-center">Você não pode nomear nenhum cargo no momento.</p>';
+            } else {
+                podeNomear.forEach(cargo => {
+                    const info = estruturaJudicial[cargo];
+                    if (info) {
+                        cargosDisponiveis += `
+                            <div class="bg-gradient-to-r from-yellow-600/20 to-amber-600/20 rounded-lg p-4 border border-yellow-500/50 mb-3">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <h4 class="text-white font-bold flex items-center">
+                                            <span class="text-2xl mr-3">${info.icon}</span>
+                                            ${info.nome}
+                                        </h4>
+                                        <p class="text-white/70 text-sm">${info.descricao}</p>
+                                        <p class="text-yellow-300 text-xs">Nível ${info.nivel} - ${info.titulo}</p>
+                                    </div>
+                                    <button onclick="iniciarNomeacao('${cargo}')" class="bg-yellow-600 hover:bg-yellow-500 text-black font-bold px-4 py-2 rounded-lg transition-all">
+                                        👑 Nomear
+                                    </button>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+            }
+
+            modal.innerHTML = `
+                <div class="bg-gradient-to-br from-yellow-600/30 to-amber-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-yellow-500/60 shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                    <div class="text-center mb-6">
+                        <h2 class="text-3xl font-bold text-white flex items-center justify-center">
+                            <span class="text-4xl mr-3">👑</span>
+                            Sistema de Nomeações
+                        </h2>
+                        <p class="text-yellow-200 mt-2">Nomear profissionais para cargos hierárquicos</p>
+                    </div>
+                    
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold text-white mb-4">Cargos Disponíveis para Nomeação:</h3>
+                        ${cargosDisponiveis}
+                    </div>
+                    
+                    <div class="text-center">
+                        <button onclick="this.closest('.fixed').remove()" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg transition-all">
+                            ❌ Fechar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function iniciarNomeacao(cargo) {
+            const info = estruturaJudicial[cargo];
+            const nome = prompt(`Digite o nome completo para nomear como ${info.nome}:`);
+            
+            if (nome && nome.trim()) {
+                const confirmacao = confirm(`Confirma a nomeação de "${nome}" para o cargo de ${info.nome}?`);
+                if (confirmacao) {
+                    // Aqui você pode implementar a lógica de nomeação
+                    alert(`✅ ${nome} foi nomeado(a) com sucesso para o cargo de ${info.nome}!`);
+                    
+                    // Fechar modal
+                    document.querySelector('.fixed').remove();
+                }
+            }
+        }
+
+        function abrirHierarquiaJudicial() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center overflow-y-auto';
+            
+            let hierarquiaHTML = '';
+            
+            // Organizar por níveis
+            const niveis = {};
+            Object.entries(estruturaJudicial).forEach(([key, info]) => {
+                if (!niveis[info.nivel]) niveis[info.nivel] = [];
+                niveis[info.nivel].push({key, ...info});
+            });
+            
+            Object.keys(niveis).sort((a, b) => a - b).forEach(nivel => {
+                hierarquiaHTML += `
+                    <div class="mb-6">
+                        <h3 class="text-lg font-bold text-white mb-3 border-b border-white/20 pb-2">Nível ${nivel}</h3>
+                        <div class="grid md:grid-cols-2 gap-3">
+                `;
+                
+                niveis[nivel].forEach(cargo => {
+                    const ocupado = false; // Aqui você pode verificar se o cargo está ocupado
+                    const statusClass = ocupado ? 'from-green-600/20 to-green-800/20 border-green-500/50' : 'from-gray-600/20 to-gray-800/20 border-gray-500/50';
+                    const statusText = ocupado ? '✅ Ocupado' : '⏳ Vago';
+                    
+                    hierarquiaHTML += `
+                        <div class="bg-gradient-to-r ${statusClass} rounded-lg p-4 border">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="text-white font-bold flex items-center">
+                                        <span class="text-xl mr-2">${cargo.icon}</span>
+                                        ${cargo.nome}
+                                    </h4>
+                                    <p class="text-white/70 text-sm">${cargo.descricao}</p>
+                                    <p class="text-white/50 text-xs mt-1">${cargo.titulo}</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-xs px-2 py-1 rounded ${ocupado ? 'bg-green-500/30 text-green-300' : 'bg-gray-500/30 text-gray-300'}">${statusText}</span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                });
+                
+                hierarquiaHTML += '</div></div>';
+            });
+
+            modal.innerHTML = `
+                <div class="bg-gradient-to-br from-blue-600/30 to-indigo-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-blue-500/60 shadow-2xl max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                    <div class="text-center mb-6">
+                        <h2 class="text-3xl font-bold text-white flex items-center justify-center">
+                            <span class="text-4xl mr-3">🏛️</span>
+                            Hierarquia Judicial Completa
+                        </h2>
+                        <p class="text-blue-200 mt-2">Estrutura organizacional do Sistema Judicial de Brasilândia</p>
+                    </div>
+                    
+                    ${hierarquiaHTML}
+                    
+                    <div class="text-center mt-6">
+                        <button onclick="this.closest('.fixed').remove()" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg transition-all">
+                            ❌ Fechar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
+        function abrirConfiguracoes() {
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center overflow-y-auto';
+            
+            modal.innerHTML = `
+                <div class="bg-gradient-to-br from-indigo-600/30 to-purple-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-indigo-500/60 shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                    <div class="text-center mb-6">
+                        <h2 class="text-3xl font-bold text-white flex items-center justify-center">
+                            <span class="text-4xl mr-3">⚙️</span>
+                            Configurações do Sistema
+                        </h2>
+                    </div>
+                    
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="bg-white/10 rounded-lg p-6 border border-white/20">
+                            <h3 class="text-white font-bold mb-4">🔧 Configurações Gerais</h3>
+                            <div class="space-y-3">
+                                <label class="flex items-center space-x-3">
+                                    <input type="checkbox" class="rounded">
+                                    <span class="text-white text-sm">Notificações por email</span>
+                                </label>
+                                <label class="flex items-center space-x-3">
+                                    <input type="checkbox" class="rounded" checked>
+                                    <span class="text-white text-sm">Backup automático</span>
+                                </label>
+                                <label class="flex items-center space-x-3">
+                                    <input type="checkbox" class="rounded" checked>
+                                    <span class="text-white text-sm">Log de atividades</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-white/10 rounded-lg p-6 border border-white/20">
+                            <h3 class="text-white font-bold mb-4">🔒 Segurança</h3>
+                            <div class="space-y-3">
+                                <button class="w-full bg-red-600 hover:bg-red-500 text-white py-2 px-4 rounded-lg transition-all">
+                                    🔄 Resetar Senhas
+                                </button>
+                                <button class="w-full bg-yellow-600 hover:bg-yellow-500 text-black py-2 px-4 rounded-lg transition-all">
+                                    📊 Relatório de Acesso
+                                </button>
+                                <button class="w-full bg-blue-600 hover:bg-blue-500 text-white py-2 px-4 rounded-lg transition-all">
+                                    💾 Backup Manual
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-6">
+                        <button onclick="this.closest('.fixed').remove()" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg transition-all">
+                            ❌ Fechar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+        }
+
         function abrirLogsSistema() {
-            alert('📊 Sistema de logs em desenvolvimento!');
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center overflow-y-auto';
+            
+            // Logs simulados
+            const logs = [
+                { data: '2025-01-15 14:30:25', usuario: 'Alexandre de Moraes', acao: 'Login realizado', tipo: 'info' },
+                { data: '2025-01-15 14:25:10', usuario: 'Sistema', acao: 'Backup automático executado', tipo: 'success' },
+                { data: '2025-01-15 14:20:15', usuario: 'João Silva', acao: 'Documento gerado: Mandado de Prisão', tipo: 'info' },
+                { data: '2025-01-15 14:15:30', usuario: 'Maria Santos', acao: 'Tentativa de login falhada', tipo: 'warning' },
+                { data: '2025-01-15 14:10:45', usuario: 'Sistema', acao: 'Usuário cadastrado: Carlos Oliveira', tipo: 'success' }
+            ];
+            
+            let logsHTML = '';
+            logs.forEach(log => {
+                const tipoClass = {
+                    'info': 'bg-blue-500/20 border-blue-500/50 text-blue-300',
+                    'success': 'bg-green-500/20 border-green-500/50 text-green-300',
+                    'warning': 'bg-yellow-500/20 border-yellow-500/50 text-yellow-300',
+                    'error': 'bg-red-500/20 border-red-500/50 text-red-300'
+                };
+                
+                logsHTML += `
+                    <div class="${tipoClass[log.tipo]} rounded-lg p-3 border mb-2">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <p class="font-medium">${log.acao}</p>
+                                <p class="text-sm opacity-80">Usuário: ${log.usuario}</p>
+                            </div>
+                            <span class="text-xs opacity-70">${log.data}</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            modal.innerHTML = `
+                <div class="bg-gradient-to-br from-red-600/30 to-pink-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-red-500/60 shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                    <div class="text-center mb-6">
+                        <h2 class="text-3xl font-bold text-white flex items-center justify-center">
+                            <span class="text-4xl mr-3">📊</span>
+                            Logs do Sistema
+                        </h2>
+                        <p class="text-red-200 mt-2">Monitoramento de atividades e eventos</p>
+                    </div>
+                    
+                    <div class="mb-4">
+                        <div class="flex space-x-2 mb-4">
+                            <button class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg transition-all text-sm">
+                                📋 Todos
+                            </button>
+                            <button class="bg-green-600 hover:bg-green-500 text-white px-4 py-2 rounded-lg transition-all text-sm">
+                                ✅ Sucessos
+                            </button>
+                            <button class="bg-yellow-600 hover:bg-yellow-500 text-black px-4 py-2 rounded-lg transition-all text-sm">
+                                ⚠️ Avisos
+                            </button>
+                            <button class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition-all text-sm">
+                                ❌ Erros
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="max-h-96 overflow-y-auto">
+                        ${logsHTML}
+                    </div>
+                    
+                    <div class="text-center mt-6">
+                        <button onclick="this.closest('.fixed').remove()" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg transition-all">
+                            ❌ Fechar
+                        </button>
+                    </div>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
         }
 
         // Funções de Primeiro Acesso
@@ -4267,5 +4812,5 @@
             document.head.appendChild(script);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a3db71e79827f3',t:'MTc1NDM3MTM1MS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a3ee2dd5506f86',t:'MTc1NDM3MjExOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
