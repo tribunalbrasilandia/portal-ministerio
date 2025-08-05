@@ -589,78 +589,78 @@
 </head>
 <body class="bg-gradient-to-br from-slate-900 via-gray-800 to-slate-900 min-h-screen">
     <!-- Header Principal -->
-  <div class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-4 px-4 md:py-6 md:px-8 shadow-2xl border-b-4 border-amber-500 relative overflow-hidden fade-in" style="animation-delay: 0.3s;">
+  <div class="bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-4 px-4 shadow-2xl border-b-4 border-amber-500 relative overflow-hidden fade-in" style="animation-delay: 0.3s;">
     <div class="absolute inset-0 bg-gradient-to-r from-amber-500/10 via-yellow-500/5 to-amber-600/10"></div>
     <div class="absolute top-0 left-1/4 w-32 h-32 bg-white/5 rounded-full blur-3xl"></div>
     <div class="absolute bottom-0 right-1/4 w-24 h-24 bg-yellow-500/5 rounded-full blur-2xl"></div>
     
     <div class="container mx-auto relative z-10">
-        <div class="header-content">
-            <div class="header-logos">
-                <div class="w-12 h-12 md:w-16 md:h-16 bg-white/5 rounded-xl flex items-center justify-center shadow-lg border border-amber-500/50">
-                    <img src="URL_DO_LOGO_DO_TRIBUNAL" alt="Logo do Tribunal" class="h-8 w-8 md:h-12 md:w-12" />
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center shadow-lg border border-amber-500/50">
+                    <img src="https://i.imgur.com/duLSu8w.png" alt="Logo do Tribunal" class="h-8 w-8" />
                 </div>
                 
-                <div class="w-px bg-amber-600 h-10"></div>
+                <div class="w-px bg-amber-600 h-10 hidden md:block"></div>
 
-                <div class="header-title">
-                    <h1 class="font-black bg-clip-text text-transparent drop-shadow-lg" style="background-image: linear-gradient(to right, #f59e0b, #facc15);">
+                <div class="text-center md:text-left">
+                    <h1 class="font-black text-xl sm:text-2xl bg-clip-text text-transparent drop-shadow-lg" style="background-image: linear-gradient(to right, #f59e0b, #facc15);">
                         SISTEMA JURÍDICO COMPLETO
                     </h1>
-                    <p class="font-bold text-gray-300 flex items-center">
-                        <svg class="w-4 h-4 mr-2 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
+                    <p class="font-bold text-gray-300 text-xs sm:text-sm flex items-center justify-center md:justify-start mt-1">
+                        <svg class="w-3 h-3 mr-1 text-amber-400" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                         </svg>
                         Brasilândia RP - Poder Judiciário
                     </p>
                 </div>
                 
-                <div class="w-12 h-12 md:w-16 md:h-16 bg-white/5 rounded-xl flex items-center justify-center shadow-lg border border-amber-500/50 hidden-mobile">
-                    <img src="URL_DO_LOGO_DE_BRASILANDIA" alt="Logo de Brasilândia" class="h-8 w-8 md:h-12 md:w-12" />
+                <div class="w-12 h-12 bg-white/5 rounded-xl flex items-center justify-center shadow-lg border border-amber-500/50 md:hidden">
+                    <img src="https://i.imgur.com/0nl9DgQ.png" alt="Logo de Brasilândia" class="h-8 w-8" />
                 </div>
             </div>
             
-            <div class="header-status">
-                <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-                    <div class="bg-green-500/20 px-3 py-2 rounded-xl border border-green-500/50 backdrop-blur-sm shadow-lg">
-                        <span class="text-xs sm:text-sm font-bold text-green-400 flex items-center">
-                            <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse shadow-lg shadow-green-500/50"></div>
-                            Sistema Online - v2025.1
-                        </span>
-                    </div>
-                    
-                    <div id="usuario-logado" class="bg-gradient-to-r from-amber-500/20 to-yellow-500/20 px-4 py-2 rounded-xl border border-amber-500/50 backdrop-blur-sm shadow-lg hidden">
-                        <div class="flex items-center space-x-2">
-                            <div class="w-8 h-8 bg-gradient-to-br from-amber-600 to-yellow-600 rounded-lg flex items-center justify-center">
-                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                                </svg>
-                            </div>
-                            <div class="text-left">
-                                <div class="text-xs sm:text-sm font-bold text-yellow-300" id="nome-usuario"></div>
-                                <div class="text-xs text-yellow-400" id="cargo-usuario"></div>
-                            </div>
+            <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4 mt-4 md:mt-0">
+                <div class="bg-green-500/20 px-3 py-2 rounded-xl border border-green-500/50 backdrop-blur-sm shadow-lg">
+                    <span class="text-xs sm:text-sm font-bold text-green-400 flex items-center">
+                        <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse shadow-lg shadow-green-500/50"></div>
+                        Sistema Online - v2025.1
+                    </span>
+                </div>
+                
+                <div id="usuario-logado" class="bg-gradient-to-r from-amber-500/20 to-yellow-500/20 px-4 py-2 rounded-xl border border-amber-500/50 backdrop-blur-sm shadow-lg hidden">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-8 h-8 bg-gradient-to-br from-amber-600 to-yellow-600 rounded-lg flex items-center justify-center">
+                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-xs sm:text-sm font-bold text-yellow-300" id="nome-usuario"></div>
+                            <div class="text-xs text-yellow-400" id="cargo-usuario"></div>
                         </div>
                     </div>
-                    
-                    <button onclick="mostrarPainelAdmin()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white px-3 py-2 rounded-xl transition-all hidden text-xs sm:text-sm shadow-lg" id="btn-admin">
-                        <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                        </svg>
-                        <span class="hidden sm:inline">Admin</span>
-                    </button>
-                    
-                    <button onclick="logout()" class="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white px-3 py-2 rounded-xl transition-all hidden text-xs sm:text-sm shadow-lg" id="btn-logout">
-                        <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
-                        </svg>
-                        <span class="hidden sm:inline">Sair</span>
-                    </button>
                 </div>
+                
+                <button onclick="mostrarPainelAdmin()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white px-3 py-2 rounded-xl transition-all hidden text-xs sm:text-sm shadow-lg" id="btn-admin">
+                    <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                    </svg>
+                    <span class="hidden sm:inline">Admin</span>
+                </button>
+                
+                <button onclick="logout()" class="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white px-3 py-2 rounded-xl transition-all hidden text-xs sm:text-sm shadow-lg" id="btn-logout">
+                    <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                    </svg>
+                    <span class="hidden sm:inline">Sair</span>
+                </button>
             </div>
         </div>
     </div>
 </div>
+
 
 
     <!-- Sistema de Login -->
