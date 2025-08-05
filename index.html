@@ -7,526 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap');
-        
-        /* Reset e configurações base */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        
-        body { 
-            font-family: 'Inter', sans-serif; 
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-        
-        /* Responsividade para containers */
-        .container {
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-        
-        @media (min-width: 640px) {
-            .container { padding: 0 1.5rem; }
-        }
-        
-        @media (min-width: 1024px) {
-            .container { padding: 0 2rem; }
-        }
-        
-        /* Header responsivo */
-        .header-content {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            text-align: center;
-        }
-        
-        @media (min-width: 768px) {
-            .header-content {
-                flex-direction: row;
-                justify-content: space-between;
-                text-align: left;
-            }
-        }
-        
-        .header-logos {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        @media (min-width: 768px) {
-            .header-logos {
-                justify-content: flex-start;
-            }
-        }
-        
-        .header-logos img {
-            height: 3rem;
-            width: auto;
-        }
-        
-        @media (min-width: 768px) {
-            .header-logos img {
-                height: 4rem;
-            }
-        }
-        
-        .header-title h1 {
-            font-size: 1.5rem;
-            line-height: 1.2;
-        }
-        
-        @media (min-width: 640px) {
-            .header-title h1 {
-                font-size: 2rem;
-            }
-        }
-        
-        @media (min-width: 768px) {
-            .header-title h1 {
-                font-size: 2.5rem;
-            }
-        }
-        
-        .header-title p {
-            font-size: 0.875rem;
-        }
-        
-        @media (min-width: 640px) {
-            .header-title p {
-                font-size: 1rem;
-            }
-        }
-        
-        @media (min-width: 768px) {
-            .header-title p {
-                font-size: 1.125rem;
-            }
-        }
-        
-        .header-status {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            align-items: center;
-        }
-        
-        @media (min-width: 768px) {
-            .header-status {
-                align-items: flex-end;
-            }
-        }
-        
-        /* Login responsivo */
-        .login-container {
-            padding: 1.5rem;
-            margin: 1rem;
-            max-width: 90vw;
-            width: 100%;
-        }
-        
-        @media (min-width: 640px) {
-            .login-container {
-                padding: 2.5rem;
-                margin: 1.5rem;
-                max-width: 28rem;
-            }
-        }
-        
-        .login-title {
-            font-size: 2rem;
-            margin-bottom: 0.75rem;
-        }
-        
-        @media (min-width: 640px) {
-            .login-title {
-                font-size: 2.5rem;
-            }
-        }
-        
-        .login-subtitle {
-            font-size: 1rem;
-        }
-        
-        @media (min-width: 640px) {
-            .login-subtitle {
-                font-size: 1.25rem;
-            }
-        }
-        
-        .login-emoji {
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        @media (min-width: 640px) {
-            .login-emoji {
-                font-size: 5rem;
-            }
-        }
-        
-        /* Menu principal responsivo */
-        .menu-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        @media (min-width: 640px) {
-            .menu-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .menu-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-        
-        .menu-item {
-            padding: 1rem;
-            min-height: 8rem;
-        }
-        
-        @media (min-width: 640px) {
-            .menu-item {
-                padding: 1.5rem;
-                min-height: 10rem;
-            }
-        }
-        
-        .menu-item-emoji {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        @media (min-width: 640px) {
-            .menu-item-emoji {
-                font-size: 3rem;
-            }
-        }
-        
-        .menu-item-title {
-            font-size: 1rem;
-            margin-bottom: 0.5rem;
-        }
-        
-        @media (min-width: 640px) {
-            .menu-item-title {
-                font-size: 1.25rem;
-            }
-        }
-        
-        .menu-item-description {
-            font-size: 0.75rem;
-        }
-        
-        @media (min-width: 640px) {
-            .menu-item-description {
-                font-size: 0.875rem;
-            }
-        }
-        
-        /* Seções de conteúdo responsivas */
-        .content-section {
-            padding: 1rem;
-        }
-        
-        @media (min-width: 768px) {
-            .content-section {
-                padding: 2rem;
-            }
-        }
-        
-        .section-header {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        @media (min-width: 768px) {
-            .section-header {
-                flex-direction: row;
-                justify-content: space-between;
-                align-items: center;
-            }
-        }
-        
-        .section-title {
-            font-size: 1.5rem;
-        }
-        
-        @media (min-width: 640px) {
-            .section-title {
-                font-size: 1.875rem;
-            }
-        }
-        
-        /* Grids responsivos */
-        .responsive-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-        
-        @media (min-width: 768px) {
-            .responsive-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .responsive-grid {
-                grid-template-columns: repeat(3, 1fr);
-                gap: 2rem;
-            }
-        }
-        
-        .responsive-grid-2 {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-        
-        @media (min-width: 1024px) {
-            .responsive-grid-2 {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 2rem;
-            }
-        }
-        
-        /* Tabelas responsivas */
-        .responsive-table {
-            width: 100%;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-        }
-        
-        .responsive-table table {
-            min-width: 100%;
-            white-space: nowrap;
-        }
-        
-        @media (max-width: 640px) {
-            .responsive-table table {
-                font-size: 0.875rem;
-            }
-            
-            .responsive-table td,
-            .responsive-table th {
-                padding: 0.5rem !important;
-            }
-        }
-        
-        /* Formulários responsivos */
-        .form-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-        
-        @media (min-width: 768px) {
-            .form-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
-            }
-        }
-        
-        .form-input {
-            width: 100%;
-            padding: 0.75rem;
-            font-size: 1rem;
-        }
-        
-        @media (min-width: 640px) {
-            .form-input {
-                padding: 1rem;
-            }
-        }
-        
-        /* Botões responsivos */
-        .btn {
-            padding: 0.75rem 1.5rem;
-            font-size: 0.875rem;
-            width: 100%;
-        }
-        
-        @media (min-width: 640px) {
-            .btn {
-                padding: 1rem 2rem;
-                font-size: 1rem;
-                width: auto;
-            }
-        }
-        
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-        }
-        
-        @media (min-width: 640px) {
-            .btn-group {
-                flex-direction: row;
-                gap: 1rem;
-            }
-        }
-        
-        /* Cards responsivos */
-        .card {
-            padding: 1rem;
-        }
-        
-        @media (min-width: 640px) {
-            .card {
-                padding: 1.5rem;
-            }
-        }
-        
-        /* Modais responsivos */
-        .modal-content {
-            margin: 1rem;
-            max-width: calc(100vw - 2rem);
-            max-height: calc(100vh - 2rem);
-            overflow-y: auto;
-        }
-        
-        @media (min-width: 640px) {
-            .modal-content {
-                margin: 2rem;
-                max-width: 90vw;
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .modal-content {
-                max-width: 80vw;
-            }
-        }
-        
-        /* Documentos responsivos */
-        .document-content {
-            padding: 1rem;
-            font-size: 0.875rem;
-            line-height: 1.4;
-        }
-        
-        @media (min-width: 640px) {
-            .document-content {
-                padding: 1.5rem;
-                font-size: 1rem;
-                line-height: 1.6;
-            }
-        }
-        
-        .document-header {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        @media (min-width: 768px) {
-            .document-header {
-                flex-direction: row;
-                justify-content: space-between;
-            }
-        }
-        
-        .document-logo {
-            width: 60px;
-            height: 60px;
-        }
-        
-        @media (min-width: 640px) {
-            .document-logo {
-                width: 80px;
-                height: 80px;
-            }
-        }
-        
-        /* Estatísticas responsivas */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            margin-bottom: 2rem;
-        }
-        
-        @media (min-width: 640px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .stats-grid {
-                grid-template-columns: repeat(4, 1fr);
-            }
-        }
-        
-        /* Cronômetro responsivo */
-        .cronometro-display {
-            font-size: 2.5rem;
-            margin-bottom: 1.5rem;
-        }
-        
-        @media (min-width: 640px) {
-            .cronometro-display {
-                font-size: 3.75rem;
-            }
-        }
-        
-        /* Sistema mobile responsivo */
-        .mobile-simulator {
-            max-width: 20rem;
-            margin: 0 auto;
-        }
-        
-        @media (min-width: 1024px) {
-            .mobile-simulator {
-                max-width: 24rem;
-            }
-        }
-        
-        /* Painel admin responsivo */
-        .admin-panel {
-            margin-bottom: 2rem;
-        }
-        
-        .admin-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-        }
-        
-        @media (min-width: 768px) {
-            .admin-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-        
-        @media (min-width: 1024px) {
-            .admin-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-        }
-        
-        /* Animações */
+        body { font-family: 'Inter', sans-serif; }
         .fade-in { animation: fadeIn 0.5s ease-in; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
         .slide-in { animation: slideIn 0.3s ease-out; }
@@ -545,132 +26,106 @@
         /* Animação de loading */
         .animate-spin-slow { animation: spin 2s linear infinite; }
         @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        
-        /* Utilitários de responsividade */
-        .hidden-mobile {
-            display: none;
-        }
-        
-        @media (min-width: 768px) {
-            .hidden-mobile {
-                display: block;
-            }
-        }
-        
-        .visible-mobile {
-            display: block;
-        }
-        
-        @media (min-width: 768px) {
-            .visible-mobile {
-                display: none;
-            }
-        }
-        
-        /* Scroll suave */
-        html {
-            scroll-behavior: smooth;
-        }
-        
-        /* Melhorias para touch */
-        @media (hover: none) and (pointer: coarse) {
-            .menu-item:hover {
-                transform: none;
-            }
-            
-            .menu-item:active {
-                transform: scale(0.98);
-            }
-        }
     </style>
 </head>
 <body class="bg-gradient-to-br from-black via-red-900 to-gray-900 min-h-screen">
     <!-- Header Principal -->
-    <div class="bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 text-black py-4 px-4 md:py-6 md:px-8 shadow-2xl border-b-4 border-yellow-500">
-        <div class="container mx-auto">
-            <div class="header-content">
-                <div class="header-logos">
-                    <img src="https://i.imgur.com/duLSu8w.png" alt="Ministério Público" class="drop-shadow-lg">
-                    <div class="header-title">
-                        <h1 class="font-black bg-gradient-to-r from-black via-gray-800 to-black bg-clip-text text-transparent">
-                            SISTEMA JURÍDICO COMPLETO
-                        </h1>
-                        <p class="font-bold text-gray-800">Brasilândia RP - Poder Judiciário</p>
-                    </div>
-                    <img src="https://i.imgur.com/0nl9DgQ.png" alt="Brasilândia" class="drop-shadow-lg hidden-mobile">
+    <div class="bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 text-black py-6 px-8 shadow-2xl border-b-4 border-yellow-500">
+        <div class="container mx-auto flex items-center justify-between">
+            <div class="flex items-center space-x-6">
+                <img src="https://i.imgur.com/duLSu8w.png" alt="Ministério Público" class="h-16 w-auto drop-shadow-lg">
+                <div>
+                    <h1 class="text-3xl font-black bg-gradient-to-r from-black via-gray-800 to-black bg-clip-text text-transparent">
+                        SISTEMA JURÍDICO COMPLETO
+                    </h1>
+                    <p class="text-lg font-bold text-gray-800">Brasilândia RP - Poder Judiciário</p>
                 </div>
-                <div class="header-status">
-                    <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-                        <div class="bg-green-500/20 px-3 py-2 rounded-lg border border-green-500/50">
-                            <span class="text-xs sm:text-sm font-bold text-green-800 flex items-center">
-                                <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                                <span class="hidden sm:inline">Sistema Online - </span>v2025.1
-                            </span>
-                        </div>
-                        <div id="usuario-logado" class="bg-blue-500/20 px-3 py-2 rounded-lg border border-blue-500/50 hidden">
-                            <span class="text-xs sm:text-sm font-bold text-blue-300" id="nome-usuario"></span>
-                        </div>
-                        <button onclick="logout()" class="bg-red-600 hover:bg-red-500 text-white px-3 py-2 rounded-lg transition-all hidden text-xs sm:text-sm" id="btn-logout">
-                            🚪 <span class="hidden sm:inline">Sair</span>
-                        </button>
+                <img src="https://i.imgur.com/0nl9DgQ.png" alt="Brasilândia" class="h-16 w-auto drop-shadow-lg">
+            </div>
+            <div class="text-right">
+                <div class="flex items-center space-x-4">
+                    <div class="bg-green-500/20 px-4 py-2 rounded-lg border border-green-500/50">
+                        <span class="text-sm font-bold text-green-800 flex items-center">
+                            <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                            Sistema Online - v2025.1
+                        </span>
                     </div>
+                    <div id="usuario-logado" class="bg-blue-500/20 px-4 py-2 rounded-lg border border-blue-500/50 hidden">
+                        <span class="text-sm font-bold text-blue-300" id="nome-usuario"></span>
+                    </div>
+                    <button onclick="logout()" class="bg-red-600 hover:bg-red-500 text-white px-4 py-2 rounded-lg transition-all hidden" id="btn-logout">
+                        🚪 Sair
+                    </button>
                 </div>
             </div>
         </div>
     </div>
 
     <!-- Sistema de Login -->
-    <div id="login-sistema" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center p-4">
-        <div class="login-container bg-gradient-to-br from-yellow-600/30 to-red-600/30 backdrop-blur-xl rounded-3xl border-2 border-yellow-500/60 shadow-2xl animate-pulse-glow">
+    <div id="login-sistema" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center">
+        <div class="bg-gradient-to-br from-yellow-600/30 to-red-600/30 backdrop-blur-xl rounded-3xl p-10 border-2 border-yellow-500/60 shadow-2xl max-w-lg w-full mx-4 animate-pulse-glow">
             <!-- Header do Login -->
-            <div class="text-center mb-6 sm:mb-10">
-                <div class="login-emoji animate-bounce">⚖️</div>
-                <h1 class="login-title font-black text-transparent bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 bg-clip-text mb-3">
+            <div class="text-center mb-10">
+                <div class="text-8xl mb-6 animate-bounce">⚖️</div>
+                <h1 class="text-4xl font-black text-transparent bg-gradient-to-r from-yellow-300 via-yellow-400 to-yellow-500 bg-clip-text mb-3">
                     SISTEMA JURÍDICO
                 </h1>
-                <p class="login-subtitle text-yellow-300 font-bold">Brasilândia RP - Acesso Seguro</p>
-                <div class="w-16 sm:w-20 h-1 bg-gradient-to-r from-yellow-400 to-red-500 mx-auto mt-4 rounded-full"></div>
+                <p class="text-xl text-yellow-300 font-bold">Brasilândia RP - Acesso Seguro</p>
+                <div class="w-20 h-1 bg-gradient-to-r from-yellow-400 to-red-500 mx-auto mt-4 rounded-full"></div>
             </div>
             
             <!-- Formulário de Login -->
-            <form id="form-login" class="space-y-4 sm:space-y-6">
+            <form id="form-login" class="space-y-6">
                 <div class="relative">
-                    <label class="block text-white font-bold mb-2 sm:mb-3 text-base sm:text-lg">👤 Usuário</label>
+                    <label class="block text-white font-bold mb-3 text-lg">👤 Usuário</label>
                     <input 
                         type="text" 
                         id="login-usuario" 
                         placeholder="Digite seu usuário..." 
-                        class="form-input rounded-xl bg-gray-900/80 border-2 border-yellow-500/50 text-white placeholder-gray-400 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/50 transition-all duration-300"
+                        class="w-full p-4 rounded-xl bg-gray-900/80 border-2 border-yellow-500/50 text-white placeholder-gray-400 text-lg focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/50 transition-all duration-300"
                         autocomplete="username"
                     >
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 pt-8 sm:pt-12">
-                        <span class="text-yellow-400 text-sm sm:text-base">👤</span>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pt-12">
+                        <span class="text-yellow-400">👤</span>
                     </div>
                 </div>
                 
                 <div class="relative">
-                    <label class="block text-white font-bold mb-2 sm:mb-3 text-base sm:text-lg">🔒 Senha</label>
+                    <label class="block text-white font-bold mb-3 text-lg">🔒 Senha</label>
                     <input 
                         type="password" 
                         id="login-senha" 
                         placeholder="Digite sua senha..." 
-                        class="form-input rounded-xl bg-gray-900/80 border-2 border-yellow-500/50 text-white placeholder-gray-400 focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/50 transition-all duration-300"
+                        class="w-full p-4 rounded-xl bg-gray-900/80 border-2 border-yellow-500/50 text-white placeholder-gray-400 text-lg focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/50 transition-all duration-300"
                         autocomplete="current-password"
                     >
-                    <div class="absolute inset-y-0 right-0 flex items-center pr-3 sm:pr-4 pt-8 sm:pt-12">
-                        <span class="text-yellow-400 text-sm sm:text-base">🔒</span>
+                    <div class="absolute inset-y-0 right-0 flex items-center pr-4 pt-12">
+                        <span class="text-yellow-400">🔒</span>
                     </div>
                 </div>
                 
-
+                <div class="relative">
+                    <label class="block text-white font-bold mb-3 text-lg">⚖️ Cargo</label>
+                    <select 
+                        id="login-cargo" 
+                        class="w-full p-4 rounded-xl bg-gray-900/80 border-2 border-yellow-500/50 text-white text-lg focus:border-yellow-400 focus:ring-2 focus:ring-yellow-400/50 transition-all duration-300"
+                    >
+                        <option value="" class="bg-gray-900">Selecione seu cargo...</option>
+                        <option value="magistrado" class="bg-gray-900">👨‍⚖️ Magistrado (Juiz)</option>
+                        <option value="promotor" class="bg-gray-900">🏛️ Promotor de Justiça</option>
+                        <option value="advogado" class="bg-gray-900">👨‍💼 Advogado</option>
+                        <option value="escrivao" class="bg-gray-900">📝 Escrivão Judicial</option>
+                        <option value="oficial" class="bg-gray-900">👮‍♂️ Oficial de Justiça</option>
+                    </select>
+                </div>
                 
                 <!-- Botão de Login -->
                 <button 
                     type="submit"
                     id="btn-entrar"
-                    class="w-full bg-gradient-to-r from-yellow-600 to-yellow-500 text-black font-black py-3 sm:py-4 px-6 sm:px-8 rounded-xl hover:from-yellow-500 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 shadow-lg text-base sm:text-xl"
+                    class="w-full bg-gradient-to-r from-yellow-600 to-yellow-500 text-black font-black py-4 px-8 rounded-xl hover:from-yellow-500 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 shadow-lg text-xl"
                 >
-                    <span id="texto-botao">🔐 <span class="hidden sm:inline">ENTRAR NO </span>SISTEMA</span>
+                    <span id="texto-botao">🔐 ENTRAR NO SISTEMA</span>
                     <span id="loading-botao" class="hidden">⏳ VERIFICANDO...</span>
                 </button>
             </form>
@@ -707,20 +162,19 @@
     <div class="container mx-auto px-4 py-8">
         
         <!-- Painel Administrativo (Exclusivo Alexandre de Moraes) -->
-        <div id="painel-admin" class="admin-panel hidden">
-            <div class="content-section bg-gradient-to-br from-red-600/20 to-red-800/40 backdrop-blur-lg rounded-2xl border-2 border-red-500/50 shadow-2xl">
-                <div class="section-header">
-                    <h2 class="section-title font-bold text-white flex items-center">
-                        <span class="bg-red-600 p-2 sm:p-3 rounded-lg mr-3 sm:mr-4 shadow-lg text-lg sm:text-xl">👑</span>
-                        <span class="hidden lg:inline">Painel Administrativo - Alexandre de Moraes</span>
-                        <span class="lg:hidden">Painel Admin</span>
+        <div id="painel-admin" class="hidden mb-8">
+            <div class="bg-gradient-to-br from-red-600/20 to-red-800/40 backdrop-blur-lg rounded-2xl p-8 border-2 border-red-500/50 shadow-2xl">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-3xl font-bold text-white flex items-center">
+                        <span class="bg-red-600 p-3 rounded-lg mr-4 shadow-lg">👑</span>
+                        Painel Administrativo - Alexandre de Moraes
                     </h2>
-                    <button onclick="esconderPainelAdmin()" class="btn bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-all">
-                        ← <span class="hidden sm:inline">Minimizar</span>
+                    <button onclick="esconderPainelAdmin()" class="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition-all">
+                        ← Minimizar
                     </button>
                 </div>
                 
-                <div class="admin-grid">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <!-- Cadastrar Usuário -->
                     <div class="bg-green-600/20 rounded-lg p-6 border border-green-500/50 hover:bg-green-600/30 transition-all cursor-pointer" onclick="abrirCadastroUsuario()">
                         <div class="text-center">
@@ -752,76 +206,76 @@
         </div>
 
         <!-- Menu Principal -->
-        <div class="menu-grid">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
             <!-- Calculadora de Penas -->
-            <div id="menu-calculadora" class="menu-item bg-gradient-to-br from-red-600/20 to-red-800/40 backdrop-blur-lg rounded-2xl border-2 border-red-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('calculadora')">
+            <div id="menu-calculadora" class="bg-gradient-to-br from-red-600/20 to-red-800/40 backdrop-blur-lg rounded-2xl p-6 border-2 border-red-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('calculadora')">
                 <div class="text-center">
-                    <div class="menu-item-emoji">⚖️</div>
-                    <h3 class="menu-item-title font-bold text-white mb-2">Calculadora de Penas</h3>
-                    <p class="menu-item-description text-red-200">Calcule sentenças automaticamente</p>
+                    <div class="text-5xl mb-4">⚖️</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Calculadora de Penas</h3>
+                    <p class="text-red-200 text-sm">Calcule sentenças automaticamente</p>
                 </div>
             </div>
 
             <!-- Gerador de Documentos -->
-            <div id="menu-documentos" class="menu-item bg-gradient-to-br from-blue-600/20 to-blue-800/40 backdrop-blur-lg rounded-2xl border-2 border-blue-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('documentos')">
+            <div id="menu-documentos" class="bg-gradient-to-br from-blue-600/20 to-blue-800/40 backdrop-blur-lg rounded-2xl p-6 border-2 border-blue-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('documentos')">
                 <div class="text-center">
-                    <div class="menu-item-emoji">📋</div>
-                    <h3 class="menu-item-title font-bold text-white mb-2">Gerador de Documentos</h3>
-                    <p class="menu-item-description text-blue-200">Mandados, B.O., Intimações</p>
+                    <div class="text-5xl mb-4">📋</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Gerador de Documentos</h3>
+                    <p class="text-blue-200 text-sm">Mandados, B.O., Intimações</p>
                 </div>
             </div>
 
             <!-- Sistema de Audiências -->
-            <div id="menu-audiencias" class="menu-item bg-gradient-to-br from-purple-600/20 to-purple-800/40 backdrop-blur-lg rounded-2xl border-2 border-purple-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('audiencias')">
+            <div id="menu-audiencias" class="bg-gradient-to-br from-purple-600/20 to-purple-800/40 backdrop-blur-lg rounded-2xl p-6 border-2 border-purple-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('audiencias')">
                 <div class="text-center">
-                    <div class="menu-item-emoji">🏛️</div>
-                    <h3 class="menu-item-title font-bold text-white mb-2">Sistema de Audiências</h3>
-                    <p class="menu-item-description text-purple-200">Gerencie julgamentos</p>
+                    <div class="text-5xl mb-4">🏛️</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Sistema de Audiências</h3>
+                    <p class="text-purple-200 text-sm">Gerencie julgamentos</p>
                 </div>
             </div>
 
             <!-- Dashboard Administrativo -->
-            <div id="menu-dashboard" class="menu-item bg-gradient-to-br from-green-600/20 to-green-800/40 backdrop-blur-lg rounded-2xl border-2 border-green-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('dashboard')">
+            <div id="menu-dashboard" class="bg-gradient-to-br from-green-600/20 to-green-800/40 backdrop-blur-lg rounded-2xl p-6 border-2 border-green-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('dashboard')">
                 <div class="text-center">
-                    <div class="menu-item-emoji">📊</div>
-                    <h3 class="menu-item-title font-bold text-white mb-2">Dashboard</h3>
-                    <p class="menu-item-description text-green-200">Estatísticas e relatórios</p>
+                    <div class="text-5xl mb-4">📊</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Dashboard</h3>
+                    <p class="text-green-200 text-sm">Estatísticas e relatórios</p>
                 </div>
             </div>
 
             <!-- Ferramentas para Advogados -->
-            <div id="menu-advogados" class="menu-item bg-gradient-to-br from-yellow-600/20 to-yellow-800/40 backdrop-blur-lg rounded-2xl border-2 border-yellow-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('advogados')">
+            <div id="menu-advogados" class="bg-gradient-to-br from-yellow-600/20 to-yellow-800/40 backdrop-blur-lg rounded-2xl p-6 border-2 border-yellow-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('advogados')">
                 <div class="text-center">
-                    <div class="menu-item-emoji">👨‍💼</div>
-                    <h3 class="menu-item-title font-bold text-white mb-2">Área do Advogado</h3>
-                    <p class="menu-item-description text-yellow-200">Petições e honorários</p>
+                    <div class="text-5xl mb-4">👨‍💼</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Área do Advogado</h3>
+                    <p class="text-yellow-200 text-sm">Petições e honorários</p>
                 </div>
             </div>
 
             <!-- Gestão Processual -->
-            <div id="menu-processos" class="menu-item bg-gradient-to-br from-indigo-600/20 to-indigo-800/40 backdrop-blur-lg rounded-2xl border-2 border-indigo-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('processos')">
+            <div id="menu-processos" class="bg-gradient-to-br from-indigo-600/20 to-indigo-800/40 backdrop-blur-lg rounded-2xl p-6 border-2 border-indigo-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('processos')">
                 <div class="text-center">
-                    <div class="menu-item-emoji">🗃️</div>
-                    <h3 class="menu-item-title font-bold text-white mb-2">Gestão Processual</h3>
-                    <p class="menu-item-description text-indigo-200">Controle de processos</p>
+                    <div class="text-5xl mb-4">🗃️</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Gestão Processual</h3>
+                    <p class="text-indigo-200 text-sm">Controle de processos</p>
                 </div>
             </div>
 
             <!-- Cadastro de Réus -->
-            <div id="menu-reus" class="menu-item bg-gradient-to-br from-orange-600/20 to-orange-800/40 backdrop-blur-lg rounded-2xl border-2 border-orange-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('reus')">
+            <div id="menu-reus" class="bg-gradient-to-br from-orange-600/20 to-orange-800/40 backdrop-blur-lg rounded-2xl p-6 border-2 border-orange-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('reus')">
                 <div class="text-center">
-                    <div class="menu-item-emoji">👤</div>
-                    <h3 class="menu-item-title font-bold text-white mb-2">Cadastro de Réus</h3>
-                    <p class="menu-item-description text-orange-200">Histórico criminal</p>
+                    <div class="text-5xl mb-4">👤</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Cadastro de Réus</h3>
+                    <p class="text-orange-200 text-sm">Histórico criminal</p>
                 </div>
             </div>
 
             <!-- Sistema Mobile -->
-            <div id="menu-mobile" class="menu-item bg-gradient-to-br from-pink-600/20 to-pink-800/40 backdrop-blur-lg rounded-2xl border-2 border-pink-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('mobile')">
+            <div id="menu-mobile" class="bg-gradient-to-br from-pink-600/20 to-pink-800/40 backdrop-blur-lg rounded-2xl p-6 border-2 border-pink-500/50 shadow-2xl hover:scale-105 transition-all cursor-pointer" onclick="mostrarSecao('mobile')">
                 <div class="text-center">
-                    <div class="menu-item-emoji">📱</div>
-                    <h3 class="menu-item-title font-bold text-white mb-2">Sistema Mobile</h3>
-                    <p class="menu-item-description text-pink-200">Consultas e notificações</p>
+                    <div class="text-5xl mb-4">📱</div>
+                    <h3 class="text-xl font-bold text-white mb-2">Sistema Mobile</h3>
+                    <p class="text-pink-200 text-sm">Consultas e notificações</p>
                 </div>
             </div>
         </div>
@@ -850,19 +304,18 @@
 
             <!-- Calculadora de Penas -->
             <div id="calculadora" class="hidden">
-                <div class="content-section bg-gradient-to-br from-black/90 to-red-900/20 backdrop-blur-lg rounded-2xl border-2 border-red-600/50 shadow-2xl">
-                    <div class="section-header">
-                        <h2 class="section-title font-bold text-white flex items-center">
-                            <span class="bg-red-600 p-2 sm:p-3 rounded-lg mr-3 sm:mr-4 shadow-lg text-lg sm:text-xl">⚖️</span>
-                            <span class="hidden sm:inline">Calculadora de Penas</span>
-                            <span class="sm:hidden">Calc. Penas</span>
+                <div class="bg-gradient-to-br from-black/90 to-red-900/20 backdrop-blur-lg rounded-2xl p-8 border-2 border-red-600/50 shadow-2xl">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-3xl font-bold text-white flex items-center">
+                            <span class="bg-red-600 p-3 rounded-lg mr-4 shadow-lg">⚖️</span>
+                            Calculadora de Penas
                         </h2>
-                        <button onclick="mostrarSecao('inicial')" class="btn bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-all">
-                            ← <span class="hidden sm:inline">Voltar</span>
+                        <button onclick="mostrarSecao('inicial')" class="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition-all">
+                            ← Voltar
                         </button>
                     </div>
                     
-                    <div class="responsive-grid-2">
+                    <div class="grid lg:grid-cols-2 gap-8">
                         <!-- Seleção de Crimes -->
                         <div>
                             <h3 class="text-xl font-bold text-white mb-4">Selecionar Crimes</h3>
@@ -1068,37 +521,35 @@
 
             <!-- Sistema de Audiências -->
             <div id="audiencias" class="hidden">
-                <div class="content-section bg-gradient-to-br from-black/90 to-purple-900/20 backdrop-blur-lg rounded-2xl border-2 border-purple-600/50 shadow-2xl">
-                    <div class="section-header">
-                        <h2 class="section-title font-bold text-white flex items-center">
-                            <span class="bg-purple-600 p-2 sm:p-3 rounded-lg mr-3 sm:mr-4 shadow-lg text-lg sm:text-xl">🏛️</span>
-                            <span class="hidden sm:inline">Sistema de Audiências</span>
-                            <span class="sm:hidden">Audiências</span>
+                <div class="bg-gradient-to-br from-black/90 to-purple-900/20 backdrop-blur-lg rounded-2xl p-8 border-2 border-purple-600/50 shadow-2xl">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-3xl font-bold text-white flex items-center">
+                            <span class="bg-purple-600 p-3 rounded-lg mr-4 shadow-lg">🏛️</span>
+                            Sistema de Audiências
                         </h2>
-                        <button onclick="mostrarSecao('inicial')" class="btn bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-all">
-                            ← <span class="hidden sm:inline">Voltar</span>
+                        <button onclick="mostrarSecao('inicial')" class="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition-all">
+                            ← Voltar
                         </button>
                     </div>
 
-                    <div class="responsive-grid-2">
+                    <div class="grid lg:grid-cols-2 gap-8">
                         <!-- Cronômetro da Audiência -->
-                        <div class="card bg-purple-900/30 rounded-lg border border-purple-600/40">
-                            <h3 class="text-lg sm:text-xl font-bold text-white mb-4 flex items-center">
-                                <span class="bg-purple-600 p-2 rounded-lg mr-3 text-sm sm:text-base">⏱️</span>
-                                <span class="hidden sm:inline">Cronômetro da Audiência</span>
-                                <span class="sm:hidden">Cronômetro</span>
+                        <div class="bg-purple-900/30 rounded-lg p-6 border border-purple-600/40">
+                            <h3 class="text-xl font-bold text-white mb-4 flex items-center">
+                                <span class="bg-purple-600 p-2 rounded-lg mr-3">⏱️</span>
+                                Cronômetro da Audiência
                             </h3>
                             <div class="text-center">
-                                <div id="cronometro" class="cronometro-display font-bold text-purple-300">00:00:00</div>
-                                <div class="btn-group">
-                                    <button onclick="iniciarCronometro()" class="btn bg-green-600 hover:bg-green-500 text-white rounded-lg transition-all">
-                                        ▶️ <span class="hidden sm:inline">Iniciar</span>
+                                <div id="cronometro" class="text-6xl font-bold text-purple-300 mb-6">00:00:00</div>
+                                <div class="space-x-4">
+                                    <button onclick="iniciarCronometro()" class="bg-green-600 hover:bg-green-500 text-white px-6 py-3 rounded-lg transition-all">
+                                        ▶️ Iniciar
                                     </button>
-                                    <button onclick="pausarCronometro()" class="btn bg-yellow-600 hover:bg-yellow-500 text-white rounded-lg transition-all">
-                                        ⏸️ <span class="hidden sm:inline">Pausar</span>
+                                    <button onclick="pausarCronometro()" class="bg-yellow-600 hover:bg-yellow-500 text-white px-6 py-3 rounded-lg transition-all">
+                                        ⏸️ Pausar
                                     </button>
-                                    <button onclick="pararCronometro()" class="btn bg-red-600 hover:bg-red-500 text-white rounded-lg transition-all">
-                                        ⏹️ <span class="hidden sm:inline">Parar</span>
+                                    <button onclick="pararCronometro()" class="bg-red-600 hover:bg-red-500 text-white px-6 py-3 rounded-lg transition-all">
+                                        ⏹️ Parar
                                     </button>
                                 </div>
                             </div>
@@ -1159,20 +610,19 @@
 
             <!-- Dashboard -->
             <div id="dashboard" class="hidden">
-                <div class="content-section bg-gradient-to-br from-black/90 to-green-900/20 backdrop-blur-lg rounded-2xl border-2 border-green-600/50 shadow-2xl">
-                    <div class="section-header">
-                        <h2 class="section-title font-bold text-white flex items-center">
-                            <span class="bg-green-600 p-2 sm:p-3 rounded-lg mr-3 sm:mr-4 shadow-lg text-lg sm:text-xl">📊</span>
-                            <span class="hidden sm:inline">Dashboard Administrativo</span>
-                            <span class="sm:hidden">Dashboard</span>
+                <div class="bg-gradient-to-br from-black/90 to-green-900/20 backdrop-blur-lg rounded-2xl p-8 border-2 border-green-600/50 shadow-2xl">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-3xl font-bold text-white flex items-center">
+                            <span class="bg-green-600 p-3 rounded-lg mr-4 shadow-lg">📊</span>
+                            Dashboard Administrativo
                         </h2>
-                        <button onclick="mostrarSecao('inicial')" class="btn bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-all">
-                            ← <span class="hidden sm:inline">Voltar</span>
+                        <button onclick="mostrarSecao('inicial')" class="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition-all">
+                            ← Voltar
                         </button>
                     </div>
 
                     <!-- Estatísticas Principais -->
-                    <div class="stats-grid">
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
                         <div class="bg-blue-600/20 rounded-lg p-6 border border-blue-500/50">
                             <div class="flex items-center justify-between">
                                 <div>
@@ -1574,23 +1024,22 @@
 
             <!-- Sistema Mobile -->
             <div id="mobile" class="hidden">
-                <div class="content-section bg-gradient-to-br from-black/90 to-pink-900/20 backdrop-blur-lg rounded-2xl border-2 border-pink-600/50 shadow-2xl">
-                    <div class="section-header">
-                        <h2 class="section-title font-bold text-white flex items-center">
-                            <span class="bg-pink-600 p-2 sm:p-3 rounded-lg mr-3 sm:mr-4 shadow-lg text-lg sm:text-xl">📱</span>
-                            <span class="hidden sm:inline">Sistema Mobile</span>
-                            <span class="sm:hidden">Mobile</span>
+                <div class="bg-gradient-to-br from-black/90 to-pink-900/20 backdrop-blur-lg rounded-2xl p-8 border-2 border-pink-600/50 shadow-2xl">
+                    <div class="flex items-center justify-between mb-6">
+                        <h2 class="text-3xl font-bold text-white flex items-center">
+                            <span class="bg-pink-600 p-3 rounded-lg mr-4 shadow-lg">📱</span>
+                            Sistema Mobile
                         </h2>
-                        <button onclick="mostrarSecao('inicial')" class="btn bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-all">
-                            ← <span class="hidden sm:inline">Voltar</span>
+                        <button onclick="mostrarSecao('inicial')" class="bg-gray-600 hover:bg-gray-500 text-white px-4 py-2 rounded-lg transition-all">
+                            ← Voltar
                         </button>
                     </div>
 
-                    <div class="responsive-grid">
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                         <!-- Simulador Mobile -->
                         <div class="lg:col-span-2">
-                            <h3 class="text-lg sm:text-xl font-bold text-white mb-4">📱 <span class="hidden sm:inline">Simulador de App Mobile</span><span class="sm:hidden">App Mobile</span></h3>
-                            <div class="mobile-simulator bg-gray-900 rounded-3xl p-4 sm:p-6 border-4 border-gray-700">
+                            <h3 class="text-xl font-bold text-white mb-4">📱 Simulador de App Mobile</h3>
+                            <div class="bg-gray-900 rounded-3xl p-6 border-4 border-gray-700 max-w-sm mx-auto">
                                 <!-- Tela do celular -->
                                 <div class="bg-white rounded-2xl p-4 h-96 overflow-y-auto">
                                     <div class="text-center mb-4">
@@ -1665,68 +1114,68 @@
     </div>
 
     <!-- Tela de Primeiro Acesso -->
-    <div id="primeiro-acesso" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center p-4 hidden">
-        <div class="modal-content bg-gradient-to-br from-blue-600/30 to-green-600/30 backdrop-blur-xl rounded-3xl p-6 sm:p-10 border-2 border-blue-500/60 shadow-2xl">
-            <div class="text-center mb-6 sm:mb-8">
-                <div class="text-4xl sm:text-6xl mb-4">🆕</div>
-                <h1 class="text-2xl sm:text-3xl font-black text-transparent bg-gradient-to-r from-blue-300 via-blue-400 to-green-500 bg-clip-text mb-3">
+    <div id="primeiro-acesso" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center hidden">
+        <div class="bg-gradient-to-br from-blue-600/30 to-green-600/30 backdrop-blur-xl rounded-3xl p-10 border-2 border-blue-500/60 shadow-2xl max-w-lg w-full mx-4">
+            <div class="text-center mb-8">
+                <div class="text-6xl mb-4">🆕</div>
+                <h1 class="text-3xl font-black text-transparent bg-gradient-to-r from-blue-300 via-blue-400 to-green-500 bg-clip-text mb-3">
                     PRIMEIRO ACESSO
                 </h1>
-                <p class="text-base sm:text-lg text-blue-300 font-bold">Configure sua conta no sistema</p>
+                <p class="text-lg text-blue-300 font-bold">Configure sua conta no sistema</p>
             </div>
             
-            <form id="form-primeiro-acesso" class="space-y-4 sm:space-y-6">
+            <form id="form-primeiro-acesso" class="space-y-6">
                 <div>
-                    <label class="block text-white font-bold mb-2 sm:mb-3 text-sm sm:text-base">🔢 Número OAB Recebido</label>
+                    <label class="block text-white font-bold mb-3">🔢 Número OAB Recebido</label>
                     <input 
                         type="text" 
                         id="oab-recebida" 
                         placeholder="Digite o número OAB que você recebeu..." 
-                        class="form-input rounded-xl bg-gray-900/80 border-2 border-blue-500/50 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 transition-all"
+                        class="w-full p-4 rounded-xl bg-gray-900/80 border-2 border-blue-500/50 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 transition-all"
                     >
                 </div>
                 
                 <div>
-                    <label class="block text-white font-bold mb-2 sm:mb-3 text-sm sm:text-base">👤 Seu Nome de Usuário</label>
+                    <label class="block text-white font-bold mb-3">👤 Seu Nome de Usuário</label>
                     <input 
                         type="text" 
                         id="novo-usuario" 
                         placeholder="Escolha seu nome de usuário..." 
-                        class="form-input rounded-xl bg-gray-900/80 border-2 border-blue-500/50 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 transition-all"
+                        class="w-full p-4 rounded-xl bg-gray-900/80 border-2 border-blue-500/50 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 transition-all"
                     >
                 </div>
                 
                 <div>
-                    <label class="block text-white font-bold mb-2 sm:mb-3 text-sm sm:text-base">🔒 Sua Senha</label>
+                    <label class="block text-white font-bold mb-3">🔒 Sua Senha</label>
                     <input 
                         type="password" 
                         id="nova-senha" 
                         placeholder="Crie uma senha segura..." 
-                        class="form-input rounded-xl bg-gray-900/80 border-2 border-blue-500/50 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 transition-all"
+                        class="w-full p-4 rounded-xl bg-gray-900/80 border-2 border-blue-500/50 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 transition-all"
                     >
                 </div>
                 
                 <div>
-                    <label class="block text-white font-bold mb-2 sm:mb-3 text-sm sm:text-base">🔒 Confirmar Senha</label>
+                    <label class="block text-white font-bold mb-3">🔒 Confirmar Senha</label>
                     <input 
                         type="password" 
                         id="confirmar-senha" 
                         placeholder="Digite a senha novamente..." 
-                        class="form-input rounded-xl bg-gray-900/80 border-2 border-blue-500/50 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 transition-all"
+                        class="w-full p-4 rounded-xl bg-gray-900/80 border-2 border-blue-500/50 text-white placeholder-gray-400 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/50 transition-all"
                     >
                 </div>
                 
-                <div class="btn-group">
+                <div class="flex space-x-4">
                     <button 
                         type="button"
                         onclick="fecharPrimeiroAcesso()"
-                        class="btn bg-gray-600 hover:bg-gray-500 text-white font-bold rounded-xl transition-all"
+                        class="flex-1 bg-gray-600 hover:bg-gray-500 text-white font-bold py-4 px-6 rounded-xl transition-all"
                     >
                         ❌ Cancelar
                     </button>
                     <button 
                         type="submit"
-                        class="btn bg-gradient-to-r from-blue-600 to-green-500 text-white font-bold rounded-xl hover:from-blue-500 hover:to-green-400 transition-all"
+                        class="flex-1 bg-gradient-to-r from-blue-600 to-green-500 text-white font-bold py-4 px-6 rounded-xl hover:from-blue-500 hover:to-green-400 transition-all"
                     >
                         ✅ Cadastrar
                     </button>
@@ -1772,6 +1221,7 @@
         function realizarLogin() {
             const usuario = document.getElementById('login-usuario').value.trim().toLowerCase();
             const senha = document.getElementById('login-senha').value;
+            const cargo = document.getElementById('login-cargo').value;
 
             // Limpar mensagens anteriores
             esconderMensagem();
@@ -1789,13 +1239,19 @@
                 return;
             }
 
+            if (!cargo) {
+                mostrarMensagem('⚠️ Selecione seu cargo!', 'erro');
+                document.getElementById('login-cargo').focus();
+                return;
+            }
+
             // Mostrar loading
             mostrarLoading(true);
 
             // Simular verificação (delay para UX)
             setTimeout(() => {
                 // Verificar credenciais
-                if (usuariosCadastrados[usuario] && usuariosCadastrados[usuario].senha === senha) {
+                if (usuariosCadastrados[usuario] && usuariosCadastrados[usuario].senha === senha && usuariosCadastrados[usuario].cargo === cargo) {
                     // Login bem-sucedido
                     usuarioLogado = {
                         usuario: usuario,
@@ -1823,7 +1279,7 @@
                         // Mostrar informações do usuário
                         document.getElementById('usuario-logado').classList.remove('hidden');
                         document.getElementById('btn-logout').classList.remove('hidden');
-                        document.getElementById('nome-usuario').textContent = `${getCargoIcon(usuarioLogado.cargo)} ${usuarioLogado.nome}`;
+                        document.getElementById('nome-usuario').textContent = `${getCargoIcon(cargo)} ${usuarioLogado.nome}`;
                         
                         // Mostrar mensagem de boas-vindas
                         mostrarBoasVindas();
@@ -1833,7 +1289,7 @@
                     
                 } else {
                     // Login falhou
-                    mostrarMensagem('❌ Usuário ou senha incorretos!', 'erro');
+                    mostrarMensagem('❌ Usuário, senha ou cargo incorretos!', 'erro');
                     mostrarLoading(false);
                     
                     // Limpar campos
@@ -2292,6 +1748,7 @@
                     // Limpar campos do login
                     document.getElementById('login-usuario').value = '';
                     document.getElementById('login-senha').value = '';
+                    document.getElementById('login-cargo').value = '';
                     esconderMensagem();
                     
                     // Remover notificação
@@ -4149,5 +3606,5 @@
             document.head.appendChild(script);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a396f4751d27ef',t:'MTc1NDM2ODU0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a3aa37508c27f5',t:'MTc1NDM2OTMzNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
