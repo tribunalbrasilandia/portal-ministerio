@@ -589,32 +589,85 @@
 </head>
 <body class="bg-gradient-to-br from-slate-900 via-gray-800 to-slate-900 min-h-screen">
     <!-- Header Principal -->
-    <div class="bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 text-black py-4 px-4 md:py-6 md:px-8 shadow-2xl border-b-4 border-amber-500">
-        <div class="container mx-auto">
+    <div class="bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 text-black py-4 px-4 md:py-6 md:px-8 shadow-2xl border-b-4 border-amber-500 relative overflow-hidden">
+        <!-- Efeitos de fundo -->
+        <div class="absolute inset-0 bg-gradient-to-r from-yellow-400/20 via-amber-500/10 to-yellow-600/20"></div>
+        <div class="absolute top-0 left-1/4 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
+        <div class="absolute bottom-0 right-1/4 w-24 h-24 bg-black/10 rounded-full blur-2xl"></div>
+        
+        <div class="container mx-auto relative z-10">
             <div class="header-content">
                 <div class="header-logos">
-                    <img src="https://i.imgur.com/duLSu8w.png" alt="Ministério Público" class="drop-shadow-lg">
+                    <!-- Ícone do Ministério Público -->
+                    <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-gray-800 to-black rounded-xl flex items-center justify-center shadow-2xl border-2 border-gray-700">
+                        <svg class="w-6 h-6 md:w-8 md:h-8 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
+                            <path d="M12 8v8m-4-4h8" stroke="currentColor" stroke-width="1" fill="none"/>
+                        </svg>
+                    </div>
+                    
                     <div class="header-title">
-                        <h1 class="font-black bg-gradient-to-r from-black via-gray-800 to-black bg-clip-text text-transparent">
+                        <h1 class="font-black bg-gradient-to-r from-black via-gray-800 to-black bg-clip-text text-transparent drop-shadow-lg">
                             SISTEMA JURÍDICO COMPLETO
                         </h1>
-                        <p class="font-bold text-gray-800">Brasilândia RP - Poder Judiciário</p>
+                        <p class="font-bold text-gray-800 flex items-center">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            Brasilândia RP - Poder Judiciário
+                        </p>
                     </div>
-                    <img src="https://i.imgur.com/0nl9DgQ.png" alt="Brasilândia" class="drop-shadow-lg hidden-mobile">
+                    
+                    <!-- Ícone de Brasilândia -->
+                    <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-2xl border-2 border-blue-500 hidden-mobile">
+                        <svg class="w-6 h-6 md:w-8 md:h-8 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+                        </svg>
+                    </div>
                 </div>
+                
                 <div class="header-status">
                     <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-                        <div class="bg-green-500/20 px-3 py-2 rounded-lg border border-green-500/50">
+                        <!-- Status do Sistema -->
+                        <div class="bg-green-500/20 px-3 py-2 rounded-xl border border-green-500/50 backdrop-blur-sm shadow-lg">
                             <span class="text-xs sm:text-sm font-bold text-green-800 flex items-center">
-                                <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
+                                <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse shadow-lg shadow-green-500/50"></div>
+                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
                                 <span class="hidden sm:inline">Sistema Online - </span>v2025.1
                             </span>
                         </div>
-                        <div id="usuario-logado" class="bg-blue-500/20 px-3 py-2 rounded-lg border border-blue-500/50 hidden">
-                            <span class="text-xs sm:text-sm font-bold text-blue-300" id="nome-usuario"></span>
+                        
+                        <!-- Informações do Usuário -->
+                        <div id="usuario-logado" class="bg-gradient-to-r from-blue-500/20 to-indigo-500/20 px-4 py-2 rounded-xl border border-blue-500/50 backdrop-blur-sm shadow-lg hidden">
+                            <div class="flex items-center space-x-2">
+                                <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                    </svg>
+                                </div>
+                                <div class="text-left">
+                                    <div class="text-xs sm:text-sm font-bold text-blue-300" id="nome-usuario"></div>
+                                    <div class="text-xs text-blue-400" id="cargo-usuario"></div>
+                                </div>
+                            </div>
                         </div>
-                        <button onclick="logout()" class="bg-red-600 hover:bg-red-500 text-white px-3 py-2 rounded-lg transition-all hidden text-xs sm:text-sm" id="btn-logout">
-                            🚪 <span class="hidden sm:inline">Sair</span>
+                        
+                        <!-- Botão Admin (se aplicável) -->
+                        <button onclick="mostrarPainelAdmin()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white px-3 py-2 rounded-xl transition-all hidden text-xs sm:text-sm shadow-lg" id="btn-admin">
+                            <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                            <span class="hidden sm:inline">Admin</span>
+                        </button>
+                        
+                        <!-- Botão Logout -->
+                        <button onclick="logout()" class="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white px-3 py-2 rounded-xl transition-all hidden text-xs sm:text-sm shadow-lg" id="btn-logout">
+                            <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                            </svg>
+                            <span class="hidden sm:inline">Sair</span>
                         </button>
                     </div>
                 </div>
@@ -776,12 +829,19 @@
             <div class="content-section bg-gradient-to-br from-red-600/20 to-red-800/40 backdrop-blur-lg rounded-2xl border-2 border-red-500/50 shadow-2xl">
                 <div class="section-header">
                     <h2 class="section-title font-bold text-white flex items-center">
-                        <span class="bg-red-600 p-2 sm:p-3 rounded-lg mr-3 sm:mr-4 shadow-lg text-lg sm:text-xl">👑</span>
+                        <div class="w-10 h-10 bg-gradient-to-br from-red-600 to-red-800 rounded-lg flex items-center justify-center shadow-lg mr-3">
+                            <svg class="w-6 h-6 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                            </svg>
+                        </div>
                         <span class="hidden lg:inline">Painel Administrativo - Alexandre de Moraes</span>
                         <span class="lg:hidden">Painel Admin</span>
                     </h2>
                     <button onclick="esconderPainelAdmin()" class="btn bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-all">
-                        ← <span class="hidden sm:inline">Minimizar</span>
+                        <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M19 13H5v-2h14v2z"/>
+                        </svg>
+                        <span class="hidden sm:inline">Minimizar</span>
                     </button>
                 </div>
                 
@@ -816,7 +876,11 @@
                     <!-- Gerenciar Usuários -->
                     <div class="bg-purple-600/20 rounded-lg p-6 border border-purple-500/50 hover:bg-purple-600/30 transition-all cursor-pointer" onclick="abrirGerenciarUsuarios()">
                         <div class="text-center">
-                            <div class="text-4xl mb-4">👥</div>
+                            <div class="w-12 h-12 bg-gradient-to-br from-purple-600 to-purple-800 rounded-lg flex items-center justify-center mx-auto mb-4 shadow-lg">
+                                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-1c0-2.66 5.33-4 8-4s8 1.34 8 4v1H4zM12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
+                                </svg>
+                            </div>
                             <h3 class="text-lg font-bold text-white mb-2">Gerenciar Usuários</h3>
                             <p class="text-purple-200 text-sm">Editar e remover usuários</p>
                         </div>
@@ -1902,6 +1966,10 @@
                 permissoes: ['todas', 'admin', 'nomeacoes', 'maxima_autoridade'],
                 isAdmin: true,
                 nivel_hierarquico: 1,
+                oab: 'STF-001',
+                nomeado: true,
+                nomeado_por: 'Sistema',
+                data_nomeacao: '2025-01-15',
                 pode_nomear: ['2_juiz_federal', '3_juiz_federal', '1_desembargador', '2_desembargador', '3_desembargador']
             }
         };
@@ -2153,15 +2221,9 @@
                         cargo: usuariosCadastrados[usuario].cargo,
                         permissoes: usuariosCadastrados[usuario].permissoes,
                         isAdmin: usuariosCadastrados[usuario].isAdmin || false,
+                        oab: usuariosCadastrados[usuario].oab || 'N/A',
                         loginTime: new Date()
                     };
-                    
-                    // Mostrar painel admin se for Alexandre de Moraes
-                    if (usuarioLogado.isAdmin) {
-                        setTimeout(() => {
-                            mostrarPainelAdmin();
-                        }, 2000);
-                    }
                     
                     mostrarMensagem('✅ Login realizado com sucesso!', 'sucesso');
                     
@@ -2172,7 +2234,13 @@
                         // Mostrar informações do usuário
                         document.getElementById('usuario-logado').classList.remove('hidden');
                         document.getElementById('btn-logout').classList.remove('hidden');
-                        document.getElementById('nome-usuario').textContent = `${getCargoIcon(usuarioLogado.cargo)} ${usuarioLogado.nome}`;
+                        document.getElementById('nome-usuario').textContent = usuarioLogado.nome;
+                        document.getElementById('cargo-usuario').textContent = `${usuarioLogado.titulo} | OAB: ${usuarioLogado.oab}`;
+                        
+                        // Mostrar botão admin se for administrador
+                        if (usuarioLogado.isAdmin) {
+                            document.getElementById('btn-admin').classList.remove('hidden');
+                        }
                         
                         // Mostrar mensagem de boas-vindas
                         mostrarBoasVindas();
@@ -2413,26 +2481,46 @@
 
         function abrirGerenciarUsuarios() {
             const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center';
+            modal.className = 'fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center overflow-y-auto';
             
             let listaUsuarios = '';
-            for (const [oab, dados] of Object.entries(registrosOAB)) {
-                const status = dados.primeiroAcesso ? '✅ Ativo' : '⏳ Pendente';
+            
+            // Listar usuários cadastrados
+            for (const [usuario, dados] of Object.entries(usuariosCadastrados)) {
+                const statusNomeacao = dados.nomeado ? '✅ Nomeado' : '⏳ Não Nomeado';
+                const cargoInfo = estruturaJudicial[dados.cargo] || { nome: 'Cargo Desconhecido', icon: '❓' };
+                
                 listaUsuarios += `
-                    <div class="bg-white/10 rounded-lg p-4 border border-white/20 mb-3">
+                    <div class="bg-gradient-to-r from-white/10 to-white/5 rounded-xl p-4 border border-white/20 mb-3 hover:from-white/15 hover:to-white/10 transition-all">
                         <div class="flex justify-between items-center">
-                            <div>
-                                <h4 class="text-white font-bold">${dados.nome}</h4>
-                                <p class="text-white/70 text-sm">OAB: ${oab} | ${dados.cargo}</p>
-                                <p class="text-white/70 text-sm">Status: ${status}</p>
+                            <div class="flex items-center space-x-4">
+                                <div class="w-12 h-12 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center">
+                                    <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="text-white font-bold text-lg">${dados.nome}</h4>
+                                    <p class="text-white/70 text-sm">${cargoInfo.nome}</p>
+                                    <p class="text-white/60 text-xs">OAB: ${dados.oab || 'N/A'} | Usuário: ${usuario}</p>
+                                    <p class="text-white/60 text-xs">Status: ${statusNomeacao}</p>
+                                </div>
                             </div>
-                            <div class="space-x-2">
-                                <button onclick="editarUsuario('${oab}')" class="bg-blue-600 hover:bg-blue-500 text-white px-3 py-1 rounded text-sm">
-                                    ✏️ Editar
+                            <div class="flex space-x-2">
+                                <button onclick="editarUsuario('${usuario}')" class="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-500 hover:to-blue-600 text-white px-4 py-2 rounded-lg text-sm transition-all shadow-lg">
+                                    <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                                    </svg>
+                                    Editar
                                 </button>
-                                <button onclick="removerUsuario('${oab}')" class="bg-red-600 hover:bg-red-500 text-white px-3 py-1 rounded text-sm">
-                                    🗑️ Remover
+                                ${usuario !== 'alexandre.moraes' ? `
+                                <button onclick="removerUsuario('${usuario}')" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white px-4 py-2 rounded-lg text-sm transition-all shadow-lg">
+                                    <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
+                                    </svg>
+                                    Remover
                                 </button>
+                                ` : '<span class="text-yellow-400 text-sm font-medium">👑 Administrador Principal</span>'}
                             </div>
                         </div>
                     </div>
@@ -2440,9 +2528,15 @@
             }
 
             modal.innerHTML = `
-                <div class="bg-gradient-to-br from-blue-600/30 to-purple-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-blue-500/60 shadow-2xl max-w-4xl w-full mx-4 max-h-[80vh] overflow-y-auto">
+                <div class="bg-gradient-to-br from-blue-600/30 to-purple-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-blue-500/60 shadow-2xl max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto">
                     <div class="text-center mb-6">
-                        <h2 class="text-2xl font-bold text-white">👥 Gerenciar Usuários</h2>
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-2xl">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-1c0-2.66 5.33-4 8-4s8 1.34 8 4v1H4zM12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-3xl font-bold text-white">Gerenciar Usuários</h2>
+                        <p class="text-blue-200 mt-2">Editar perfis e gerenciar permissões</p>
                     </div>
                     
                     <div class="space-y-4">
@@ -2450,8 +2544,11 @@
                     </div>
                     
                     <div class="text-center mt-6">
-                        <button onclick="this.closest('.fixed').remove()" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg transition-all">
-                            ❌ Fechar
+                        <button onclick="this.closest('.fixed').remove()" class="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white font-bold py-3 px-6 rounded-xl transition-all shadow-lg">
+                            <svg class="w-5 h-5 inline mr-2" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                            </svg>
+                            Fechar
                         </button>
                     </div>
                 </div>
@@ -2460,17 +2557,166 @@
             document.body.appendChild(modal);
         }
 
-        function removerUsuario(oab) {
-            if (confirm(`⚠️ Tem certeza que deseja remover o usuário com OAB ${oab}?`)) {
-                delete registrosOAB[oab];
+        function editarUsuario(usuario) {
+            const dados = usuariosCadastrados[usuario];
+            if (!dados) {
+                alert('❌ Usuário não encontrado!');
+                return;
+            }
+
+            const modal = document.createElement('div');
+            modal.className = 'fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center overflow-y-auto';
+            
+            let opcoesCargoHTML = '';
+            Object.entries(estruturaJudicial).forEach(([key, info]) => {
+                const selected = key === dados.cargo ? 'selected' : '';
+                opcoesCargoHTML += `<option value="${key}" ${selected}>${info.icon} ${info.nome}</option>`;
+            });
+
+            modal.innerHTML = `
+                <div class="bg-gradient-to-br from-blue-600/30 to-indigo-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-blue-500/60 shadow-2xl max-w-2xl w-full mx-4">
+                    <div class="text-center mb-6">
+                        <div class="w-16 h-16 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-2xl">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04c.39-.39.39-1.02 0-1.41l-2.34-2.34c-.39-.39-1.02-.39-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-bold text-white">Editar Usuário</h2>
+                        <p class="text-blue-200 mt-2">Modificar informações do perfil</p>
+                    </div>
+                    
+                    <form id="form-editar-usuario" class="space-y-4">
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-white font-bold mb-2">Nome Completo</label>
+                                <input type="text" id="edit-nome" value="${dados.nome}" class="w-full p-3 rounded-lg bg-gray-900 border border-blue-500/50 text-white" required>
+                            </div>
+                            <div>
+                                <label class="block text-white font-bold mb-2">Usuário</label>
+                                <input type="text" id="edit-usuario" value="${usuario}" class="w-full p-3 rounded-lg bg-gray-900 border border-blue-500/50 text-white" ${usuario === 'alexandre.moraes' ? 'readonly' : ''}>
+                            </div>
+                        </div>
+                        
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div>
+                                <label class="block text-white font-bold mb-2">OAB/Funcional</label>
+                                <input type="text" id="edit-oab" value="${dados.oab || ''}" class="w-full p-3 rounded-lg bg-gray-900 border border-blue-500/50 text-white">
+                            </div>
+                            <div>
+                                <label class="block text-white font-bold mb-2">Cargo</label>
+                                <select id="edit-cargo" class="w-full p-3 rounded-lg bg-gray-900 border border-blue-500/50 text-white" ${usuario === 'alexandre.moraes' ? 'disabled' : ''}>
+                                    ${opcoesCargoHTML}
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label class="block text-white font-bold mb-2">Nova Senha (deixe em branco para manter atual)</label>
+                            <input type="password" id="edit-senha" placeholder="Digite nova senha..." class="w-full p-3 rounded-lg bg-gray-900 border border-blue-500/50 text-white placeholder-gray-400">
+                        </div>
+                        
+                        <div class="flex items-center space-x-3">
+                            <input type="checkbox" id="edit-nomeado" ${dados.nomeado ? 'checked' : ''} class="rounded">
+                            <label for="edit-nomeado" class="text-white">Usuário nomeado para o cargo</label>
+                        </div>
+                        
+                        <div class="flex space-x-4 mt-6">
+                            <button type="button" onclick="this.closest('.fixed').remove()" class="flex-1 bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg transition-all">
+                                Cancelar
+                            </button>
+                            <button type="submit" class="flex-1 bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 px-6 rounded-lg transition-all">
+                                Salvar Alterações
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            `;
+            
+            document.body.appendChild(modal);
+            
+            // Event listener para o formulário
+            document.getElementById('form-editar-usuario').addEventListener('submit', function(e) {
+                e.preventDefault();
+                salvarEdicaoUsuario(usuario);
+            });
+        }
+
+        function salvarEdicaoUsuario(usuarioOriginal) {
+            const nome = document.getElementById('edit-nome').value.trim();
+            const novoUsuario = document.getElementById('edit-usuario').value.trim().toLowerCase();
+            const oab = document.getElementById('edit-oab').value.trim();
+            const cargo = document.getElementById('edit-cargo').value;
+            const novaSenha = document.getElementById('edit-senha').value;
+            const nomeado = document.getElementById('edit-nomeado').checked;
+
+            if (!nome || !novoUsuario || !cargo) {
+                alert('⚠️ Preencha todos os campos obrigatórios!');
+                return;
+            }
+
+            // Verificar se o novo usuário já existe (se foi alterado)
+            if (novoUsuario !== usuarioOriginal && usuariosCadastrados[novoUsuario]) {
+                alert('⚠️ Este nome de usuário já existe!');
+                return;
+            }
+
+            const dadosAtualizados = {
+                ...usuariosCadastrados[usuarioOriginal],
+                nome: nome,
+                oab: oab,
+                cargo: cargo,
+                titulo: estruturaJudicial[cargo]?.titulo || 'Profissional Jurídico',
+                permissoes: estruturaJudicial[cargo]?.permissoes || ['basicas'],
+                nomeado: nomeado
+            };
+
+            // Se a senha foi alterada
+            if (novaSenha) {
+                dadosAtualizados.senha = novaSenha;
+            }
+
+            // Se o usuário foi alterado, remover o antigo e criar o novo
+            if (novoUsuario !== usuarioOriginal) {
+                delete usuariosCadastrados[usuarioOriginal];
+                usuariosCadastrados[novoUsuario] = dadosAtualizados;
+            } else {
+                usuariosCadastrados[usuarioOriginal] = dadosAtualizados;
+            }
+
+            // Atualizar usuário logado se for o mesmo
+            if (usuarioLogado && usuarioLogado.usuario === usuarioOriginal) {
+                usuarioLogado = {
+                    ...usuarioLogado,
+                    nome: nome,
+                    titulo: dadosAtualizados.titulo,
+                    cargo: cargo,
+                    oab: oab,
+                    permissoes: dadosAtualizados.permissoes
+                };
                 
-                // Remover também da lista de usuários cadastrados se existir
-                for (const [usuario, dados] of Object.entries(usuariosCadastrados)) {
-                    if (dados.oab === oab) {
-                        delete usuariosCadastrados[usuario];
-                        break;
-                    }
-                }
+                // Atualizar interface
+                document.getElementById('nome-usuario').textContent = usuarioLogado.nome;
+                document.getElementById('cargo-usuario').textContent = `${usuarioLogado.titulo} | OAB: ${usuarioLogado.oab}`;
+            }
+
+            salvarDados();
+            alert('✅ Usuário atualizado com sucesso!');
+            
+            // Fechar modal e recarregar lista
+            document.querySelector('.fixed').remove();
+            setTimeout(() => {
+                abrirGerenciarUsuarios();
+            }, 100);
+        }
+
+        function removerUsuario(usuario) {
+            if (usuario === 'alexandre.moraes') {
+                alert('❌ Não é possível remover o administrador principal!');
+                return;
+            }
+
+            if (confirm(`⚠️ Tem certeza que deseja remover o usuário "${usuariosCadastrados[usuario]?.nome}"?`)) {
+                delete usuariosCadastrados[usuario];
                 
                 salvarDados();
                 alert('✅ Usuário removido com sucesso!');
@@ -4812,5 +5058,5 @@
             document.head.appendChild(script);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a3ee2dd5506f86',t:'MTc1NDM3MjExOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96a40d1ae43727e7',t:'MTc1NDM3MzM4NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
