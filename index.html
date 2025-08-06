@@ -1146,7 +1146,7 @@
 
 <!-- Calculadora de Penas - NOVO VISUAL + FUNCIONALIDADE ANTIGA -->
 <div id="calculadora" class="hidden">
-    <div class="content-section bg-gradient-to-br from-slate-900/95 via-red-900/30 to-slate-800/95 backdrop-blur-lg rounded-2xl border-2 border-red-600/50 shadow-2xl">
+    <div class="content-section bg-gradient-to-br from-slate-900/95 via-red-900/30 to-slate-800/95 backdrop-blur-lg rounded-2xl border-2 border-red-600/50 shadow-2xl" style="max-height: 600px;">
         <div class="section-header">
             <h2 class="section-title font-bold text-white flex items-center">
                 <span class="bg-red-600 p-2 sm:p-3 rounded-lg mr-3 sm:mr-4 shadow-lg text-lg sm:text-xl">⚖️</span>
@@ -1157,11 +1157,11 @@
                 ← <span class="hidden sm:inline">Voltar</span>
             </button>
         </div>
-        <div class="responsive-grid-2">
+        <div class="responsive-grid-2" style="max-height: calc(600px - 80px); overflow: hidden;">
             <!-- Seleção de Crimes -->
-            <div>
+            <div style="height: 100%;">
                 <h3 class="text-xl font-bold text-white mb-4">Selecionar Crimes</h3>
-                <div class="space-y-6 h-full overflow-y-auto px-2 flex flex-col">
+                <div class="space-y-6 overflow-y-auto px-2" style="height: calc(100% - 40px);">
                     <!-- Filtro de busca -->
                     <div class="mb-2">
                         <input type="text" id="buscarCrime" placeholder="🔍 Buscar crime ou artigo..." class="w-full px-3 py-2 rounded-lg bg-gray-900 border border-red-500/50 text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all text-sm">
