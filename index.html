@@ -2016,16 +2016,97 @@
         let cronometroAtivo = false;
         let usuarioLogado = null;
         
-        // Sistema de usuários local (fallback)
-        let usuariosCadastrados = JSON.parse(localStorage.getItem('usuariosCadastrados')) || {};
-        let registrosOAB = JSON.parse(localStorage.getItem('registrosOAB')) || {};
-        let usuariosOnline = JSON.parse(localStorage.getItem('usuariosOnline')) || {};
+        // Sistema Firebase - Dados em tempo real
+        let usuariosCadastrados = {};
+        let registrosOAB = {};
+        let usuariosOnline = {};
+        let listeners = []; // Para gerenciar listeners do Firebase
         
-        // Função para salvar dados localmente
-        function salvarDados() {
-            localStorage.setItem('usuariosCadastrados', JSON.stringify(usuariosCadastrados));
-            localStorage.setItem('registrosOAB', JSON.stringify(registrosOAB));
-            localStorage.setItem('usuariosOnline', JSON.stringify(usuariosOnline));
+        // Função para salvar dados no Firebase
+        async function salvarDados() {
+            try {
+                // Salvar no Firebase em tempo real
+                await Promise.all([
+                    salvarDadosFirebase('usuarios_cadastrados', 'dados', usuariosCadastrados),
+                    salvarDadosFirebase('registros_oab', 'dados', registrosOAB),
+                    salvarDadosFirebase('usuarios_online', 'dados', usuariosOnline)
+                ]);
+                console.log('✅ Dados salvos no Firebase com sucesso!');
+            } catch (error) {
+                console.error('❌ Erro ao salvar dados:', error);
+                // Fallback para localStorage em caso de erro
+                localStorage.setItem('usuariosCadastrados', JSON.stringify(usuariosCadastrados));
+                localStorage.setItem('registrosOAB', JSON.stringify(registrosOAB));
+                localStorage.setItem('usuariosOnline', JSON.stringify(usuariosOnline));
+            }
+        }
+        
+        // Função para carregar dados do Firebase em tempo real
+        async function carregarDadosFirebase() {
+            try {
+                console.log('🔄 Carregando dados do Firebase...');
+                
+                // Listener para usuários cadastrados
+                const unsubscribeUsuarios = firebaseModules.onSnapshot(
+                    firebaseModules.doc(db, 'usuarios_cadastrados', 'dados'),
+                    (doc) => {
+                        if (doc.exists()) {
+                            usuariosCadastrados = doc.data() || {};
+                            console.log('👥 Usuários cadastrados atualizados:', Object.keys(usuariosCadastrados).length);
+                            atualizarInterfaceUsuarios();
+                        }
+                    }
+                );
+                listeners.push(unsubscribeUsuarios);
+                
+                // Listener para registros OAB
+                const unsubscribeOAB = firebaseModules.onSnapshot(
+                    firebaseModules.doc(db, 'registros_oab', 'dados'),
+                    (doc) => {
+                        if (doc.exists()) {
+                            registrosOAB = doc.data() || {};
+                            console.log('📋 Registros OAB atualizados:', Object.keys(registrosOAB).length);
+                        }
+                    }
+                );
+                listeners.push(unsubscribeOAB);
+                
+                // Listener para usuários online
+                const unsubscribeOnline = firebaseModules.onSnapshot(
+                    firebaseModules.doc(db, 'usuarios_online', 'dados'),
+                    (doc) => {
+                        if (doc.exists()) {
+                            usuariosOnline = doc.data() || {};
+                            console.log('🌐 Usuários online atualizados:', Object.keys(usuariosOnline).length);
+                            atualizarContadorOnline();
+                        }
+                    }
+                );
+                listeners.push(unsubscribeOnline);
+                
+                console.log('✅ Listeners Firebase configurados com sucesso!');
+                
+            } catch (error) {
+                console.error('❌ Erro ao configurar listeners Firebase:', error);
+                // Fallback para localStorage
+                usuariosCadastrados = JSON.parse(localStorage.getItem('usuariosCadastrados')) || {};
+                registrosOAB = JSON.parse(localStorage.getItem('registrosOAB')) || {};
+                usuariosOnline = JSON.parse(localStorage.getItem('usuariosOnline')) || {};
+            }
+        }
+        
+        // Função para atualizar interface quando dados mudarem
+        function atualizarInterfaceUsuarios() {
+            // Atualizar contadores e estatísticas em tempo real
+            const totalUsuarios = Object.keys(usuariosCadastrados).length;
+            const usuariosNomeados = Object.values(usuariosCadastrados).filter(u => u.nomeado).length;
+            
+            // Atualizar elementos da interface se existirem
+            const elementos = document.querySelectorAll('[data-update="usuarios"]');
+            elementos.forEach(el => {
+                if (el.dataset.tipo === 'total') el.textContent = totalUsuarios;
+                if (el.dataset.tipo === 'nomeados') el.textContent = usuariosNomeados;
+            });
         }
 
         // Sistema Firebase Real
@@ -2043,6 +2124,9 @@
             firebaseModules = window.firebaseModules;
             
             console.log('🔥 Firebase conectado!');
+            
+            // Carregar dados em tempo real ANTES da autenticação
+            await carregarDadosFirebase();
             
             // Verificar se usuário já está logado
             firebaseModules.onAuthStateChanged(auth, async (user) => {
@@ -2544,36 +2628,44 @@
             }
         }
         
-        // Sistema de usuários online
-        function marcarUsuarioOnline() {
+        // Sistema de usuários online com Firebase
+        async function marcarUsuarioOnline() {
             if (usuarioLogado) {
-                const userKey = usuarioLogado.email || usuarioLogado.usuario || 'unknown';
-                usuariosOnline[userKey] = {
-                    nome: usuarioLogado.nome,
-                    cargo: usuarioLogado.cargo,
-                    titulo: usuarioLogado.titulo,
-                    lastSeen: Date.now(),
-                    loginTime: usuarioLogado.loginTime || Date.now()
-                };
-                salvarDados();
-                atualizarContadorOnline();
-                
-                // Atualizar a cada 30 segundos
-                setTimeout(() => {
-                    if (usuarioLogado) {
-                        marcarUsuarioOnline();
-                    }
-                }, 30000);
+                try {
+                    const userKey = usuarioLogado.email || usuarioLogado.usuario || 'unknown';
+                    usuariosOnline[userKey] = {
+                        nome: usuarioLogado.nome,
+                        cargo: usuarioLogado.cargo,
+                        titulo: usuarioLogado.titulo,
+                        lastSeen: Date.now(),
+                        loginTime: usuarioLogado.loginTime || Date.now()
+                    };
+                    
+                    // Salvar no Firebase
+                    await salvarDados();
+                    
+                    // Atualizar a cada 30 segundos
+                    setTimeout(() => {
+                        if (usuarioLogado) {
+                            marcarUsuarioOnline();
+                        }
+                    }, 30000);
+                } catch (error) {
+                    console.error('❌ Erro ao marcar usuário online:', error);
+                }
             }
         }
         
-        function marcarUsuarioOffline() {
+        async function marcarUsuarioOffline() {
             if (usuarioLogado) {
-                const userKey = usuarioLogado.email || usuarioLogado.usuario || 'unknown';
-                if (usuariosOnline[userKey]) {
-                    delete usuariosOnline[userKey];
-                    salvarDados();
-                    atualizarContadorOnline();
+                try {
+                    const userKey = usuarioLogado.email || usuarioLogado.usuario || 'unknown';
+                    if (usuariosOnline[userKey]) {
+                        delete usuariosOnline[userKey];
+                        await salvarDados();
+                    }
+                } catch (error) {
+                    console.error('❌ Erro ao marcar usuário offline:', error);
                 }
             }
         }
@@ -3065,7 +3157,7 @@
             });
         }
 
-        function processarCadastroAdmin() {
+        async function processarCadastroAdmin() {
             const nome = document.getElementById('admin-nome').value.trim();
             const oab = document.getElementById('admin-oab').value.trim();
             const cargo = document.getElementById('admin-cargo').value;
@@ -3082,23 +3174,32 @@
                 return;
             }
 
-            // Criar registro OAB
-            registrosOAB[oab] = {
-                nome: nome,
-                cargo: cargo,
-                email: email,
-                dataCadastro: new Date().toISOString(),
-                ativo: true,
-                primeiroAcesso: false
-            };
+            try {
+                // Criar registro OAB
+                registrosOAB[oab] = {
+                    nome: nome,
+                    cargo: cargo,
+                    email: email,
+                    dataCadastro: new Date().toISOString(),
+                    ativo: true,
+                    primeiroAcesso: false
+                };
 
-            // Salvar dados
-            salvarDados();
+                // Salvar dados no Firebase
+                await salvarDados();
 
-            alert(`✅ Usuário cadastrado com sucesso!\n\nNome: ${nome}\nOAB: ${oab}\nCargo: ${cargo}\n\nO usuário pode agora fazer o primeiro acesso com este número OAB.`);
-            
-            // Fechar modal
-            document.querySelector('.fixed').remove();
+                // Registrar log
+                await registrarLog('cadastro_admin', `Usuário cadastrado pelo admin: ${nome} (OAB: ${oab})`);
+
+                alert(`✅ Usuário cadastrado com sucesso!\n\nNome: ${nome}\nOAB: ${oab}\nCargo: ${cargo}\n\nO usuário pode agora fazer o primeiro acesso com este número OAB.`);
+                
+                // Fechar modal
+                document.querySelector('.fixed').remove();
+                
+            } catch (error) {
+                console.error('❌ Erro ao cadastrar usuário:', error);
+                alert('❌ Erro ao cadastrar usuário. Tente novamente.');
+            }
         }
 
         function abrirGerenciarUsuarios() {
@@ -3522,7 +3623,7 @@
             document.body.appendChild(modal);
         }
 
-        function selecionarUsuarioParaNomeacao(username, cargo) {
+        async function selecionarUsuarioParaNomeacao(username, cargo) {
             const usuario = usuariosCadastrados[username];
             const info = estruturaJudicial[cargo];
             
@@ -3534,80 +3635,83 @@
             const confirmacao = confirm(`🎯 CONFIRMAR NOMEAÇÃO\n\n👤 Usuário: ${usuario.nome}\n👑 Cargo: ${info.nome}\n📋 Título: ${info.titulo}\n🏛️ Nível: ${info.nivel}\n\n⚠️ Esta ação não pode ser desfeita!\n\nConfirma a nomeação?`);
             
             if (confirmacao) {
-                // Realizar a nomeação
-                usuariosCadastrados[username] = {
-                    ...usuario,
-                    cargo: cargo,
-                    titulo: info.titulo,
-                    permissoes: info.permissoes,
-                    pode_nomear: info.pode_nomear || [],
-                    nomeado: true,
-                    nomeado_por: usuarioLogado.usuario,
-                    data_nomeacao: new Date().toISOString(),
-                    nivel_hierarquico: info.nivel
-                };
+                try {
+                    // Realizar a nomeação
+                    usuariosCadastrados[username] = {
+                        ...usuario,
+                        cargo: cargo,
+                        titulo: info.titulo,
+                        permissoes: info.permissoes,
+                        pode_nomear: info.pode_nomear || [],
+                        nomeado: true,
+                        nomeado_por: usuarioLogado.email || usuarioLogado.usuario,
+                        data_nomeacao: new Date().toISOString(),
+                        nivel_hierarquico: info.nivel
+                    };
 
-                // Salvar dados
-                salvarDados();
+                    // Salvar dados no Firebase
+                    await salvarDados();
 
-                // Criar log da nomeação
-                const logNomeacao = {
-                    data: new Date().toISOString(),
-                    nomeador: usuarioLogado.nome,
-                    nomeado: usuario.nome,
-                    cargo: info.nome,
-                    tipo: 'nomeacao'
-                };
+                    // Registrar log da nomeação no Firebase
+                    await registrarLog('nomeacao', `${usuarioLogado.nome} nomeou ${usuario.nome} para ${info.nome}`, {
+                        nomeador: usuarioLogado.nome,
+                        nomeado: usuario.nome,
+                        cargo: info.nome,
+                        nivel: info.nivel
+                    });
 
-                // Salvar log
-                let logs = JSON.parse(localStorage.getItem('logsNomeacoes')) || [];
-                logs.push(logNomeacao);
-                localStorage.setItem('logsNomeacoes', JSON.stringify(logs));
+                    // Criar notificação para o usuário nomeado (se estiver online)
+                    criarNotificacaoNomeacao(usuario.nome, info.nome, info.icon);
 
-                // Criar notificação para o usuário nomeado (se estiver online)
-                criarNotificacaoNomeacao(usuario.nome, info.nome, info.icon);
-
-                // Mostrar confirmação
-                const sucessoModal = document.createElement('div');
-                sucessoModal.className = 'fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center';
-                sucessoModal.innerHTML = `
-                    <div class="bg-gradient-to-br from-green-600/30 to-emerald-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-green-500/60 shadow-2xl max-w-2xl w-full mx-4">
-                        <div class="text-center">
-                            <div class="w-20 h-20 bg-gradient-to-br from-green-600 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
-                                <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
+                    // Mostrar confirmação
+                    const sucessoModal = document.createElement('div');
+                    sucessoModal.className = 'fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center';
+                    sucessoModal.innerHTML = `
+                        <div class="bg-gradient-to-br from-green-600/30 to-emerald-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-green-500/60 shadow-2xl max-w-2xl w-full mx-4">
+                            <div class="text-center">
+                                <div class="w-20 h-20 bg-gradient-to-br from-green-600 to-emerald-600 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl">
+                                    <svg class="w-10 h-10 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <h2 class="text-3xl font-bold text-white mb-4">🎉 NOMEAÇÃO REALIZADA!</h2>
+                                <div class="bg-green-500/20 rounded-lg p-6 border border-green-500/50 mb-6">
+                                    <p class="text-green-300 font-bold text-lg mb-2">👤 ${usuario.nome}</p>
+                                    <p class="text-white">foi nomeado(a) com sucesso para:</p>
+                                    <p class="text-green-300 font-bold text-xl mt-2">${info.icon} ${info.nome}</p>
+                                    <p class="text-green-200 text-sm mt-1">${info.titulo}</p>
+                                </div>
+                                <div class="text-white/80 text-sm mb-6">
+                                    <p>📅 Data: ${new Date().toLocaleDateString('pt-BR')}</p>
+                                    <p>👑 Nomeado por: ${usuarioLogado.nome}</p>
+                                    <p>🏛️ Nível Hierárquico: ${info.nivel}</p>
+                                    <p class="text-green-300 font-bold mt-2">✅ Dados sincronizados em tempo real!</p>
+                                </div>
+                                <button onclick="this.closest('.fixed').remove(); document.querySelector('.fixed').remove();" class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-lg transition-all">
+                                    ✅ Concluir
+                                </button>
                             </div>
-                            <h2 class="text-3xl font-bold text-white mb-4">🎉 NOMEAÇÃO REALIZADA!</h2>
-                            <div class="bg-green-500/20 rounded-lg p-6 border border-green-500/50 mb-6">
-                                <p class="text-green-300 font-bold text-lg mb-2">👤 ${usuario.nome}</p>
-                                <p class="text-white">foi nomeado(a) com sucesso para:</p>
-                                <p class="text-green-300 font-bold text-xl mt-2">${info.icon} ${info.nome}</p>
-                                <p class="text-green-200 text-sm mt-1">${info.titulo}</p>
-                            </div>
-                            <div class="text-white/80 text-sm mb-6">
-                                <p>📅 Data: ${new Date().toLocaleDateString('pt-BR')}</p>
-                                <p>👑 Nomeado por: ${usuarioLogado.nome}</p>
-                                <p>🏛️ Nível Hierárquico: ${info.nivel}</p>
-                            </div>
-                            <button onclick="this.closest('.fixed').remove(); document.querySelector('.fixed').remove();" class="bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-lg transition-all">
-                                ✅ Concluir
-                            </button>
                         </div>
-                    </div>
-                `;
-                
-                document.body.appendChild(sucessoModal);
-
-                // Atualizar interface se o usuário nomeado estiver logado
-                if (usuarioLogado && usuarioLogado.usuario === username) {
-                    usuarioLogado.cargo = cargo;
-                    usuarioLogado.titulo = info.titulo;
-                    usuarioLogado.permissoes = info.permissoes;
+                    `;
                     
-                    // Atualizar header
-                    document.getElementById('nome-usuario').textContent = usuarioLogado.nome;
-                    document.getElementById('cargo-usuario').textContent = `${usuarioLogado.titulo} | OAB: ${usuarioLogado.oab}`;
+                    document.body.appendChild(sucessoModal);
+
+                    // Atualizar interface se o usuário nomeado estiver logado
+                    if (usuarioLogado && (usuarioLogado.usuario === username || usuarioLogado.email === username)) {
+                        usuarioLogado.cargo = cargo;
+                        usuarioLogado.titulo = info.titulo;
+                        usuarioLogado.permissoes = info.permissoes;
+                        
+                        // Atualizar header
+                        const nomeEl = document.getElementById('nome-usuario');
+                        const cargoEl = document.getElementById('cargo-usuario');
+                        if (nomeEl) nomeEl.textContent = usuarioLogado.nome;
+                        if (cargoEl) cargoEl.textContent = `${usuarioLogado.titulo} | OAB: ${usuarioLogado.oab}`;
+                    }
+                    
+                } catch (error) {
+                    console.error('❌ Erro ao realizar nomeação:', error);
+                    alert('❌ Erro ao realizar nomeação. Tente novamente.');
                 }
             }
         }
@@ -3813,50 +3917,83 @@
             document.body.appendChild(modal);
         }
 
-        function abrirLogsSistema() {
+        async function abrirLogsSistema() {
             const modal = document.createElement('div');
             modal.className = 'fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center overflow-y-auto';
             
-            // Buscar logs reais de nomeações
-            const logsNomeacoes = JSON.parse(localStorage.getItem('logsNomeacoes')) || [];
-            
-            // Logs do sistema (simulados + reais)
-            const logs = [
-                { data: '2025-01-15 14:30:25', usuario: 'Alexandre de Moraes', acao: 'Login realizado', tipo: 'info' },
-                { data: '2025-01-15 14:25:10', usuario: 'Sistema', acao: 'Backup automático executado', tipo: 'success' },
-                ...logsNomeacoes.map(log => ({
+            try {
+                // Buscar logs reais do Firebase
+                const logsQuery = firebaseModules.query(
+                    firebaseModules.collection(db, 'logs'),
+                    firebaseModules.orderBy ? firebaseModules.orderBy('timestamp', 'desc') : null
+                );
+                
+                const logsSnapshot = await firebaseModules.getDocs(logsQuery);
+                const logsFirebase = [];
+                
+                logsSnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    logsFirebase.push({
+                        data: data.data_formatada || new Date(data.timestamp).toLocaleString('pt-BR'),
+                        usuario: data.usuario || 'Sistema',
+                        acao: data.descricao,
+                        tipo: data.tipo
+                    });
+                });
+                
+                // Combinar com logs locais se houver
+                const logsLocais = JSON.parse(localStorage.getItem('logsNomeacoes')) || [];
+                const logsNomeacoes = logsLocais.map(log => ({
                     data: new Date(log.data).toLocaleString('pt-BR'),
                     usuario: log.nomeador,
                     acao: `👑 Nomeou ${log.nomeado} para ${log.cargo}`,
                     tipo: 'nomeacao'
-                })),
-                { data: '2025-01-15 14:20:15', usuario: 'João Silva', acao: 'Documento gerado: Mandado de Prisão', tipo: 'info' },
-                { data: '2025-01-15 14:15:30', usuario: 'Maria Santos', acao: 'Tentativa de login falhada', tipo: 'warning' },
-                { data: '2025-01-15 14:10:45', usuario: 'Sistema', acao: 'Usuário cadastrado: Carlos Oliveira', tipo: 'success' }
-            ].sort((a, b) => new Date(b.data) - new Date(a.data));
-            
-            let logsHTML = '';
-            logs.forEach(log => {
-                const tipoClass = {
-                    'info': 'bg-blue-500/20 border-blue-500/50 text-blue-300',
-                    'success': 'bg-green-500/20 border-green-500/50 text-green-300',
-                    'warning': 'bg-yellow-500/20 border-yellow-500/50 text-yellow-300',
-                    'error': 'bg-red-500/20 border-red-500/50 text-red-300',
-                    'nomeacao': 'bg-purple-500/20 border-purple-500/50 text-purple-300'
-                };
+                }));
                 
-                logsHTML += `
-                    <div class="${tipoClass[log.tipo]} rounded-lg p-3 border mb-2">
-                        <div class="flex justify-between items-center">
-                            <div>
-                                <p class="font-medium">${log.acao}</p>
-                                <p class="text-sm opacity-80">Usuário: ${log.usuario}</p>
+                // Combinar todos os logs
+                const logs = [...logsFirebase, ...logsNomeacoes].sort((a, b) => {
+                    const dateA = new Date(a.data.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2/$1/$3'));
+                    const dateB = new Date(b.data.replace(/(\d{2})\/(\d{2})\/(\d{4})/, '$2/$1/$3'));
+                    return dateB - dateA;
+                });
+            
+                let logsHTML = '';
+                if (logs.length === 0) {
+                    logsHTML = '<p class="text-white text-center">Nenhum log encontrado.</p>';
+                } else {
+                    logs.forEach(log => {
+                        const tipoClass = {
+                            'info': 'bg-blue-500/20 border-blue-500/50 text-blue-300',
+                            'success': 'bg-green-500/20 border-green-500/50 text-green-300',
+                            'warning': 'bg-yellow-500/20 border-yellow-500/50 text-yellow-300',
+                            'error': 'bg-red-500/20 border-red-500/50 text-red-300',
+                            'nomeacao': 'bg-purple-500/20 border-purple-500/50 text-purple-300',
+                            'login': 'bg-green-500/20 border-green-500/50 text-green-300',
+                            'logout': 'bg-red-500/20 border-red-500/50 text-red-300',
+                            'cadastro_admin': 'bg-yellow-500/20 border-yellow-500/50 text-yellow-300',
+                            'primeiro_acesso': 'bg-blue-500/20 border-blue-500/50 text-blue-300'
+                        };
+                        
+                        const classe = tipoClass[log.tipo] || tipoClass['info'];
+                        
+                        logsHTML += `
+                            <div class="${classe} rounded-lg p-3 border mb-2">
+                                <div class="flex justify-between items-center">
+                                    <div>
+                                        <p class="font-medium">${log.acao}</p>
+                                        <p class="text-sm opacity-80">Usuário: ${log.usuario}</p>
+                                    </div>
+                                    <span class="text-xs opacity-70">${log.data}</span>
+                                </div>
                             </div>
-                            <span class="text-xs opacity-70">${log.data}</span>
-                        </div>
-                    </div>
-                `;
-            });
+                        `;
+                    });
+                }
+                
+            } catch (error) {
+                console.error('❌ Erro ao carregar logs:', error);
+                logsHTML = '<p class="text-red-300 text-center">Erro ao carregar logs do Firebase.</p>';
+            }
 
             modal.innerHTML = `
                 <div class="bg-gradient-to-br from-red-600/30 to-pink-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-red-500/60 shadow-2xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-y-auto">
@@ -3917,7 +4054,7 @@
             document.getElementById('confirmar-senha').value = '';
         }
 
-        function processarPrimeiroAcesso() {
+        async function processarPrimeiroAcesso() {
             const oab = document.getElementById('oab-recebida').value.trim();
             const usuario = document.getElementById('novo-usuario').value.trim();
             const senha = document.getElementById('nova-senha').value;
@@ -3957,31 +4094,61 @@
                 return;
             }
 
-            // Criar usuário
-            const dadosOAB = registrosOAB[oab];
-            usuariosCadastrados[usuario] = {
-                nome: dadosOAB.nome,
-                senha: senha,
-                cargo: dadosOAB.cargo,
-                oab: oab,
-                email: dadosOAB.email,
-                titulo: getTituloFromCargo(dadosOAB.cargo),
-                permissoes: getPermissoesCargo(dadosOAB.cargo),
-                dataCriacao: new Date().toISOString()
-            };
+            try {
+                // Criar usuário
+                const dadosOAB = registrosOAB[oab];
+                const emailUsuario = dadosOAB.email || `${usuario}@brasilandia.rp`;
+                
+                // Tentar criar no Firebase Auth
+                const resultado = await cadastrarUsuarioFirebase({
+                    nome: dadosOAB.nome,
+                    email: emailUsuario,
+                    senha: senha,
+                    cargo: dadosOAB.cargo,
+                    titulo: estruturaJudicial[dadosOAB.cargo]?.titulo || 'Profissional Jurídico',
+                    permissoes: estruturaJudicial[dadosOAB.cargo]?.permissoes || ['basicas'],
+                    oab: oab,
+                    nomeado: false,
+                    pode_nomear: estruturaJudicial[dadosOAB.cargo]?.pode_nomear || []
+                });
 
-            // Marcar OAB como usado
-            registrosOAB[oab].primeiroAcesso = true;
-            registrosOAB[oab].usuario = usuario;
+                if (resultado.sucesso) {
+                    // Adicionar aos usuários cadastrados
+                    usuariosCadastrados[usuario] = {
+                        nome: dadosOAB.nome,
+                        email: emailUsuario,
+                        cargo: dadosOAB.cargo,
+                        oab: oab,
+                        titulo: estruturaJudicial[dadosOAB.cargo]?.titulo || 'Profissional Jurídico',
+                        permissoes: estruturaJudicial[dadosOAB.cargo]?.permissoes || ['basicas'],
+                        dataCriacao: new Date().toISOString(),
+                        nomeado: false
+                    };
 
-            // Salvar dados
-            salvarDados();
+                    // Marcar OAB como usado
+                    registrosOAB[oab].primeiroAcesso = true;
+                    registrosOAB[oab].usuario = usuario;
+                    registrosOAB[oab].email = emailUsuario;
 
-            mostrarMensagemPrimeiro('✅ Conta criada com sucesso! Você já pode fazer login.', 'sucesso');
+                    // Salvar dados no Firebase
+                    await salvarDados();
 
-            setTimeout(() => {
-                fecharPrimeiroAcesso();
-            }, 2000);
+                    // Registrar log
+                    await registrarLog('primeiro_acesso', `Primeiro acesso realizado: ${dadosOAB.nome} (${emailUsuario})`);
+
+                    mostrarMensagemPrimeiro('✅ Conta criada com sucesso! Você já pode fazer login.', 'sucesso');
+
+                    setTimeout(() => {
+                        fecharPrimeiroAcesso();
+                    }, 2000);
+                } else {
+                    mostrarMensagemPrimeiro(`❌ Erro ao criar conta: ${resultado.erro}`, 'erro');
+                }
+                
+            } catch (error) {
+                console.error('❌ Erro no primeiro acesso:', error);
+                mostrarMensagemPrimeiro('❌ Erro ao criar conta. Tente novamente.', 'erro');
+            }
         }
 
         function mostrarMensagemPrimeiro(texto, tipo) {
@@ -4064,10 +4231,18 @@
             if (confirm('🚪 Tem certeza que deseja sair do sistema?')) {
                 try {
                     // Marcar usuário como offline
-                    marcarUsuarioOffline();
+                    await marcarUsuarioOffline();
                     
                     // Registrar log de logout
                     await registrarLog('logout', `Logout realizado por ${usuarioLogado ? usuarioLogado.email : 'Usuário'}`);
+                    
+                    // Limpar listeners do Firebase
+                    listeners.forEach(unsubscribe => {
+                        if (typeof unsubscribe === 'function') {
+                            unsubscribe();
+                        }
+                    });
+                    listeners = [];
                     
                     // Fazer logout no Firebase
                     await firebaseModules.signOut(auth);
@@ -6115,5 +6290,5 @@
             document.head.appendChild(script);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ab0f9b627f27e7',t:'MTc1NDQ0Njg4OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ab23c9557527ef',t:'MTc1NDQ0NzcxNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
