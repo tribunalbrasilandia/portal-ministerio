@@ -80,7 +80,7 @@
         letter-spacing: 0.02em;
     }
     </style>
-    
+
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
@@ -1143,163 +1143,163 @@
             </div>
 
             <!-- Calculadora de Penas -->
-            <div id="calculadora" class="hidden">
-                <div class="content-section bg-gradient-to-br from-slate-900/95 via-red-900/30 to-slate-800/95 backdrop-blur-lg rounded-2xl border-2 border-red-600/50 shadow-2xl">
-                    <div class="section-header">
-                        <h2 class="section-title font-bold text-white flex items-center">
-                            <span class="bg-red-600 p-2 sm:p-3 rounded-lg mr-3 sm:mr-4 shadow-lg text-lg sm:text-xl">⚖️</span>
-                            <span class="hidden sm:inline">Calculadora de Penas</span>
-                            <span class="sm:hidden">Calc. Penas</span>
-                        </h2>
-                        <button onclick="mostrarSecao('inicial')" class="btn bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-all">
-                            ← <span class="hidden sm:inline">Voltar</span>
-                        </button>
+            <!-- Calculadora de Penas -->
+<div id="calculadora" class="hidden">
+    <div class="content-section bg-gradient-to-br from-slate-900/95 via-red-900/30 to-slate-800/95 backdrop-blur-lg rounded-2xl border-2 border-red-600/50 shadow-2xl">
+        <div class="section-header">
+            <h2 class="section-title font-bold text-white flex items-center">
+                <span class="bg-red-600 p-2 sm:p-3 rounded-lg mr-3 sm:mr-4 shadow-lg text-lg sm:text-xl">⚖️</span>
+                <span class="hidden sm:inline">Calculadora de Penas</span>
+                <span class="sm:hidden">Calc. Penas</span>
+            </h2>
+            <button onclick="mostrarSecao('inicial')" class="btn bg-gray-600 hover:bg-gray-500 text-white rounded-lg transition-all">
+                ← <span class="hidden sm:inline">Voltar</span>
+            </button>
+        </div>
+        <div class="responsive-grid-2">
+            <!-- Seleção de Crimes -->
+            <div>
+                <h3 class="text-xl font-bold text-white mb-4">Selecionar Crimes</h3>
+                <div class="space-y-6 max-h-96 overflow-y-auto px-2">
+                    <!-- Filtro de busca -->
+                    <div class="mb-2">
+                        <input type="text" id="busca-crime" placeholder="🔍 Buscar crime ou artigo..." class="w-full px-3 py-2 rounded-lg bg-gray-900 border border-red-500/50 text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all text-sm" oninput="filtrarCrimes()">
                     </div>
-                    
-                    <div class="responsive-grid-2">
-                        <!-- Seleção de Crimes -->
-                        <div>
-                            <h3 class="text-xl font-bold text-white mb-4">Selecionar Crimes</h3>
-                            <div class="space-y-6 max-h-96 overflow-y-auto px-2">
-    <!-- Filtro de busca -->
-    <div class="mb-2">
-        <input type="text" id="busca-crime" placeholder="🔍 Buscar crime ou artigo..." class="w-full px-3 py-2 rounded-lg bg-gray-900 border border-red-500/50 text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all text-sm" oninput="filtrarCrimes()">
-    </div>
-    <!-- Categorias de Crimes -->
-    <div id="categorias-crimes" class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Cada categoria é um card -->
-        <div class="bg-red-900/40 rounded-xl p-4 border-2 border-red-600/50 shadow-lg">
-            <h4 class="font-bold text-yellow-300 mb-3 text-lg flex items-center"><span class="mr-2">🚗</span>Trânsito</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" data-categoria="trânsito">
-                <!-- Exemplo de crime -->
-                <button type="button" class="crime-btn" data-crime="Alta Velocidade" data-multa="600" data-tempo="0">ART. 218 - Alta Velocidade <span class="text-yellow-400">R$600</span></button>
-                <button type="button" class="crime-btn" data-crime="Direção Perigosa" data-multa="2000" data-tempo="0">ART. 175 - Direção Perigosa <span class="text-yellow-400">R$2.000</span></button>
-                <button type="button" class="crime-btn" data-crime="Estacionar em local proibido" data-multa="650" data-tempo="0">ART. 181 - Estacionar Proibido <span class="text-yellow-400">R$650</span></button>
-                <button type="button" class="crime-btn" data-crime="Disputar corrida" data-multa="650" data-tempo="0">ART. 173 - Disputar Corrida <span class="text-yellow-400">R$650</span></button>
-                <button type="button" class="crime-btn" data-crime="Avançar sinal vermelho" data-multa="650" data-tempo="0">ART. 183 - Sinal Vermelho <span class="text-yellow-400">R$650</span></button>
-                <button type="button" class="crime-btn" data-crime="Veículo Abandonado" data-multa="700" data-tempo="0">ART. 181 - Veículo Abandonado <span class="text-yellow-400">R$700</span></button>
-                <button type="button" class="crime-btn" data-crime="Transitar na contramão" data-multa="600" data-tempo="0">ART. 176 - Contramão <span class="text-yellow-400">R$600</span></button>
-                <button type="button" class="crime-btn" data-crime="Omissão de Socorro" data-multa="650" data-tempo="0">ART. 304 - Omissão de Socorro <span class="text-yellow-400">R$650</span></button>
-                <button type="button" class="crime-btn" data-crime="Falta de combustível" data-multa="150" data-tempo="0">ART. 162 - Falta de Combustível <span class="text-yellow-400">R$150</span></button>
-                <button type="button" class="crime-btn" data-crime="Dirigir sem habilitação" data-multa="150" data-tempo="0">ART. 162 - Sem Habilitação <span class="text-yellow-400">R$150</span></button>
-                <button type="button" class="crime-btn" data-crime="Ultrapassar blitz" data-multa="850" data-tempo="0">ART. 210 - Ultrapassar Blitz <span class="text-yellow-400">R$850</span></button>
-                <button type="button" class="crime-btn" data-crime="Recusar bafômetro" data-multa="1000" data-tempo="0">ART. 165-A - Recusar Bafômetro <span class="text-yellow-400">R$1.000</span></button>
-                <button type="button" class="crime-btn" data-crime="Seguir viatura policial" data-multa="1000" data-tempo="0">ART. 218 - Seguir Viatura <span class="text-yellow-400">R$1.000</span></button>
-                <button type="button" class="crime-btn" data-crime="Motocicleta sem capacete" data-multa="1300" data-tempo="0">ART. 244 - Sem Capacete <span class="text-yellow-400">R$1.300</span></button>
-                <button type="button" class="crime-btn" data-crime="Marcha ré indevida" data-multa="300" data-tempo="0">ART. 194 - Marcha Ré <span class="text-yellow-400">R$300</span></button>
-                <button type="button" class="crime-btn" data-crime="Ultrapassar pela direita" data-multa="1000" data-tempo="0">ART. 199 - Ultrapassar Direita <span class="text-yellow-400">R$1.000</span></button>
-            </div>
-        </div>
-        <div class="bg-red-900/30 rounded-xl p-4 border-2 border-red-600/50 shadow-lg">
-            <h4 class="font-bold text-red-300 mb-3 text-lg flex items-center"><span class="mr-2">👤</span>Pessoa</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" data-categoria="pessoa">
-                <button type="button" class="crime-btn" data-crime="Homicídio" data-multa="850" data-tempo="40">Art.121 - Homicídio <span class="text-red-400">R$850 | 40m</span></button>
-                <button type="button" class="crime-btn" data-crime="Homicídio de funcionário público" data-multa="3000" data-tempo="60">Art.121-A - Func. Público <span class="text-red-400">R$3.000 | 60m</span></button>
-                <button type="button" class="crime-btn" data-crime="Homicídio culposo" data-multa="1500" data-tempo="30">Art.121-B - Culposo <span class="text-red-400">R$1.500 | 30m</span></button>
-                <button type="button" class="crime-btn" data-crime="Lesão corporal" data-multa="550" data-tempo="3">Art.129 - Lesão Corporal <span class="text-red-400">R$550 | 3m</span></button>
-                <button type="button" class="crime-btn" data-crime="Calúnia" data-multa="450" data-tempo="10">Art.130 - Calúnia <span class="text-red-400">R$450 | 10m</span></button>
-                <button type="button" class="crime-btn" data-crime="Difamação" data-multa="450" data-tempo="10">Art.139 - Difamação <span class="text-red-400">R$450 | 10m</span></button>
-                <button type="button" class="crime-btn" data-crime="Ameaça" data-multa="600" data-tempo="10">Art.147 - Ameaça <span class="text-red-400">R$600 | 10m</span></button>
-                <button type="button" class="crime-btn" data-crime="Sequestro e cárcere privado" data-multa="1500" data-tempo="40">Art.148 - Sequestro <span class="text-red-400">R$1.500 | 40m</span></button>
-                <button type="button" class="crime-btn" data-crime="Genocídio" data-multa="3000" data-tempo="60">Art.3 - Genocídio <span class="text-red-400">R$3.000 | 60m</span></button>
-                <button type="button" class="crime-btn" data-crime="Lesão corporal seguida de morte" data-multa="1500" data-tempo="30">Art.129 III - Lesão/Morte <span class="text-red-400">R$1.500 | 30m</span></button>
-                <button type="button" class="crime-btn" data-crime="Incitação/apologia ao crime" data-multa="850" data-tempo="25">Art.287 - Incitação <span class="text-red-400">R$850 | 25m</span></button>
-            </div>
-        </div>
-        <div class="bg-yellow-900/30 rounded-xl p-4 border-2 border-yellow-600/50 shadow-lg">
-            <h4 class="font-bold text-yellow-300 mb-3 text-lg flex items-center"><span class="mr-2">💰</span>Patrimônio</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" data-categoria="patrimônio">
-                <button type="button" class="crime-btn" data-crime="Furto qualificado" data-multa="550" data-tempo="30">Art.155 I - Furto Qualif. <span class="text-yellow-400">R$550 | 30m</span></button>
-                <button type="button" class="crime-btn" data-crime="Furto" data-multa="350" data-tempo="25">Art.155 - Furto <span class="text-yellow-400">R$350 | 25m</span></button>
-                <button type="button" class="crime-btn" data-crime="Roubo" data-multa="750" data-tempo="40">Art.157 - Roubo <span class="text-yellow-400">R$750 | 40m</span></button>
-                <button type="button" class="crime-btn" data-crime="Roubo seguido de morte" data-multa="1000" data-tempo="50">Art.157-B - Latrocínio <span class="text-yellow-400">R$1.000 | 50m</span></button>
-                <button type="button" class="crime-btn" data-crime="Roubo qualificado" data-multa="900" data-tempo="50">Art.157 II - Roubo Qualif. <span class="text-yellow-400">R$900 | 50m</span></button>
-                <button type="button" class="crime-btn" data-crime="Estelionato" data-multa="2500" data-tempo="12">Art.171 - Estelionato <span class="text-yellow-400">R$2.500 | 12m</span></button>
-                <button type="button" class="crime-btn" data-crime="Desmonte de veículos" data-multa="2500" data-tempo="10">Art.126 - Desmonte <span class="text-yellow-400">R$2.500 | 10m</span></button>
-                <button type="button" class="crime-btn" data-crime="Recepção" data-multa="2500" data-tempo="10">Art.180 - Recepção <span class="text-yellow-400">R$2.500 | 10m</span></button>
-            </div>
-        </div>
-        <div class="bg-purple-900/30 rounded-xl p-4 border-2 border-purple-600/50 shadow-lg">
-            <h4 class="font-bold text-purple-300 mb-3 text-lg flex items-center"><span class="mr-2">⚠️</span>Ordem Pública</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" data-categoria="ordem">
-                <button type="button" class="crime-btn" data-crime="Roupas Policiais" data-multa="5000" data-tempo="50">Art.200-A - Roupas Policiais <span class="text-purple-400">R$5.000 | 50m</span></button>
-                <button type="button" class="crime-btn" data-crime="Roupas Militares" data-multa="5000" data-tempo="50">Art.200-B - Roupas Militares <span class="text-purple-400">R$5.000 | 50m</span></button>
-                <button type="button" class="crime-btn" data-crime="Ocultação facial" data-multa="1000" data-tempo="5">Art.200-C - Ocultação Facial <span class="text-purple-400">R$1.000 | 5m</span></button>
-                <button type="button" class="crime-btn" data-crime="Produtos ilícitos" data-multa="2000" data-tempo="10">Art.288 - Produtos Ilícitos <span class="text-purple-400">R$2.000 | 10m</span></button>
-                <button type="button" class="crime-btn" data-crime="Associação Criminosa" data-multa="2000" data-tempo="15">Art.288 - Associação <span class="text-purple-400">R$2.000 | 15m</span></button>
-                <button type="button" class="crime-btn" data-crime="Dinheiro ilícito" data-multa="1500" data-tempo="18">Art.289 - Dinheiro Ilícito <span class="text-purple-400">R$1.500 | 18m</span></button>
-                <button type="button" class="crime-btn" data-crime="Falsidade ideológica" data-multa="1750" data-tempo="15">Art.299 - Falsidade Ideológica <span class="text-purple-400">R$1.750 | 15m</span></button>
-                <button type="button" class="crime-btn" data-crime="Desobediência" data-multa="1500" data-tempo="10">Art.330 - Desobediência <span class="text-purple-400">R$1.500 | 10m</span></button>
-                <button type="button" class="crime-btn" data-crime="Desacato" data-multa="1500" data-tempo="12">Art.331 - Desacato <span class="text-purple-400">R$1.500 | 12m</span></button>
-                <button type="button" class="crime-btn" data-crime="Corrupção" data-multa="2500" data-tempo="15">Art.333 - Corrupção <span class="text-purple-400">R$2.500 | 15m</span></button>
-                <button type="button" class="crime-btn" data-crime="Suborno" data-multa="2500" data-tempo="25">Art.337 - Suborno <span class="text-purple-400">R$2.500 | 25m</span></button>
-                <button type="button" class="crime-btn" data-crime="Denúncia caluniosa" data-multa="1750" data-tempo="12">Art.339 - Denúncia Caluniosa <span class="text-purple-400">R$1.750 | 12m</span></button>
-                <button type="button" class="crime-btn" data-crime="Falso testemunho" data-multa="1500" data-tempo="10">Art.342 - Falso Testemunho <span class="text-purple-400">R$1.500 | 10m</span></button>
-                <button type="button" class="crime-btn" data-crime="Uso de máscara para terrorismo" data-multa="2500" data-tempo="12">Art.311 - Máscara Terrorismo <span class="text-purple-400">R$2.500 | 12m</span></button>
-                <button type="button" class="crime-btn" data-crime="Abuso de autoridade" data-multa="5000" data-tempo="12">Art.355 - Abuso Autoridade <span class="text-purple-400">R$5.000 | 12m</span></button>
-                <button type="button" class="crime-btn" data-crime="Obstrução de Justiça" data-multa="5000" data-tempo="32">Art.357 - Obstrução Justiça <span class="text-purple-400">R$5.000 | 32m</span></button>
-            </div>
-        </div>
-        <div class="bg-green-900/30 rounded-xl p-4 border-2 border-green-600/50 shadow-lg">
-            <h4 class="font-bold text-green-300 mb-3 text-lg flex items-center"><span class="mr-2">💊</span>Armas e Drogas</h4>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" data-categoria="armas">
-                <button type="button" class="crime-btn" data-crime="Porte ilegal de arma classe 1" data-multa="2000" data-tempo="14">Art.16 - Porte Ilegal C1 <span class="text-green-400">R$2.000 | 14m</span></button>
-                <button type="button" class="crime-btn" data-crime="Porte ilegal de arma classe 2" data-multa="3000" data-tempo="14">Art.17 - Porte Ilegal C2 <span class="text-green-400">R$3.000 | 14m</span></button>
-                <button type="button" class="crime-btn" data-crime="Tráfico de munições" data-multa="3500" data-tempo="10">Art.18 - Tráfico Munições <span class="text-green-400">R$3.500 | 10m</span></button>
-                <button type="button" class="crime-btn" data-crime="Tráfico de armamento" data-multa="5000" data-tempo="20">Art.19 - Tráfico Armamento <span class="text-green-400">R$5.000 | 20m</span></button>
-                <button type="button" class="crime-btn" data-crime="Tráfico de drogas" data-multa="5000" data-tempo="25">Art.33 - Tráfico Drogas <span class="text-green-400">R$5.000 | 25m</span></button>
-            </div>
-        </div>
-    </div>
-    <!-- Crimes selecionados -->
-    <div id="crimes-selecionados" class="mt-4">
-        <h4 class="text-white font-bold mb-2">Crimes Selecionados:</h4>
-        <div id="lista-crimes" class="flex flex-wrap gap-2"></div>
-    </div>
-</div>
-
-
-                        <!-- Reduções e Resultado -->
-                        <div>
-                            <h3 class="text-xl font-bold text-white mb-4">Reduções e Resultado</h3>
-                            
-                            <!-- Reduções -->
-                            <div class="bg-green-900/20 rounded-lg p-4 mb-6 border border-green-500/30">
-    <h4 class="font-bold text-green-300 mb-3">📉 Reduções Aplicáveis</h4>
-    <div class="space-y-2">
-        <label class="flex items-center space-x-3 cursor-pointer">
-            <input type="checkbox" id="calc-advogado" class="reducao-checkbox" data-reducao="10">
-            <span class="text-white text-sm">⚖️ Advogado presente (-10%)</span>
-        </label>
-        <label class="flex items-center space-x-3 cursor-pointer">
-            <input type="checkbox" id="calc-primario" class="reducao-checkbox" data-reducao="15">
-            <span class="text-white text-sm">🆕 Réu primário (-15%)</span>
-        </label>
-        <label class="flex items-center space-x-3 cursor-pointer">
-            <input type="checkbox" id="calc-colaboracao" class="reducao-checkbox" data-reducao="7">
-            <span class="text-white text-sm">🤝 Colaboração (-7%)</span>
-        </label>
-        <label class="flex items-center space-x-3 cursor-pointer">
-            <input type="checkbox" id="calc-confissao" class="reducao-checkbox" data-reducao="10">
-            <span class="text-white text-sm">🗣️ Confissão (-10%)</span>
-        </label>
-    </div>
-</div>
-
-                            <!-- Resultado -->
-                            <div id="resultado-calculo" class="bg-gradient-to-r from-yellow-500/20 to-red-500/20 rounded-lg p-6 border border-yellow-500/30">
-                                <h4 class="font-bold text-yellow-300 mb-4">📊 Resultado da Sentença</h4>
-                                <div id="resultado-texto" class="text-white">
-                                    <p class="mb-2">Selecione os crimes para calcular a pena</p>
-                                </div>
-                                <button onclick="calcularPenaCompleta()" class="w-full mt-4 bg-gradient-to-r from-yellow-600 to-yellow-500 text-black font-bold py-3 px-6 rounded-lg hover:from-yellow-500 hover:to-yellow-400 transition-all">
-                                    ⚖️ CALCULAR SENTENÇA
-                                </button>
+                    <!-- Categorias de Crimes -->
+                    <div id="categorias-crimes" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Trânsito -->
+                        <div class="bg-red-900/40 rounded-xl p-4 border-2 border-red-600/50 shadow-lg">
+                            <h4 class="font-bold text-yellow-300 mb-3 text-lg flex items-center"><span class="mr-2">🚗</span>Trânsito</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" data-categoria="trânsito">
+                                <button type="button" class="crime-btn" data-crime="Alta Velocidade" data-multa="600" data-tempo="0">ART. 218 - Alta Velocidade <span class="text-yellow-400">R$600</span></button>
+                                <button type="button" class="crime-btn" data-crime="Direção Perigosa" data-multa="2000" data-tempo="0">ART. 175 - Direção Perigosa <span class="text-yellow-400">R$2.000</span></button>
+                                <button type="button" class="crime-btn" data-crime="Estacionar em local proibido" data-multa="650" data-tempo="0">ART. 181 - Estacionar Proibido <span class="text-yellow-400">R$650</span></button>
+                                <button type="button" class="crime-btn" data-crime="Disputar corrida" data-multa="650" data-tempo="0">ART. 173 - Disputar Corrida <span class="text-yellow-400">R$650</span></button>
+                                <button type="button" class="crime-btn" data-crime="Avançar sinal vermelho" data-multa="650" data-tempo="0">ART. 183 - Sinal Vermelho <span class="text-yellow-400">R$650</span></button>
+                                <button type="button" class="crime-btn" data-crime="Veículo Abandonado" data-multa="700" data-tempo="0">ART. 181 - Veículo Abandonado <span class="text-yellow-400">R$700</span></button>
+                                <button type="button" class="crime-btn" data-crime="Transitar na contramão" data-multa="600" data-tempo="0">ART. 176 - Contramão <span class="text-yellow-400">R$600</span></button>
+                                <button type="button" class="crime-btn" data-crime="Omissão de Socorro" data-multa="650" data-tempo="0">ART. 304 - Omissão de Socorro <span class="text-yellow-400">R$650</span></button>
+                                <button type="button" class="crime-btn" data-crime="Falta de combustível" data-multa="150" data-tempo="0">ART. 162 - Falta de Combustível <span class="text-yellow-400">R$150</span></button>
+                                <button type="button" class="crime-btn" data-crime="Dirigir sem habilitação" data-multa="150" data-tempo="0">ART. 162 - Sem Habilitação <span class="text-yellow-400">R$150</span></button>
+                                <button type="button" class="crime-btn" data-crime="Ultrapassar blitz" data-multa="850" data-tempo="0">ART. 210 - Ultrapassar Blitz <span class="text-yellow-400">R$850</span></button>
+                                <button type="button" class="crime-btn" data-crime="Recusar bafômetro" data-multa="1000" data-tempo="0">ART. 165-A - Recusar Bafômetro <span class="text-yellow-400">R$1.000</span></button>
+                                <button type="button" class="crime-btn" data-crime="Seguir viatura policial" data-multa="1000" data-tempo="0">ART. 218 - Seguir Viatura <span class="text-yellow-400">R$1.000</span></button>
+                                <button type="button" class="crime-btn" data-crime="Motocicleta sem capacete" data-multa="1300" data-tempo="0">ART. 244 - Sem Capacete <span class="text-yellow-400">R$1.300</span></button>
+                                <button type="button" class="crime-btn" data-crime="Marcha ré indevida" data-multa="300" data-tempo="0">ART. 194 - Marcha Ré <span class="text-yellow-400">R$300</span></button>
+                                <button type="button" class="crime-btn" data-crime="Ultrapassar pela direita" data-multa="1000" data-tempo="0">ART. 199 - Ultrapassar Direita <span class="text-yellow-400">R$1.000</span></button>
+                            </div>
+                        </div>
+                        <!-- Pessoa -->
+                        <div class="bg-red-900/30 rounded-xl p-4 border-2 border-red-600/50 shadow-lg">
+                            <h4 class="font-bold text-red-300 mb-3 text-lg flex items-center"><span class="mr-2">👤</span>Pessoa</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" data-categoria="pessoa">
+                                <button type="button" class="crime-btn" data-crime="Homicídio" data-multa="850" data-tempo="40">Art.121 - Homicídio <span class="text-red-400">R$850 | 40m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Homicídio de funcionário público" data-multa="3000" data-tempo="60">Art.121-A - Func. Público <span class="text-red-400">R$3.000 | 60m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Homicídio culposo" data-multa="1500" data-tempo="30">Art.121-B - Culposo <span class="text-red-400">R$1.500 | 30m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Lesão corporal" data-multa="550" data-tempo="3">Art.129 - Lesão Corporal <span class="text-red-400">R$550 | 3m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Calúnia" data-multa="450" data-tempo="10">Art.130 - Calúnia <span class="text-red-400">R$450 | 10m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Difamação" data-multa="450" data-tempo="10">Art.139 - Difamação <span class="text-red-400">R$450 | 10m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Ameaça" data-multa="600" data-tempo="10">Art.147 - Ameaça <span class="text-red-400">R$600 | 10m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Sequestro e cárcere privado" data-multa="1500" data-tempo="40">Art.148 - Sequestro <span class="text-red-400">R$1.500 | 40m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Genocídio" data-multa="3000" data-tempo="60">Art.3 - Genocídio <span class="text-red-400">R$3.000 | 60m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Lesão corporal seguida de morte" data-multa="1500" data-tempo="30">Art.129 III - Lesão/Morte <span class="text-red-400">R$1.500 | 30m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Incitação/apologia ao crime" data-multa="850" data-tempo="25">Art.287 - Incitação <span class="text-red-400">R$850 | 25m</span></button>
+                            </div>
+                        </div>
+                        <!-- Patrimônio -->
+                        <div class="bg-yellow-900/30 rounded-xl p-4 border-2 border-yellow-600/50 shadow-lg">
+                            <h4 class="font-bold text-yellow-300 mb-3 text-lg flex items-center"><span class="mr-2">💰</span>Patrimônio</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" data-categoria="patrimônio">
+                                <button type="button" class="crime-btn" data-crime="Furto qualificado" data-multa="550" data-tempo="30">Art.155 I - Furto Qualif. <span class="text-yellow-400">R$550 | 30m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Furto" data-multa="350" data-tempo="25">Art.155 - Furto <span class="text-yellow-400">R$350 | 25m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Roubo" data-multa="750" data-tempo="40">Art.157 - Roubo <span class="text-yellow-400">R$750 | 40m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Roubo seguido de morte" data-multa="1000" data-tempo="50">Art.157-B - Latrocínio <span class="text-yellow-400">R$1.000 | 50m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Roubo qualificado" data-multa="900" data-tempo="50">Art.157 II - Roubo Qualif. <span class="text-yellow-400">R$900 | 50m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Estelionato" data-multa="2500" data-tempo="12">Art.171 - Estelionato <span class="text-yellow-400">R$2.500 | 12m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Desmonte de veículos" data-multa="2500" data-tempo="10">Art.126 - Desmonte <span class="text-yellow-400">R$2.500 | 10m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Recepção" data-multa="2500" data-tempo="10">Art.180 - Recepção <span class="text-yellow-400">R$2.500 | 10m</span></button>
+                            </div>
+                        </div>
+                        <!-- Ordem Pública -->
+                        <div class="bg-purple-900/30 rounded-xl p-4 border-2 border-purple-600/50 shadow-lg">
+                            <h4 class="font-bold text-purple-300 mb-3 text-lg flex items-center"><span class="mr-2">⚠️</span>Ordem Pública</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" data-categoria="ordem">
+                                <button type="button" class="crime-btn" data-crime="Roupas Policiais" data-multa="5000" data-tempo="50">Art.200-A - Roupas Policiais <span class="text-purple-400">R$5.000 | 50m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Roupas Militares" data-multa="5000" data-tempo="50">Art.200-B - Roupas Militares <span class="text-purple-400">R$5.000 | 50m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Ocultação facial" data-multa="1000" data-tempo="5">Art.200-C - Ocultação Facial <span class="text-purple-400">R$1.000 | 5m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Produtos ilícitos" data-multa="2000" data-tempo="10">Art.288 - Produtos Ilícitos <span class="text-purple-400">R$2.000 | 10m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Associação Criminosa" data-multa="2000" data-tempo="15">Art.288 - Associação <span class="text-purple-400">R$2.000 | 15m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Dinheiro ilícito" data-multa="1500" data-tempo="18">Art.289 - Dinheiro Ilícito <span class="text-purple-400">R$1.500 | 18m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Falsidade ideológica" data-multa="1750" data-tempo="15">Art.299 - Falsidade Ideológica <span class="text-purple-400">R$1.750 | 15m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Desobediência" data-multa="1500" data-tempo="10">Art.330 - Desobediência <span class="text-purple-400">R$1.500 | 10m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Desacato" data-multa="1500" data-tempo="12">Art.331 - Desacato <span class="text-purple-400">R$1.500 | 12m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Corrupção" data-multa="2500" data-tempo="15">Art.333 - Corrupção <span class="text-purple-400">R$2.500 | 15m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Suborno" data-multa="2500" data-tempo="25">Art.337 - Suborno <span class="text-purple-400">R$2.500 | 25m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Denúncia caluniosa" data-multa="1750" data-tempo="12">Art.339 - Denúncia Caluniosa <span class="text-purple-400">R$1.750 | 12m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Falso testemunho" data-multa="1500" data-tempo="10">Art.342 - Falso Testemunho <span class="text-purple-400">R$1.500 | 10m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Uso de máscara para terrorismo" data-multa="2500" data-tempo="12">Art.311 - Máscara Terrorismo <span class="text-purple-400">R$2.500 | 12m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Abuso de autoridade" data-multa="5000" data-tempo="12">Art.355 - Abuso Autoridade <span class="text-purple-400">R$5.000 | 12m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Obstrução de Justiça" data-multa="5000" data-tempo="32">Art.357 - Obstrução Justiça <span class="text-purple-400">R$5.000 | 32m</span></button>
+                            </div>
+                        </div>
+                        <!-- Armas e Drogas -->
+                        <div class="bg-green-900/30 rounded-xl p-4 border-2 border-green-600/50 shadow-lg">
+                            <h4 class="font-bold text-green-300 mb-3 text-lg flex items-center"><span class="mr-2">💊</span>Armas e Drogas</h4>
+                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2" data-categoria="armas">
+                                <button type="button" class="crime-btn" data-crime="Porte ilegal de arma classe 1" data-multa="2000" data-tempo="14">Art.16 - Porte Ilegal C1 <span class="text-green-400">R$2.000 | 14m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Porte ilegal de arma classe 2" data-multa="3000" data-tempo="14">Art.17 - Porte Ilegal C2 <span class="text-green-400">R$3.000 | 14m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Tráfico de munições" data-multa="3500" data-tempo="10">Art.18 - Tráfico Munições <span class="text-green-400">R$3.500 | 10m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Tráfico de armamento" data-multa="5000" data-tempo="20">Art.19 - Tráfico Armamento <span class="text-green-400">R$5.000 | 20m</span></button>
+                                <button type="button" class="crime-btn" data-crime="Tráfico de drogas" data-multa="5000" data-tempo="25">Art.33 - Tráfico Drogas <span class="text-green-400">R$5.000 | 25m</span></button>
                             </div>
                         </div>
                     </div>
+                    <!-- Crimes selecionados -->
+                    <div id="crimes-selecionados" class="mt-4">
+                        <h4 class="text-white font-bold mb-2">Crimes Selecionados:</h4>
+                        <div id="lista-crimes" class="flex flex-wrap gap-2"></div>
+                    </div>
                 </div>
             </div>
+            <!-- Reduções e Resultado -->
+            <div class="flex flex-col h-full">
+                <h3 class="text-xl font-bold text-white mb-4">Reduções e Resultado</h3>
+                <!-- Reduções -->
+                <div class="bg-green-900/20 rounded-lg p-4 mb-6 border border-green-500/30">
+                    <h4 class="font-bold text-green-300 mb-3">📉 Reduções Aplicáveis</h4>
+                    <div class="space-y-2">
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" id="calc-advogado" class="reducao-checkbox" data-reducao="10">
+                            <span class="text-white text-sm">⚖️ Advogado presente (-10%)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" id="calc-primario" class="reducao-checkbox" data-reducao="15">
+                            <span class="text-white text-sm">🆕 Réu primário (-15%)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" id="calc-colaboracao" class="reducao-checkbox" data-reducao="7">
+                            <span class="text-white text-sm">🤝 Colaboração (-7%)</span>
+                        </label>
+                        <label class="flex items-center space-x-3 cursor-pointer">
+                            <input type="checkbox" id="calc-confissao" class="reducao-checkbox" data-reducao="10">
+                            <span class="text-white text-sm">🗣️ Confissão (-10%)</span>
+                        </label>
+                    </div>
+                </div>
+                <!-- Resultado -->
+                <div id="resultado-calculo" class="bg-gradient-to-r from-yellow-500/20 to-red-500/20 rounded-lg p-6 border border-yellow-500/30 flex-1">
+                    <h4 class="font-bold text-yellow-300 mb-4">📊 Resultado da Sentença</h4>
+                    <div id="resultado-texto" class="text-white">
+                        <p class="mb-2">Selecione os crimes para calcular a pena</p>
+                    </div>
+                    <button onclick="calcularPenaCompleta()" class="w-full mt-4 bg-gradient-to-r from-yellow-600 to-yellow-500 text-black font-bold py-3 px-6 rounded-lg hover:from-yellow-500 hover:to-yellow-400 transition-all">
+                        ⚖️ CALCULAR SENTENÇA
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
             <!-- Gerador de Documentos -->
             <div id="documentos" class="hidden">
