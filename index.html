@@ -3626,16 +3626,35 @@
             });
             
             Object.keys(niveis).sort((a, b) => a - b).forEach(nivel => {
+                let nivelTitulo = '';
+                switch(nivel) {
+                    case '1': nivelTitulo = 'Nível 1 - SUPREMA AUTORIDADE JUDICIAL'; break;
+                    case '2': nivelTitulo = 'Nível 2 - TRIBUNAIS SUPERIORES FEDERAIS'; break;
+                    case '3': nivelTitulo = 'Nível 3 - TRIBUNAIS DE SEGUNDA INSTÂNCIA'; break;
+                    case '4': nivelTitulo = 'Nível 4 - PRIMEIRA INSTÂNCIA ESTADUAL'; break;
+                    case '5': nivelTitulo = 'Nível 5 - MINISTÉRIO PÚBLICO FEDERAL'; break;
+                    case '6': nivelTitulo = 'Nível 6 - MINISTÉRIO PÚBLICO ESTADUAL'; break;
+                    case '7': nivelTitulo = 'Nível 7 - PROMOTORIA GERAL'; break;
+                    case '8': nivelTitulo = 'Nível 8 - PROMOTORES DE PRIMEIRA INSTÂNCIA'; break;
+                    case '9': nivelTitulo = 'Nível 9 - OFICIAIS DE JUSTIÇA - SEGUNDA INSTÂNCIA'; break;
+                    case '10': nivelTitulo = 'Nível 10 - OFICIAIS DE JUSTIÇA - PRIMEIRA INSTÂNCIA'; break;
+                    case '11': nivelTitulo = 'Nível 11 - ADVOCACIA E DEFENSORIA'; break;
+                    default: nivelTitulo = `Nível ${nivel}`;
+                }
+                
                 hierarquiaHTML += `
-                    <div class="mb-6">
-                        <h3 class="text-lg font-bold text-white mb-3 border-b border-white/20 pb-2">Nível ${nivel}</h3>
-                        <div class="grid md:grid-cols-2 gap-3">
+                    <div class="mb-8">
+                        <div class="bg-gradient-to-r from-yellow-600/30 to-amber-600/30 rounded-lg p-4 border-2 border-yellow-500/50 mb-4">
+                            <h3 class="text-xl font-bold text-white text-center">${nivelTitulo}</h3>
+                        </div>
+                        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
                 `;
                 
                 niveis[nivel].forEach(cargo => {
-                    // Verificar se o cargo está ocupado no Firebase ou localStorage
+                    // Verificar se o cargo está ocupado
                     let ocupado = false;
                     let usuarioOcupante = null;
+                    let podeNomear = false;
                     
                     // Verificar nos usuários cadastrados
                     if (usuariosCadastrados && Object.keys(usuariosCadastrados).length > 0) {
@@ -3649,23 +3668,31 @@
                         usuarioOcupante = { nome: 'Alexandre de Moraes' };
                     }
                     
+                    // Verificar se o usuário logado pode nomear este cargo
+                    if (usuarioLogado && usuarioLogado.pode_nomear && usuarioLogado.pode_nomear.includes(cargo.key)) {
+                        podeNomear = true;
+                    }
+                    
                     const statusClass = ocupado ? 'from-green-600/20 to-green-800/20 border-green-500/50' : 'from-gray-600/20 to-gray-800/20 border-gray-500/50';
                     const statusText = ocupado ? '✅ Ocupado' : '⏳ Vago';
+                    const statusColor = ocupado ? 'bg-green-500/30 text-green-300' : 'bg-gray-500/30 text-gray-300';
                     
                     hierarquiaHTML += `
-                        <div class="bg-gradient-to-r ${statusClass} rounded-lg p-4 border">
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <h4 class="text-white font-bold flex items-center">
-                                        <span class="text-xl mr-2">${cargo.icon}</span>
-                                        ${cargo.nome}
-                                    </h4>
-                                    <p class="text-white/70 text-sm">${cargo.descricao}</p>
-                                    <p class="text-white/50 text-xs mt-1">${cargo.titulo}</p>
-                                </div>
-                                <div class="text-right">
-                                    <span class="text-xs px-2 py-1 rounded ${ocupado ? 'bg-green-500/30 text-green-300' : 'bg-gray-500/30 text-gray-300'}">${statusText}</span>
-                                    ${ocupado && usuarioOcupante ? `<p class="text-xs text-green-400 mt-1">${usuarioOcupante.nome}</p>` : ''}
+                        <div class="bg-gradient-to-r ${statusClass} rounded-lg p-4 border hover:scale-105 transition-all">
+                            <div class="text-center">
+                                <div class="text-3xl mb-2">${cargo.icon}</div>
+                                <h4 class="text-white font-bold text-sm mb-1">${cargo.nome}</h4>
+                                <p class="text-white/70 text-xs mb-2">${cargo.descricao}</p>
+                                <p class="text-white/50 text-xs mb-3 min-h-[2.5rem]">${cargo.titulo}</p>
+                                
+                                <div class="space-y-2">
+                                    <span class="inline-block text-xs px-2 py-1 rounded ${statusColor}">${statusText}</span>
+                                    ${ocupado && usuarioOcupante ? `<p class="text-xs text-green-400 font-medium">${usuarioOcupante.nome}</p>` : ''}
+                                    ${podeNomear && !ocupado ? `
+                                        <button onclick="iniciarNomeacao('${cargo.key}'); this.closest('.fixed').remove();" class="w-full bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-1 px-2 rounded text-xs transition-all mt-2">
+                                            👑 Nomear
+                                        </button>
+                                    ` : ''}
                                 </div>
                             </div>
                         </div>
@@ -3675,19 +3702,45 @@
                 hierarquiaHTML += '</div></div>';
             });
 
+            // Adicionar estatísticas
+            const totalCargos = Object.keys(estruturaJudicial).length;
+            const cargosOcupados = Object.values(usuariosCadastrados).filter(user => user.nomeado).length + 1; // +1 para Alexandre
+            const cargosVagos = totalCargos - cargosOcupados;
+
             modal.innerHTML = `
-                <div class="bg-gradient-to-br from-blue-600/30 to-indigo-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-blue-500/60 shadow-2xl max-w-6xl w-full mx-4 max-h-[90vh] overflow-y-auto">
+                <div class="bg-gradient-to-br from-blue-600/30 to-indigo-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-blue-500/60 shadow-2xl max-w-7xl w-full mx-4 max-h-[95vh] overflow-y-auto">
                     <div class="text-center mb-6">
                         <h2 class="text-3xl font-bold text-white flex items-center justify-center">
                             <span class="text-4xl mr-3">🏛️</span>
                             Hierarquia Judicial Completa
                         </h2>
-                        <p class="text-blue-200 mt-2">Estrutura organizacional do Sistema Judicial de Brasilândia</p>
+                        <p class="text-blue-200 mt-2">Estrutura organizacional do Sistema Judicial de Brasilândia RP</p>
+                        
+                        <!-- Estatísticas -->
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6 mb-6">
+                            <div class="bg-blue-500/20 rounded-lg p-4 border border-blue-500/50">
+                                <div class="text-2xl font-bold text-white">${totalCargos}</div>
+                                <div class="text-blue-300 text-sm">Total de Cargos</div>
+                            </div>
+                            <div class="bg-green-500/20 rounded-lg p-4 border border-green-500/50">
+                                <div class="text-2xl font-bold text-white">${cargosOcupados}</div>
+                                <div class="text-green-300 text-sm">Cargos Ocupados</div>
+                            </div>
+                            <div class="bg-gray-500/20 rounded-lg p-4 border border-gray-500/50">
+                                <div class="text-2xl font-bold text-white">${cargosVagos}</div>
+                                <div class="text-gray-300 text-sm">Cargos Vagos</div>
+                            </div>
+                        </div>
                     </div>
                     
                     ${hierarquiaHTML}
                     
-                    <div class="text-center mt-6">
+                    <div class="text-center mt-8 space-x-4">
+                        ${usuarioLogado && usuarioLogado.permissoes && usuarioLogado.permissoes.includes('nomeacoes') ? `
+                            <button onclick="abrirSistemaNomeacoes(); this.closest('.fixed').remove();" class="bg-yellow-600 hover:bg-yellow-500 text-black font-bold py-3 px-6 rounded-lg transition-all">
+                                👑 Sistema de Nomeações
+                            </button>
+                        ` : ''}
                         <button onclick="this.closest('.fixed').remove()" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg transition-all">
                             ❌ Fechar
                         </button>
@@ -6062,5 +6115,5 @@
             document.head.appendChild(script);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ab0098327b6f83',t:'MTc1NDQ0NjI3My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ab0f9b627f27e7',t:'MTc1NDQ0Njg4OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
