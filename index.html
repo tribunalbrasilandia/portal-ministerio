@@ -1086,61 +1086,262 @@
                         <div>
                             <h3 class="text-xl font-bold text-white mb-4">Selecionar Crimes</h3>
                             <div class="space-y-4 max-h-96 overflow-y-auto">
-                                <div class="bg-red-900/30 rounded-lg p-4 border border-red-600/40">
-                                    <h4 class="font-bold text-yellow-300 mb-3">🚗 TRÂNSITO</h4>
-                                    <div class="space-y-2">
-                                        <label class="flex items-center space-x-3 cursor-pointer">
-                                            <input type="checkbox" class="crime-checkbox" data-crime="Alta Velocidade" data-multa="600" data-tempo="0">
-                                            <span class="text-white text-sm">ART. 218 - Alta Velocidade (R$ 600)</span>
-                                        </label>
-                                        <label class="flex items-center space-x-3 cursor-pointer">
-                                            <input type="checkbox" class="crime-checkbox" data-crime="Direção Perigosa" data-multa="2000" data-tempo="0">
-                                            <span class="text-white text-sm">ART. 175 - Direção Perigosa (R$ 2.000)</span>
-                                        </label>
-                                        <label class="flex items-center space-x-3 cursor-pointer">
-                                            <input type="checkbox" class="crime-checkbox" data-crime="Disputar corrida" data-multa="650" data-tempo="0">
-                                            <span class="text-white text-sm">ART. 173 - Disputar corrida (R$ 650)</span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="bg-red-900/40 rounded-lg p-4 border border-red-500/50">
-                                    <h4 class="font-bold text-red-300 mb-3">👤 CRIMES CONTRA A PESSOA</h4>
-                                    <div class="space-y-2">
-                                        <label class="flex items-center space-x-3 cursor-pointer">
-                                            <input type="checkbox" class="crime-checkbox" data-crime="Homicídio" data-multa="850" data-tempo="40">
-                                            <span class="text-white text-sm">Art.121 - Homicídio (R$ 850 | 40 meses)</span>
-                                        </label>
-                                        <label class="flex items-center space-x-3 cursor-pointer">
-                                            <input type="checkbox" class="crime-checkbox" data-crime="Lesão corporal" data-multa="550" data-tempo="3">
-                                            <span class="text-white text-sm">Art.129 - Lesão corporal (R$ 550 | 3 meses)</span>
-                                        </label>
-                                        <label class="flex items-center space-x-3 cursor-pointer">
-                                            <input type="checkbox" class="crime-checkbox" data-crime="Ameaça" data-multa="600" data-tempo="10">
-                                            <span class="text-white text-sm">Art.147 - Ameaça (R$ 600 | 10 meses)</span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <div class="bg-yellow-900/30 rounded-lg p-4 border border-yellow-600/40">
-                                    <h4 class="font-bold text-yellow-300 mb-3">💰 CRIMES CONTRA O PATRIMÔNIO</h4>
-                                    <div class="space-y-2">
-                                        <label class="flex items-center space-x-3 cursor-pointer">
-                                            <input type="checkbox" class="crime-checkbox" data-crime="Furto" data-multa="350" data-tempo="25">
-                                            <span class="text-white text-sm">Art.155 - Furto (R$ 350 | 25 meses)</span>
-                                        </label>
-                                        <label class="flex items-center space-x-3 cursor-pointer">
-                                            <input type="checkbox" class="crime-checkbox" data-crime="Roubo" data-multa="750" data-tempo="40">
-                                            <span class="text-white text-sm">Art.157 - Roubo (R$ 750 | 40 meses)</span>
-                                        </label>
-                                        <label class="flex items-center space-x-3 cursor-pointer">
-                                            <input type="checkbox" class="crime-checkbox" data-crime="Estelionato" data-multa="2500" data-tempo="12">
-                                            <span class="text-white text-sm">Art.171 - Estelionato (R$ 2.500 | 12 meses)</span>
-                                        </label>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                               <div class="space-y-4 max-h-96 overflow-y-auto">
+    <!-- TRÂNSITO -->
+    <div class="bg-red-900/30 rounded-lg p-4 border border-red-600/40">
+        <h4 class="font-bold text-yellow-300 mb-3">🚗 TRÂNSITO</h4>
+        <div class="space-y-2">
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Alta Velocidade" data-multa="600" data-tempo="0">
+                <span class="text-white text-sm">ART. 218 - Alta Velocidade (R$ 600)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Direção Perigosa" data-multa="2000" data-tempo="0">
+                <span class="text-white text-sm">ART. 175 - Direção Perigosa (R$ 2.000)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Estacionar em local proibido" data-multa="650" data-tempo="0">
+                <span class="text-white text-sm">ART. 181 - Estacionar em local proibido (R$ 650)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Disputar corrida" data-multa="650" data-tempo="0">
+                <span class="text-white text-sm">ART. 173 - Disputar corrida (R$ 650)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Avançar sinal vermelho" data-multa="650" data-tempo="0">
+                <span class="text-white text-sm">ART. 183 - Avançar sinal vermelho (R$ 650)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Veículo Abandonado" data-multa="700" data-tempo="0">
+                <span class="text-white text-sm">ART. 181 - Veículo Abandonado (R$ 700)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Transitar na contramão" data-multa="600" data-tempo="0">
+                <span class="text-white text-sm">ART. 176 - Contramão (R$ 600)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Omissão de Socorro" data-multa="650" data-tempo="0">
+                <span class="text-white text-sm">ART. 304 - Omissão de Socorro (R$ 650)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Falta de combustível" data-multa="150" data-tempo="0">
+                <span class="text-white text-sm">ART. 162 - Falta de combustível (R$ 150)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Dirigir sem habilitação" data-multa="150" data-tempo="0">
+                <span class="text-white text-sm">ART. 162 - Sem habilitação (R$ 150)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Ultrapassar blitz" data-multa="850" data-tempo="0">
+                <span class="text-white text-sm">ART. 210 - Ultrapassar blitz (R$ 850)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Recusar bafômetro" data-multa="1000" data-tempo="0">
+                <span class="text-white text-sm">ART. 165-A - Recusar bafômetro (R$ 1.000)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Seguir viatura policial" data-multa="1000" data-tempo="0">
+                <span class="text-white text-sm">ART. 218 - Seguir viatura policial (R$ 1.000)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Motocicleta sem capacete" data-multa="1300" data-tempo="0">
+                <span class="text-white text-sm">ART. 244 - Sem capacete (R$ 1.300)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Marcha ré indevida" data-multa="300" data-tempo="0">
+                <span class="text-white text-sm">ART. 194 - Marcha ré indevida (R$ 300)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Ultrapassar pela direita" data-multa="1000" data-tempo="0">
+                <span class="text-white text-sm">ART. 199 - Ultrapassar pela direita (R$ 1.000)</span>
+            </label>
+        </div>
+    </div>
+    <!-- CRIMES CONTRA A PESSOA -->
+    <div class="bg-red-900/40 rounded-lg p-4 border border-red-500/50">
+        <h4 class="font-bold text-red-300 mb-3">👤 CRIMES CONTRA A PESSOA</h4>
+        <div class="space-y-2">
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Homicídio" data-multa="850" data-tempo="40">
+                <span class="text-white text-sm">Art.121 - Homicídio (R$ 850 | 40 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Homicídio de funcionário público" data-multa="3000" data-tempo="60">
+                <span class="text-white text-sm">Art.121-A - Homicídio de funcionário público (R$ 3.000 | 60 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Homicídio culposo" data-multa="1500" data-tempo="30">
+                <span class="text-white text-sm">Art.121-B - Homicídio culposo (R$ 1.500 | 30 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Lesão corporal" data-multa="550" data-tempo="3">
+                <span class="text-white text-sm">Art.129 - Lesão corporal (R$ 550 | 3 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Calúnia" data-multa="450" data-tempo="10">
+                <span class="text-white text-sm">Art.130 - Calúnia (R$ 450 | 10 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Difamação" data-multa="450" data-tempo="10">
+                <span class="text-white text-sm">Art.139 - Difamação (R$ 450 | 10 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Ameaça" data-multa="600" data-tempo="10">
+                <span class="text-white text-sm">Art.147 - Ameaça (R$ 600 | 10 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Sequestro e cárcere privado" data-multa="1500" data-tempo="40">
+                <span class="text-white text-sm">Art.148 - Sequestro e cárcere privado (R$ 1.500 | 40 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Genocídio" data-multa="3000" data-tempo="60">
+                <span class="text-white text-sm">Art.3 - Genocídio (R$ 3.000 | 60 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Lesão corporal seguida de morte" data-multa="1500" data-tempo="30">
+                <span class="text-white text-sm">Art.129 III - Lesão corporal seguida de morte (R$ 1.500 | 30 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Incitação/apologia ao crime" data-multa="850" data-tempo="25">
+                <span class="text-white text-sm">Art.287 - Incitação/apologia ao crime (R$ 850 | 25 meses)</span>
+            </label>
+        </div>
+    </div>
+    <!-- CRIMES CONTRA O PATRIMÔNIO -->
+    <div class="bg-yellow-900/30 rounded-lg p-4 border border-yellow-600/40">
+        <h4 class="font-bold text-yellow-300 mb-3">💰 CRIMES CONTRA O PATRIMÔNIO</h4>
+        <div class="space-y-2">
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Furto qualificado" data-multa="550" data-tempo="30">
+                <span class="text-white text-sm">Art.155 I - Furto qualificado (R$ 550 | 30 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Furto" data-multa="350" data-tempo="25">
+                <span class="text-white text-sm">Art.155 - Furto (R$ 350 | 25 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Roubo" data-multa="750" data-tempo="40">
+                <span class="text-white text-sm">Art.157 - Roubo (R$ 750 | 40 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Roubo seguido de morte" data-multa="1000" data-tempo="50">
+                <span class="text-white text-sm">Art.157-B - Latrocínio (R$ 1.000 | 50 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Roubo qualificado" data-multa="900" data-tempo="50">
+                <span class="text-white text-sm">Art.157 II - Roubo qualificado (R$ 900 | 50 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Estelionato" data-multa="2500" data-tempo="12">
+                <span class="text-white text-sm">Art.171 - Estelionato (R$ 2.500 | 12 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Desmonte de veículos" data-multa="2500" data-tempo="10">
+                <span class="text-white text-sm">Art.126 - Desmonte de veículos (R$ 2.500 | 10 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Recepção" data-multa="2500" data-tempo="10">
+                <span class="text-white text-sm">Art.180 - Recepção (R$ 2.500 | 10 meses)</span>
+            </label>
+        </div>
+    </div>
+    <!-- ORDEM PÚBLICA -->
+    <div class="bg-purple-900/30 rounded-lg p-4 border border-purple-600/40">
+        <h4 class="font-bold text-purple-300 mb-3">⚠️ ORDEM PÚBLICA</h4>
+        <div class="space-y-2">
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Roupas Policiais" data-multa="5000" data-tempo="50">
+                <span class="text-white text-sm">Art.200-A - Roupas Policiais (R$ 5.000 | 50 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Roupas Militares" data-multa="5000" data-tempo="50">
+                <span class="text-white text-sm">Art.200-B - Roupas Militares (R$ 5.000 | 50 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Ocultação facial" data-multa="1000" data-tempo="5">
+                <span class="text-white text-sm">Art.200-C - Ocultação facial (R$ 1.000 | 5 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Produtos ilícitos" data-multa="2000" data-tempo="10">
+                <span class="text-white text-sm">Art.288 - Produtos ilícitos (R$ 2.000 | 10 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Associação Criminosa" data-multa="2000" data-tempo="15">
+                <span class="text-white text-sm">Art.288 - Associação Criminosa (R$ 2.000 | 15 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Dinheiro ilícito" data-multa="1500" data-tempo="18">
+                <span class="text-white text-sm">Art.289 - Dinheiro ilícito (R$ 1.500 | 18 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Falsidade ideológica" data-multa="1750" data-tempo="15">
+                <span class="text-white text-sm">Art.299 - Falsidade ideológica (R$ 1.750 | 15 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Desobediência" data-multa="1500" data-tempo="10">
+                <span class="text-white text-sm">Art.330 - Desobediência (R$ 1.500 | 10 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Desacato" data-multa="1500" data-tempo="12">
+                <span class="text-white text-sm">Art.331 - Desacato (R$ 1.500 | 12 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Corrupção" data-multa="2500" data-tempo="15">
+                <span class="text-white text-sm">Art.333 - Corrupção (R$ 2.500 | 15 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Suborno" data-multa="2500" data-tempo="25">
+                <span class="text-white text-sm">Art.337 - Suborno (R$ 2.500 | 25 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Denúncia caluniosa" data-multa="1750" data-tempo="12">
+                <span class="text-white text-sm">Art.339 - Denúncia caluniosa (R$ 1.750 | 12 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Falso testemunho" data-multa="1500" data-tempo="10">
+                <span class="text-white text-sm">Art.342 - Falso testemunho (R$ 1.500 | 10 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Uso de máscara para terrorismo" data-multa="2500" data-tempo="12">
+                <span class="text-white text-sm">Art.311 - Máscara terrorismo (R$ 2.500 | 12 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Abuso de autoridade" data-multa="5000" data-tempo="12">
+                <span class="text-white text-sm">Art.355 - Abuso de autoridade (R$ 5.000 | 12 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Obstrução de Justiça" data-multa="5000" data-tempo="32">
+                <span class="text-white text-sm">Art.357 - Obstrução de Justiça (R$ 5.000 | 32 meses)</span>
+            </label>
+        </div>
+    </div>
+    <!-- ARMAS E DROGAS -->
+    <div class="bg-green-900/30 rounded-lg p-4 border border-green-600/40">
+        <h4 class="font-bold text-green-300 mb-3">💊 ARMAS E DROGAS</h4>
+        <div class="space-y-2">
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Porte ilegal de arma classe 1" data-multa="2000" data-tempo="14">
+                <span class="text-white text-sm">Art.16 - Porte ilegal arma classe 1 (R$ 2.000 | 14 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Porte ilegal de arma classe 2" data-multa="3000" data-tempo="14">
+                <span class="text-white text-sm">Art.17 - Porte ilegal arma classe 2 (R$ 3.000 | 14 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Tráfico de munições" data-multa="3500" data-tempo="10">
+                <span class="text-white text-sm">Art.18 - Tráfico de munições (R$ 3.500 | 10 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Tráfico de armamento" data-multa="5000" data-tempo="20">
+                <span class="text-white text-sm">Art.19 - Tráfico de armamento (R$ 5.000 | 20 meses)</span>
+            </label>
+            <label class="flex items-center space-x-3 cursor-pointer">
+                <input type="checkbox" class="crime-checkbox" data-crime="Tráfico de drogas" data-multa="5000" data-tempo="25">
+                <span class="text-white text-sm">Art.33 - Tráfico de drogas (R$ 5.000 | 25 meses)</span>
+            </label>
+        </div>
+    </div>
+</div>
 
                         <!-- Reduções e Resultado -->
                         <div>
@@ -4723,46 +4924,50 @@
 
         // Calculadora de Penas
         function calcularPenaCompleta() {
-            const crimesSelecionados = document.querySelectorAll('.crime-checkbox:checked');
-            const reducoesSelecionadas = document.querySelectorAll('.reducao-checkbox:checked');
-            
-            if (crimesSelecionados.length === 0) {
-                alert('⚠️ Selecione pelo menos um crime');
-                return;
-            }
+    const crimesSelecionados = document.querySelectorAll('.crime-checkbox:checked');
+    const reducoesSelecionadas = document.querySelectorAll('.reducao-checkbox:checked');
+    
+    if (crimesSelecionados.length === 0) {
+        alert('⚠️ Selecione pelo menos um crime');
+        return;
+    }
 
-            let multaTotal = 0;
-            let tempoTotal = 0;
-            let crimesTexto = [];
+    let multaTotal = 0;
+    let tempoTotal = 0;
+    let crimesTexto = [];
 
-            crimesSelecionados.forEach(crime => {
-                multaTotal += parseInt(crime.dataset.multa);
-                tempoTotal += parseInt(crime.dataset.tempo);
-                crimesTexto.push(crime.dataset.crime);
-            });
+    crimesSelecionados.forEach(crime => {
+        multaTotal += parseInt(crime.dataset.multa);
+        tempoTotal += parseInt(crime.dataset.tempo);
+        crimesTexto.push(crime.dataset.crime);
+    });
 
-            let reducaoTotal = 0;
-            reducoesSelecionadas.forEach(reducao => {
-                reducaoTotal += parseInt(reducao.dataset.reducao);
-            });
+    let reducaoTotal = 0;
+    reducoesSelecionadas.forEach(reducao => {
+        reducaoTotal += parseInt(reducao.dataset.reducao);
+    });
 
-            const multaFinal = multaTotal * (1 - reducaoTotal / 100);
-            const tempoFinal = tempoTotal * (1 - reducaoTotal / 100);
+    // Limite máximo de redução: 50%
+    if (reducaoTotal > 50) reducaoTotal = 50;
 
-            document.getElementById('resultado-texto').innerHTML = `
-                <div class="space-y-3">
-                    <div class="bg-green-500/20 rounded-lg p-3 border border-green-500/30">
-                        <h5 class="text-green-300 font-bold mb-2">✅ Sentença Calculada</h5>
-                        ${multaTotal > 0 ? `<p class="text-white"><strong>💰 Multa:</strong> R$ ${multaFinal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</p>` : ''}
-                        ${tempoTotal > 0 ? `<p class="text-white"><strong>⏰ Prisão:</strong> ${tempoFinal.toFixed(1)} meses</p>` : ''}
-                        <p class="text-white"><strong>📉 Redução:</strong> ${reducaoTotal}%</p>
-                    </div>
-                    <div class="bg-blue-500/20 rounded-lg p-3 border border-blue-500/30">
-                        <h5 class="text-blue-300 font-bold mb-2">📋 Crimes: ${crimesTexto.join(', ')}</h5>
-                    </div>
-                </div>
-            `;
-        }
+    const multaFinal = multaTotal * (1 - reducaoTotal / 100);
+    const tempoFinal = tempoTotal * (1 - reducaoTotal / 100);
+
+    document.getElementById('resultado-texto').innerHTML = `
+        <div class="space-y-3">
+            <div class="bg-green-500/20 rounded-lg p-3 border border-green-500/30">
+                <h5 class="text-green-300 font-bold mb-2">✅ Sentença Calculada</h5>
+                ${multaTotal > 0 ? `<p class="text-white"><strong>💰 Multa:</strong> R$ ${multaFinal.toLocaleString('pt-BR', {minimumFractionDigits: 2})}</p>` : ''}
+                ${tempoTotal > 0 ? `<p class="text-white"><strong>⏰ Prisão:</strong> ${tempoFinal.toFixed(1)} meses</p>` : ''}
+                <p class="text-white"><strong>📉 Redução:</strong> ${reducaoTotal}%</p>
+            </div>
+            <div class="bg-blue-500/20 rounded-lg p-3 border border-blue-500/30">
+                <h5 class="text-blue-300 font-bold mb-2">📋 Crimes: ${crimesTexto.join(', ')}</h5>
+            </div>
+        </div>
+    `;
+}
+
 
         // Variável global para armazenar assinatura
         let assinaturaUpload = null;
