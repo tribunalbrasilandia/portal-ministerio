@@ -1161,46 +1161,34 @@
             <!-- Seleção de Crimes -->
             <div>
                 <h3 class="text-xl font-bold text-white mb-4">Selecionar Crimes</h3>
-                <div class="space-y-6 max-h-96 overflow-y-auto px-2">
+                <div class="space-y-6 px-2">
                     <!-- Filtro de busca -->
                     <div class="mb-2">
                         <input type="text" id="buscarCrime" placeholder="🔍 Buscar crime ou artigo..." class="w-full px-3 py-2 rounded-lg bg-gray-900 border border-red-500/50 text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all text-sm">
                     </div>
                     <!-- Categorias de Crimes -->
                     <div class="space-y-4">
-                        <!-- Trânsito -->
-                        <div class="bg-red-900/40 rounded-xl p-4 border-2 border-red-600/50 shadow-lg">
-                            <h4 class="font-bold text-yellow-300 mb-3 text-lg flex items-center cursor-pointer" onclick="toggleCategoria('transito')">
-                                <span class="mr-2 bg-yellow-600 p-2 rounded-lg text-black shadow-md">🚗</span>Trânsito
-                                <span id="arrow-transito" class="ml-auto text-xl font-bold">▼</span>
-                            </h4>
-                            <div id="categoria-transito" class="space-y-2 max-h-60 overflow-y-auto"></div>
-                        </div>
-                        <!-- Pessoa -->
-                        <div class="bg-red-900/30 rounded-xl p-4 border-2 border-red-600/50 shadow-lg">
-                            <h4 class="font-bold text-red-300 mb-3 text-lg flex items-center cursor-pointer" onclick="toggleCategoria('pessoa')">
-                                <span class="mr-2 bg-red-600 p-2 rounded-lg text-white shadow-md">👤</span>Pessoa
-                                <span id="arrow-pessoa" class="ml-auto text-xl font-bold">▼</span>
-                            </h4>
-                            <div id="categoria-pessoa" class="space-y-2 max-h-60 overflow-y-auto"></div>
-                        </div>
-                        <!-- Patrimônio -->
-                        <div class="bg-yellow-900/30 rounded-xl p-4 border-2 border-yellow-600/50 shadow-lg">
-                            <h4 class="font-bold text-yellow-300 mb-3 text-lg flex items-center cursor-pointer" onclick="toggleCategoria('patrimonio')">
-                                <span class="mr-2 bg-yellow-600 p-2 rounded-lg text-black shadow-md">💰</span>Patrimônio
-                                <span id="arrow-patrimonio" class="ml-auto text-xl font-bold">▼</span>
-                            </h4>
-                            <div id="categoria-patrimonio" class="space-y-2 max-h-60 overflow-y-auto"></div>
-                        </div>
-                        <!-- Ordem Pública -->
-                        <div class="bg-purple-900/30 rounded-xl p-4 border-2 border-purple-600/50 shadow-lg">
-                            <h4 class="font-bold text-purple-300 mb-3 text-lg flex items-center cursor-pointer" onclick="toggleCategoria('ordem')">
-                                <span class="mr-2 bg-purple-600 p-2 rounded-lg text-white shadow-md">🏛️</span>Ordem Pública
-                                <span id="arrow-ordem" class="ml-auto text-xl font-bold">▼</span>
-                            </h4>
-                            <div id="categoria-ordem" class="space-y-2 max-h-60 overflow-y-auto"></div>
-                        </div>
-                    </div>
+        <!-- Trânsito -->
+        <div class="bg-red-900/40 rounded-xl p-4 border-2 border-red-600/50 shadow-lg">
+            <h4 ...>...</h4>
+            <div id="categoria-transito" class="space-y-2"></div>
+        </div>
+        <!-- Pessoa -->
+        <div class="bg-red-900/30 rounded-xl p-4 border-2 border-red-600/50 shadow-lg">
+            <h4 ...>...</h4>
+            <div id="categoria-pessoa" class="space-y-2"></div>
+        </div>
+        <!-- Patrimônio -->
+        <div class="bg-yellow-900/30 rounded-xl p-4 border-2 border-yellow-600/50 shadow-lg">
+            <h4 ...>...</h4>
+            <div id="categoria-patrimonio" class="space-y-2"></div>
+        </div>
+        <!-- Ordem Pública -->
+        <div class="bg-purple-900/30 rounded-xl p-4 border-2 border-purple-600/50 shadow-lg">
+            <h4 ...>...</h4>
+            <div id="categoria-ordem" class="space-y-2"></div>
+        </div>
+    </div>
                     <!-- Crimes selecionados -->
                     <div id="crimesSelecionados" class="mt-4 mb-2 space-y-2 max-h-40 overflow-y-auto">
                         <p class="text-white/60 text-sm">Nenhum crime selecionado</p>
