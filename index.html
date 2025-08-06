@@ -423,8 +423,27 @@
             grid-template-columns: 1fr;
             gap: 1rem;
             max-height: min(600px, calc(100vh - 200px));
-            overflow: hidden;
+            overflow-y: auto;
             padding: 1rem;
+        }
+        
+        /* Estilo da barra de rolagem para melhor visual */
+        .responsive-grid-2::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        .responsive-grid-2::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+        
+        .responsive-grid-2::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+        }
+        
+        .responsive-grid-2::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.3);
         }
         
         @media (min-width: 640px) {
