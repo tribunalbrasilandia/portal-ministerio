@@ -1157,11 +1157,11 @@
                 ← <span class="hidden sm:inline">Voltar</span>
             </button>
         </div>
-        <div class="responsive-grid-2" style="max-height: 500px;">
+        <div class="responsive-grid-2" style="height: 500px; max-height: 500px;">
             <!-- Seleção de Crimes -->
-            <div>
+            <div class="h-full">
                 <h3 class="text-xl font-bold text-white mb-4">Selecionar Crimes</h3>
-                <div class="space-y-6 overflow-y-auto px-2" style="max-height: 400px;">
+                <div class="space-y-4 overflow-y-auto px-2" style="height: calc(100% - 2rem);">
                     <!-- Filtro de busca -->
                     <div class="mb-2">
                         <input type="text" id="buscarCrime" placeholder="🔍 Buscar crime ou artigo..." class="w-full px-3 py-2 rounded-lg bg-gray-900 border border-red-500/50 text-white placeholder-gray-400 focus:border-red-500 focus:ring-2 focus:ring-red-500/50 transition-all text-sm">
@@ -1199,10 +1199,11 @@
                 </div>
             </div>
             <!-- Reduções e Resultado -->
-            <div class="flex flex-col">
+            <div class="h-full flex flex-col">
                 <h3 class="text-xl font-bold text-white mb-4">Reduções e Resultado</h3>
-                <!-- Reduções -->
-                <div class="bg-green-900/20 rounded-lg p-4 mb-6 border border-green-500/30" style="max-height: 400px; overflow-y: auto;">
+                <div class="overflow-y-auto flex-1">
+                    <!-- Reduções -->
+                    <div class="bg-green-900/20 rounded-lg p-4 mb-6 border border-green-500/30">
                     <h4 class="font-bold text-green-300 mb-3">📉 Reduções Aplicáveis</h4>
                     <div class="space-y-3">
                         <label class="flex items-center space-x-3 cursor-pointer bg-gray-800/30 p-3 rounded-lg hover:bg-gray-700/30 transition-all">
