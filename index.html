@@ -2287,10 +2287,13 @@
         // Carregar dados do usuário logado
         async function carregarDadosUsuario(user) {
             try {
+                console.log('🔍 Buscando dados do usuário:', user.email);
                 const userDoc = await firebaseModules.getDoc(firebaseModules.doc(db, 'usuarios', user.email));
                 
                 if (userDoc.exists()) {
                     const userData = userDoc.data();
+                    console.log('📄 Dados encontrados:', userData);
+                    
                     usuarioLogado = {
                         uid: user.uid,
                         email: user.email,
@@ -2304,33 +2307,120 @@
                         loginTime: new Date()
                     };
                     
+                    console.log('👤 Usuário logado configurado:', usuarioLogado);
+                    
                     // Atualizar interface
                     atualizarInterfaceUsuario();
                     
                     console.log('✅ Dados do usuário carregados:', usuarioLogado.nome);
                 } else {
-                    console.error('❌ Dados do usuário não encontrados no Firestore');
-                    await firebaseModules.signOut(auth);
+                    console.log('❌ Documento do usuário não encontrado, criando...');
+                    // Se não existe, criar o usuário admin
+                    if (user.email === 'alexandre.moraes@stf.jus.br') {
+                        await criarUsuarioAdminCompleto(user);
+                    } else {
+                        console.error('❌ Usuário não autorizado');
+                        await firebaseModules.signOut(auth);
+                    }
                 }
             } catch (error) {
                 console.error('❌ Erro ao carregar dados do usuário:', error);
             }
         }
         
+        // Criar usuário admin completo
+        async function criarUsuarioAdminCompleto(user) {
+            try {
+                console.log('👑 Criando dados completos do admin...');
+                
+                const dadosAdmin = {
+                    nome: 'Alexandre de Moraes',
+                    email: user.email,
+                    cargo: '1_juiz_federal',
+                    titulo: '1º Juiz Federal - Presidente do STF/STJ/STB',
+                    permissoes: ['todas', 'admin', 'nomeacoes', 'maxima_autoridade'],
+                    isAdmin: true,
+                    nivel_hierarquico: 1,
+                    oab: 'STF-001',
+                    nomeado: true,
+                    nomeado_por: 'Sistema',
+                    data_nomeacao: new Date().toISOString(),
+                    pode_nomear: ['2_juiz_federal', '3_juiz_federal', '1_desembargador', '2_desembargador', '3_desembargador'],
+                    ativo: true,
+                    data_criacao: new Date().toISOString()
+                };
+                
+                await firebaseModules.setDoc(firebaseModules.doc(db, 'usuarios', user.email), dadosAdmin);
+                console.log('✅ Dados do admin criados no Firestore');
+                
+                // Configurar usuário logado
+                usuarioLogado = {
+                    uid: user.uid,
+                    email: user.email,
+                    nome: dadosAdmin.nome,
+                    titulo: dadosAdmin.titulo,
+                    cargo: dadosAdmin.cargo,
+                    permissoes: dadosAdmin.permissoes,
+                    isAdmin: dadosAdmin.isAdmin,
+                    oab: dadosAdmin.oab,
+                    pode_nomear: dadosAdmin.pode_nomear,
+                    loginTime: new Date()
+                };
+                
+                console.log('👑 Admin configurado:', usuarioLogado);
+                
+                // Atualizar interface
+                atualizarInterfaceUsuario();
+                
+            } catch (error) {
+                console.error('❌ Erro ao criar admin completo:', error);
+            }
+        }
+        
         // Atualizar interface do usuário
         function atualizarInterfaceUsuario() {
+            console.log('🔄 Atualizando interface do usuário...');
+            
             if (usuarioLogado) {
-                document.getElementById('usuario-logado').classList.remove('hidden');
-                document.getElementById('btn-logout').classList.remove('hidden');
-                document.getElementById('nome-usuario').textContent = usuarioLogado.nome;
-                document.getElementById('cargo-usuario').textContent = `${usuarioLogado.titulo} | OAB: ${usuarioLogado.oab}`;
+                console.log('👤 Dados do usuário para interface:', usuarioLogado);
                 
-                // Mostrar botão admin se for administrador
-                if (usuarioLogado.isAdmin) {
-                    document.getElementById('btn-admin').classList.remove('hidden');
+                // Mostrar informações do usuário
+                const usuarioLogadoEl = document.getElementById('usuario-logado');
+                const btnLogoutEl = document.getElementById('btn-logout');
+                const nomeUsuarioEl = document.getElementById('nome-usuario');
+                const cargoUsuarioEl = document.getElementById('cargo-usuario');
+                const btnAdminEl = document.getElementById('btn-admin');
+                
+                if (usuarioLogadoEl) {
+                    usuarioLogadoEl.classList.remove('hidden');
+                    console.log('✅ Elemento usuario-logado mostrado');
                 }
                 
+                if (btnLogoutEl) {
+                    btnLogoutEl.classList.remove('hidden');
+                    console.log('✅ Botão logout mostrado');
+                }
+                
+                if (nomeUsuarioEl) {
+                    nomeUsuarioEl.textContent = usuarioLogado.nome;
+                    console.log('✅ Nome do usuário definido:', usuarioLogado.nome);
+                }
+                
+                if (cargoUsuarioEl) {
+                    cargoUsuarioEl.textContent = `${usuarioLogado.titulo} | OAB: ${usuarioLogado.oab}`;
+                    console.log('✅ Cargo do usuário definido:', usuarioLogado.titulo);
+                }
+                
+                // Mostrar botão admin se for administrador
+                if (usuarioLogado.isAdmin && btnAdminEl) {
+                    btnAdminEl.classList.remove('hidden');
+                    console.log('✅ Botão admin mostrado');
+                }
+                
+                console.log('🎉 Interface atualizada com sucesso!');
                 mostrarBoasVindas();
+            } else {
+                console.log('❌ Nenhum usuário logado para atualizar interface');
             }
         }
         
@@ -5690,5 +5780,5 @@
             document.head.appendChild(script);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96aad35346906f8f',t:'MTc1NDQ0NDQxOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96aae3d405f5ca7e',t:'MTc1NDQ0NTA5NS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
