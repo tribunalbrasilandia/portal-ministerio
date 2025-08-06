@@ -6,6 +6,81 @@
     <title>Sistema Jurídico Completo - Brasilândia RP</title>
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <style>
+    /* Calculadora de Penas - Visual Moderno */
+    #calculadora .responsive-grid-2 > div:first-child {
+        background: linear-gradient(135deg, #1e293b 80%, #dc2626 20%);
+        border-radius: 1.5rem;
+        border: 2px solid #dc2626;
+        box-shadow: 0 4px 32px #dc2626a0;
+        padding: 2rem 1.5rem;
+        margin-bottom: 1.5rem;
+        transition: box-shadow 0.2s, transform 0.2s;
+    }
+    #calculadora .responsive-grid-2 > div:first-child:hover {
+        box-shadow: 0 8px 40px #dc2626cc;
+        transform: scale(1.01);
+    }
+    #calculadora .crime-btn {
+        background: #222;
+        color: #fff;
+        border: 1px solid #444;
+        border-radius: 0.75rem;
+        padding: 0.7rem 1rem;
+        margin: 0.2rem 0;
+        font-size: 1rem;
+        transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+        cursor: pointer;
+        width: 100%;
+        text-align: left;
+        box-shadow: 0 2px 8px #0002;
+    }
+    #calculadora .crime-btn.bg-gradient-to-r {
+        background: linear-gradient(90deg, #22c55e 60%, #bbf7d0 100%);
+        color: #222;
+        font-weight: bold;
+        border: 2px solid #22c55e;
+        box-shadow: 0 4px 24px #22c55e80;
+    }
+    #calculadora #lista-crimes .crime-tag {
+        background: #22c55e;
+        color: #fff;
+        border-radius: 0.5rem;
+        padding: 0.3rem 0.7rem;
+        margin: 0.2rem;
+        font-weight: bold;
+        font-size: 0.9rem;
+        box-shadow: 0 2px 8px #22c55e40;
+    }
+    #calculadora #busca-crime {
+        margin-bottom: 1rem;
+        background: #111;
+        border: 1px solid #dc2626;
+        color: #fff;
+        border-radius: 0.75rem;
+        padding: 0.7rem 1rem;
+        font-size: 1rem;
+    }
+    #calculadora .bg-green-900\/20 {
+        background: linear-gradient(90deg, #14532d 80%, #22c55e 20%);
+        border-radius: 1rem;
+        border: 2px solid #22c55e;
+        box-shadow: 0 2px 16px #22c55e40;
+    }
+    #calculadora .bg-gradient-to-r {
+        border-radius: 1rem;
+        box-shadow: 0 2px 16px #fbbf2440;
+    }
+    #calculadora .reducao-checkbox {
+        accent-color: #22c55e;
+        width: 1.2rem;
+        height: 1.2rem;
+    }
+    #calculadora h3, #calculadora h4 {
+        letter-spacing: 0.02em;
+    }
+    </style>
+    
     <!-- Firebase SDK -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
@@ -1190,22 +1265,26 @@
                             
                             <!-- Reduções -->
                             <div class="bg-green-900/20 rounded-lg p-4 mb-6 border border-green-500/30">
-                                <h4 class="font-bold text-green-300 mb-3">📉 Reduções Aplicáveis</h4>
-                                <div class="space-y-2">
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="checkbox" id="calc-advogado" class="reducao-checkbox" data-reducao="10">
-                                        <span class="text-white text-sm">⚖️ Advogado presente (-10%)</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="checkbox" id="calc-primario" class="reducao-checkbox" data-reducao="15">
-                                        <span class="text-white text-sm">🆕 Réu primário (-15%)</span>
-                                    </label>
-                                    <label class="flex items-center space-x-3 cursor-pointer">
-                                        <input type="checkbox" id="calc-colaboracao" class="reducao-checkbox" data-reducao="20">
-                                        <span class="text-white text-sm">🤝 Colaboração (-20%)</span>
-                                    </label>
-                                </div>
-                            </div>
+    <h4 class="font-bold text-green-300 mb-3">📉 Reduções Aplicáveis</h4>
+    <div class="space-y-2">
+        <label class="flex items-center space-x-3 cursor-pointer">
+            <input type="checkbox" id="calc-advogado" class="reducao-checkbox" data-reducao="10">
+            <span class="text-white text-sm">⚖️ Advogado presente (-10%)</span>
+        </label>
+        <label class="flex items-center space-x-3 cursor-pointer">
+            <input type="checkbox" id="calc-primario" class="reducao-checkbox" data-reducao="15">
+            <span class="text-white text-sm">🆕 Réu primário (-15%)</span>
+        </label>
+        <label class="flex items-center space-x-3 cursor-pointer">
+            <input type="checkbox" id="calc-colaboracao" class="reducao-checkbox" data-reducao="7">
+            <span class="text-white text-sm">🤝 Colaboração (-7%)</span>
+        </label>
+        <label class="flex items-center space-x-3 cursor-pointer">
+            <input type="checkbox" id="calc-confissao" class="reducao-checkbox" data-reducao="10">
+            <span class="text-white text-sm">🗣️ Confissão (-10%)</span>
+        </label>
+    </div>
+</div>
 
                             <!-- Resultado -->
                             <div id="resultado-calculo" class="bg-gradient-to-r from-yellow-500/20 to-red-500/20 rounded-lg p-6 border border-yellow-500/30">
@@ -4765,7 +4844,7 @@
 
         // Calculadora de Penas
         function calcularPenaCompleta() {
-    const crimesSelecionados = document.querySelectorAll('.crime-checkbox:checked');
+    const crimesSelecionados = document.querySelectorAll('.crime-tag');
     const reducoesSelecionadas = document.querySelectorAll('.reducao-checkbox:checked');
     
     if (crimesSelecionados.length === 0) {
@@ -6627,7 +6706,7 @@
             script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
             document.head.appendChild(script);
         });
-        document.querySelectorAll('.crime-btn').forEach(btn => {
+       document.querySelectorAll('.crime-btn').forEach(btn => {
     btn.addEventListener('click', function() {
         this.classList.toggle('bg-gradient-to-r');
         this.classList.toggle('from-green-600');
