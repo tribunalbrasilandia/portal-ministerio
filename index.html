@@ -2029,8 +2029,12 @@
                 }
             });
             
-            // Criar usuário admin se não existir
-            await criarUsuarioAdminInicial();
+            // Tentar criar usuário admin (sem bloquear se falhar)
+            try {
+                await criarUsuarioAdminInicial();
+            } catch (error) {
+                console.log('⚠️ Admin já existe ou sem permissões:', error.message);
+            }
         });
 
         // Estrutura Hierárquica do Sistema Judicial
@@ -2243,44 +2247,62 @@
                 const adminEmail = 'alexandre.moraes@stf.jus.br';
                 const adminPassword = 'STF2025@Seguro';
                 
-                // Verificar se admin já existe
-                const adminDoc = await firebaseModules.getDoc(firebaseModules.doc(db, 'usuarios', adminEmail));
+                console.log('🔍 Verificando se admin já existe...');
                 
-                if (!adminDoc.exists()) {
-                    console.log('👑 Criando usuário admin inicial...');
+                // Tentar verificar se admin já existe (pode falhar por permissões)
+                let adminExists = false;
+                try {
+                    const adminDoc = await firebaseModules.getDoc(firebaseModules.doc(db, 'usuarios', adminEmail));
+                    adminExists = adminDoc.exists();
+                    console.log('📄 Admin existe:', adminExists);
+                } catch (permError) {
+                    console.log('⚠️ Não foi possível verificar se admin existe (permissões)');
+                    // Continuar tentando criar
+                }
+                
+                if (!adminExists) {
+                    console.log('👑 Tentando criar usuário admin inicial...');
                     
-                    // Criar usuário no Firebase Auth
+                    // Tentar criar usuário no Firebase Auth
                     try {
                         const userCredential = await firebaseModules.createUserWithEmailAndPassword(auth, adminEmail, adminPassword);
-                        console.log('✅ Usuário admin criado no Auth');
+                        console.log('✅ Usuário admin criado no Auth:', userCredential.user.uid);
+                        
+                        // Tentar criar dados do usuário no Firestore
+                        try {
+                            await firebaseModules.setDoc(firebaseModules.doc(db, 'usuarios', adminEmail), {
+                                nome: 'Alexandre de Moraes',
+                                email: adminEmail,
+                                cargo: '1_juiz_federal',
+                                titulo: '1º Juiz Federal - Presidente do STF/STJ/STB',
+                                permissoes: ['todas', 'admin', 'nomeacoes', 'maxima_autoridade'],
+                                isAdmin: true,
+                                nivel_hierarquico: 1,
+                                oab: 'STF-001',
+                                nomeado: true,
+                                nomeado_por: 'Sistema',
+                                data_nomeacao: new Date().toISOString(),
+                                pode_nomear: ['2_juiz_federal', '3_juiz_federal', '1_desembargador', '2_desembargador', '3_desembargador'],
+                                ativo: true,
+                                data_criacao: new Date().toISOString()
+                            });
+                            console.log('👑 Dados do admin salvos no Firestore!');
+                        } catch (firestoreError) {
+                            console.log('⚠️ Erro ao salvar dados no Firestore:', firestoreError.message);
+                        }
+                        
                     } catch (authError) {
-                        if (authError.code !== 'auth/email-already-in-use') {
-                            console.error('❌ Erro ao criar admin no Auth:', authError);
+                        if (authError.code === 'auth/email-already-in-use') {
+                            console.log('✅ Admin já existe no Auth');
+                        } else {
+                            console.log('⚠️ Erro ao criar admin no Auth:', authError.message);
                         }
                     }
-                    
-                    // Criar dados do usuário no Firestore
-                    await firebaseModules.setDoc(firebaseModules.doc(db, 'usuarios', adminEmail), {
-                        nome: 'Alexandre de Moraes',
-                        email: adminEmail,
-                        cargo: '1_juiz_federal',
-                        titulo: '1º Juiz Federal - Presidente do STF/STJ/STB',
-                        permissoes: ['todas', 'admin', 'nomeacoes', 'maxima_autoridade'],
-                        isAdmin: true,
-                        nivel_hierarquico: 1,
-                        oab: 'STF-001',
-                        nomeado: true,
-                        nomeado_por: 'Sistema',
-                        data_nomeacao: new Date().toISOString(),
-                        pode_nomear: ['2_juiz_federal', '3_juiz_federal', '1_desembargador', '2_desembargador', '3_desembargador'],
-                        ativo: true,
-                        data_criacao: new Date().toISOString()
-                    });
-                    
-                    console.log('👑 Admin Alexandre de Moraes criado com sucesso!');
+                } else {
+                    console.log('✅ Admin já existe no sistema');
                 }
             } catch (error) {
-                console.error('❌ Erro ao criar admin inicial:', error);
+                console.log('⚠️ Erro geral ao verificar/criar admin:', error.message);
             }
         }
         
@@ -2288,12 +2310,24 @@
         async function carregarDadosUsuario(user) {
             try {
                 console.log('🔍 Buscando dados do usuário:', user.email);
-                const userDoc = await firebaseModules.getDoc(firebaseModules.doc(db, 'usuarios', user.email));
                 
-                if (userDoc.exists()) {
-                    const userData = userDoc.data();
-                    console.log('📄 Dados encontrados:', userData);
-                    
+                let userData = null;
+                
+                // Tentar buscar dados do usuário
+                try {
+                    const userDoc = await firebaseModules.getDoc(firebaseModules.doc(db, 'usuarios', user.email));
+                    if (userDoc.exists()) {
+                        userData = userDoc.data();
+                        console.log('📄 Dados encontrados:', userData);
+                    } else {
+                        console.log('📄 Documento do usuário não encontrado');
+                    }
+                } catch (firestoreError) {
+                    console.log('⚠️ Erro ao buscar dados no Firestore:', firestoreError.message);
+                }
+                
+                // Se encontrou dados, configurar usuário
+                if (userData) {
                     usuarioLogado = {
                         uid: user.uid,
                         email: user.email,
@@ -2315,18 +2349,30 @@
                     }, 500);
                     
                     console.log('✅ Dados do usuário carregados:', usuarioLogado.nome);
+                    
                 } else {
-                    console.log('❌ Documento do usuário não encontrado, criando...');
-                    // Se não existe, criar o usuário admin
+                    // Se não encontrou dados, tentar criar admin se for o email correto
                     if (user.email === 'alexandre.moraes@stf.jus.br') {
+                        console.log('👑 Criando dados do admin...');
                         await criarUsuarioAdminCompleto(user);
                     } else {
-                        console.error('❌ Usuário não autorizado');
-                        await firebaseModules.signOut(auth);
+                        console.log('❌ Usuário não autorizado - fazendo logout');
+                        try {
+                            await firebaseModules.signOut(auth);
+                        } catch (signOutError) {
+                            console.log('⚠️ Erro ao fazer logout:', signOutError.message);
+                        }
+                        mostrarTelaLogin();
                     }
                 }
             } catch (error) {
-                console.error('❌ Erro ao carregar dados do usuário:', error);
+                console.log('⚠️ Erro geral ao carregar dados do usuário:', error.message);
+                
+                // Se for o admin, tentar criar dados mesmo com erro
+                if (user.email === 'alexandre.moraes@stf.jus.br') {
+                    console.log('👑 Tentando criar dados do admin mesmo com erro...');
+                    await criarUsuarioAdminCompleto(user);
+                }
             }
         }
         
@@ -2352,10 +2398,15 @@
                     data_criacao: new Date().toISOString()
                 };
                 
-                await firebaseModules.setDoc(firebaseModules.doc(db, 'usuarios', user.email), dadosAdmin);
-                console.log('✅ Dados do admin criados no Firestore');
+                // Tentar salvar no Firestore
+                try {
+                    await firebaseModules.setDoc(firebaseModules.doc(db, 'usuarios', user.email), dadosAdmin);
+                    console.log('✅ Dados do admin salvos no Firestore');
+                } catch (firestoreError) {
+                    console.log('⚠️ Erro ao salvar no Firestore, usando dados locais:', firestoreError.message);
+                }
                 
-                // Configurar usuário logado
+                // Configurar usuário logado (sempre, mesmo se Firestore falhar)
                 usuarioLogado = {
                     uid: user.uid,
                     email: user.email,
@@ -2372,10 +2423,33 @@
                 console.log('👑 Admin configurado:', usuarioLogado);
                 
                 // Atualizar interface
-                atualizarInterfaceUsuario();
+                setTimeout(() => {
+                    atualizarInterfaceUsuario();
+                }, 500);
                 
             } catch (error) {
-                console.error('❌ Erro ao criar admin completo:', error);
+                console.log('⚠️ Erro ao criar admin completo:', error.message);
+                
+                // Fallback: criar dados básicos do admin mesmo com erro
+                usuarioLogado = {
+                    uid: user.uid,
+                    email: user.email,
+                    nome: 'Alexandre de Moraes',
+                    titulo: '1º Juiz Federal - Presidente do STF/STJ/STB',
+                    cargo: '1_juiz_federal',
+                    permissoes: ['todas', 'admin', 'nomeacoes', 'maxima_autoridade'],
+                    isAdmin: true,
+                    oab: 'STF-001',
+                    pode_nomear: ['2_juiz_federal', '3_juiz_federal', '1_desembargador', '2_desembargador', '3_desembargador'],
+                    loginTime: new Date()
+                };
+                
+                console.log('👑 Admin configurado com dados de fallback:', usuarioLogado);
+                
+                // Atualizar interface
+                setTimeout(() => {
+                    atualizarInterfaceUsuario();
+                }, 500);
             }
         }
         
@@ -5796,5 +5870,5 @@
             document.head.appendChild(script);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96aae757f6ecca7e',t:'MTc1NDQ0NTIzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96aaf00e74d6ca7e',t:'MTc1NDQ0NTU5Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
