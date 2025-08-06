@@ -700,17 +700,27 @@
                             </div>
                         </div>
                         
-                        <!-- Usuários Online -->
-                        <div id="usuarios-online" class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 px-3 py-2 rounded-xl border border-green-500/50 backdrop-blur-sm shadow-lg cursor-pointer hidden" onclick="mostrarUsuariosOnline()">
-                            <div class="flex items-center space-x-2">
-                                <div class="w-6 h-6 bg-gradient-to-br from-green-600 to-emerald-600 rounded-lg flex items-center justify-center">
-                                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-1c0-2.66 5.33-4 8-4s8 1.34 8 4v1H4zM12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
-                                    </svg>
+                        <!-- Lista de Usuários Online -->
+                        <div id="usuarios-online-container" class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl border border-green-500/50 backdrop-blur-sm shadow-lg hidden">
+                            <div class="px-3 py-2 border-b border-green-500/30">
+                                <div class="flex items-center space-x-2">
+                                    <div class="w-6 h-6 bg-gradient-to-br from-green-600 to-emerald-600 rounded-lg flex items-center justify-center">
+                                        <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                            <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-1c0-2.66 5.33-4 8-4s8 1.34 8 4v1H4zM12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
+                                        </svg>
+                                    </div>
+                                    <div class="text-left">
+                                        <div class="text-xs font-bold text-green-300" id="contador-online">0 Online</div>
+                                    </div>
+                                    <button onclick="toggleListaOnline()" class="ml-auto text-green-300 hover:text-green-200 transition-colors">
+                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" id="toggle-icon">
+                                            <path d="M7 14l5-5 5 5z"/>
+                                        </svg>
+                                    </button>
                                 </div>
-                                <div class="text-left">
-                                    <div class="text-xs font-bold text-green-300" id="contador-online">0 Online</div>
-                                </div>
+                            </div>
+                            <div id="lista-usuarios-online" class="max-h-64 overflow-y-auto hidden">
+                                <!-- Lista será preenchida dinamicamente -->
                             </div>
                         </div>
                         
@@ -924,12 +934,12 @@
                         </div>
                     </div>
 
-                    <!-- Cadastrar Usuário -->
+                    <!-- Liberar OAB -->
                     <div class="bg-green-600/20 rounded-lg p-6 border border-green-500/50 hover:bg-green-600/30 transition-all cursor-pointer" onclick="abrirCadastroUsuario()">
                         <div class="text-center">
-                            <div class="text-4xl mb-4">👤</div>
-                            <h3 class="text-lg font-bold text-white mb-2">Cadastrar Usuário</h3>
-                            <p class="text-green-200 text-sm">Registrar novos profissionais</p>
+                            <div class="text-4xl mb-4">🔑</div>
+                            <h3 class="text-lg font-bold text-white mb-2">Liberar OAB</h3>
+                            <p class="text-green-200 text-sm">Autorizar números para cadastro</p>
                         </div>
                     </div>
 
@@ -1882,13 +1892,13 @@
 
     <!-- Tela de Primeiro Acesso -->
     <div id="primeiro-acesso" class="fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center p-2 overflow-y-auto hidden">
-        <div class="w-full max-w-sm mx-auto bg-gradient-to-br from-gray-800/80 to-gray-700/80 backdrop-blur-xl rounded-2xl p-4 border-2 border-yellow-600/50 shadow-2xl my-4 max-h-[90vh] overflow-y-auto">
+        <div class="w-full max-w-md mx-auto bg-gradient-to-br from-gray-800/80 to-gray-700/80 backdrop-blur-xl rounded-2xl p-4 border-2 border-yellow-600/50 shadow-2xl my-4 max-h-[90vh] overflow-y-auto">
             <div class="text-center mb-4">
                 <div class="text-3xl mb-3">🆕</div>
                 <h1 class="text-xl font-black text-transparent bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-500 bg-clip-text mb-2">
                     PRIMEIRO ACESSO
                 </h1>
-                <p class="text-sm text-yellow-300 font-bold">Configure sua conta</p>
+                <p class="text-sm text-yellow-300 font-bold">Configure sua conta no sistema</p>
                 <div class="w-12 h-1 bg-gradient-to-r from-yellow-600 to-yellow-500 mx-auto mt-3 rounded-full"></div>
             </div>
             
@@ -1898,14 +1908,26 @@
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
                         </svg>
-                        Número OAB
+                        Número OAB/Credencial
                     </label>
                     <input 
                         type="text" 
                         id="oab-recebida" 
-                        placeholder="Digite o número OAB..." 
+                        placeholder="Digite o número liberado pelo admin..." 
                         class="w-full px-4 py-3 rounded-lg bg-gray-800/80 border-2 border-yellow-600/50 text-white placeholder-gray-400 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/50 transition-all text-sm"
+                        onblur="verificarOABLiberada()"
                     >
+                    <p class="text-yellow-300 text-xs mt-1">💡 Use o número fornecido pelo administrador</p>
+                </div>
+                
+                <!-- Informações do Cargo (aparece após verificar OAB) -->
+                <div id="info-cargo" class="bg-blue-500/20 rounded-lg p-4 border border-blue-500/50 hidden">
+                    <h4 class="text-blue-300 font-bold mb-2">🏛️ Informações do Cargo</h4>
+                    <div class="text-white text-sm space-y-1">
+                        <p><span class="font-bold">Cargo:</span> <span id="cargo-info">-</span></p>
+                        <p><span class="font-bold">Nível:</span> <span id="nivel-info">-</span></p>
+                        <p><span class="font-bold">Domínio:</span> <span id="dominio-info" class="text-green-300 font-mono">-</span></p>
+                    </div>
                 </div>
                 
                 <div>
@@ -1913,14 +1935,29 @@
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
                         </svg>
-                        Nome de Usuário
+                        Nome Completo
                     </label>
                     <input 
                         type="text" 
-                        id="novo-usuario" 
-                        placeholder="Escolha seu usuário..." 
+                        id="nome-completo" 
+                        placeholder="Digite seu nome completo..." 
                         class="w-full px-4 py-3 rounded-lg bg-gray-800/80 border-2 border-yellow-600/50 text-white placeholder-gray-400 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/50 transition-all text-sm"
+                        oninput="atualizarPreviewEmail()"
                     >
+                </div>
+                
+                <!-- Preview do Email (aparece após digitar nome) -->
+                <div id="preview-email" class="bg-green-500/20 rounded-lg p-4 border border-green-500/50 hidden">
+                    <h4 class="text-green-300 font-bold mb-2">📧 Seu Email de Login</h4>
+                    <div class="text-white">
+                        <p class="text-sm mb-1">Você fará login com:</p>
+                        <p class="font-mono bg-gray-900 p-2 rounded text-green-300" id="email-preview">
+                            nome.sobrenome@dominio.jus.br
+                        </p>
+                        <p class="text-xs text-green-200 mt-2">
+                            ✅ Email gerado automaticamente baseado no seu nome e cargo
+                        </p>
+                    </div>
                 </div>
                 
                 <div>
@@ -1933,7 +1970,7 @@
                     <input 
                         type="password" 
                         id="nova-senha" 
-                        placeholder="Crie uma senha..." 
+                        placeholder="Crie uma senha segura..." 
                         class="w-full px-4 py-3 rounded-lg bg-gray-800/80 border-2 border-yellow-600/50 text-white placeholder-gray-400 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-500/50 transition-all text-sm"
                     >
                 </div>
@@ -1971,7 +2008,7 @@
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
                         </svg>
-                        Cadastrar
+                        Criar Conta
                     </button>
                 </div>
             </form>
@@ -1986,13 +2023,14 @@
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
                     </svg>
-                    INFORMAÇÕES
+                    COMO FUNCIONA
                 </h4>
                 <div class="text-white text-xs space-y-1">
-                    <p>• O número OAB deve ser fornecido pelo administrador</p>
-                    <p>• Escolha um nome de usuário único</p>
-                    <p>• A senha deve ter pelo menos 6 caracteres</p>
-                    <p>• Após o cadastro, você poderá fazer login normalmente</p>
+                    <p>• Digite a OAB/credencial liberada pelo administrador</p>
+                    <p>• Seu cargo e domínio aparecerão automaticamente</p>
+                    <p>• Digite seu nome completo para gerar o email</p>
+                    <p>• Crie uma senha segura (mínimo 6 caracteres)</p>
+                    <p>• Após criar a conta, faça login com o email gerado</p>
                 </div>
             </div>
             
@@ -2002,7 +2040,7 @@
                     <svg class="w-3 h-3 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
                     </svg>
-                    Cadastro Seguro | v2025.1
+                    Sistema Seguro | v2025.1
                 </p>
             </div>
         </div>
@@ -2718,80 +2756,68 @@
             });
             
             const contadorEl = document.getElementById('contador-online');
-            const usuariosOnlineEl = document.getElementById('usuarios-online');
+            const containerEl = document.getElementById('usuarios-online-container');
+            const listaEl = document.getElementById('lista-usuarios-online');
             
-            if (contadorEl && usuariosOnlineEl) {
+            if (contadorEl && containerEl && listaEl) {
                 contadorEl.textContent = `${usuariosAtivos.length} Online`;
                 
                 if (usuariosAtivos.length > 0) {
-                    usuariosOnlineEl.classList.remove('hidden');
+                    containerEl.classList.remove('hidden');
+                    atualizarListaUsuariosOnline(usuariosAtivos);
                 } else {
-                    usuariosOnlineEl.classList.add('hidden');
+                    containerEl.classList.add('hidden');
                 }
+            }
+        }
+
+        function atualizarListaUsuariosOnline(usuariosAtivos) {
+            const listaEl = document.getElementById('lista-usuarios-online');
+            let listaHTML = '';
+            
+            usuariosAtivos.forEach(userKey => {
+                const dados = usuariosOnline[userKey];
+                const cargoInfo = estruturaJudicial[dados.cargo] || { nome: 'Profissional', icon: '👤' };
+                const tempoOnline = Math.floor((Date.now() - dados.loginTime) / 60000); // minutos
+                
+                listaHTML += `
+                    <div class="px-3 py-2 border-b border-green-500/20 hover:bg-green-500/10 transition-colors">
+                        <div class="flex items-center space-x-3">
+                            <div class="w-8 h-8 bg-gradient-to-br from-green-600 to-emerald-600 rounded-lg flex items-center justify-center relative flex-shrink-0">
+                                <span class="text-sm">${cargoInfo.icon}</span>
+                                <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border border-white animate-pulse"></div>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p class="text-white font-medium text-sm truncate">${dados.nome}</p>
+                                <p class="text-green-300 text-xs truncate">${cargoInfo.nome}</p>
+                                <p class="text-green-200 text-xs">${tempoOnline}min online</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            if (!listaHTML) {
+                listaHTML = '<div class="px-3 py-4 text-center text-green-300 text-sm">Nenhum usuário online</div>';
+            }
+            
+            listaEl.innerHTML = listaHTML;
+        }
+
+        function toggleListaOnline() {
+            const listaEl = document.getElementById('lista-usuarios-online');
+            const iconEl = document.getElementById('toggle-icon');
+            
+            if (listaEl.classList.contains('hidden')) {
+                listaEl.classList.remove('hidden');
+                iconEl.innerHTML = '<path d="M7 10l5 5 5-5z"/>';
+            } else {
+                listaEl.classList.add('hidden');
+                iconEl.innerHTML = '<path d="M7 14l5-5 5 5z"/>';
             }
         }
         
-        function mostrarUsuariosOnline() {
-            const modal = document.createElement('div');
-            modal.className = 'fixed inset-0 bg-black/95 backdrop-blur-xl z-50 flex items-center justify-center overflow-y-auto';
-            
-            const agora = Date.now();
-            let usuariosOnlineHTML = '';
-            
-            Object.entries(usuariosOnline).forEach(([key, dados]) => {
-                const isOnline = (agora - dados.lastSeen) < 300000; // 5 minutos
-                if (isOnline) {
-                    const cargoInfo = estruturaJudicial[dados.cargo] || { nome: 'Profissional', icon: '👤' };
-                    const tempoOnline = Math.floor((agora - dados.loginTime) / 60000); // minutos
-                    
-                    usuariosOnlineHTML += `
-                        <div class="bg-gradient-to-r from-green-600/20 to-emerald-600/20 rounded-lg p-4 border border-green-500/50 mb-3">
-                            <div class="flex items-center space-x-4">
-                                <div class="w-12 h-12 bg-gradient-to-br from-green-600 to-emerald-600 rounded-lg flex items-center justify-center relative">
-                                    <span class="text-xl">${cargoInfo.icon}</span>
-                                    <div class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-white animate-pulse"></div>
-                                </div>
-                                <div>
-                                    <h4 class="text-white font-bold">${dados.nome}</h4>
-                                    <p class="text-green-300 text-sm">${cargoInfo.nome}</p>
-                                    <p class="text-green-200 text-xs">Online há ${tempoOnline} minutos</p>
-                                </div>
-                            </div>
-                        </div>
-                    `;
-                }
-            });
-            
-            if (!usuariosOnlineHTML) {
-                usuariosOnlineHTML = '<p class="text-white text-center">Nenhum usuário online no momento.</p>';
-            }
-            
-            modal.innerHTML = `
-                <div class="bg-gradient-to-br from-green-600/30 to-emerald-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-green-500/60 shadow-2xl max-w-2xl w-full mx-4 max-h-[90vh] overflow-y-auto">
-                    <div class="text-center mb-6">
-                        <div class="w-16 h-16 bg-gradient-to-br from-green-600 to-emerald-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-2xl">
-                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-1c0-2.66 5.33-4 8-4s8 1.34 8 4v1H4zM12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
-                            </svg>
-                        </div>
-                        <h2 class="text-3xl font-bold text-white">Usuários Online</h2>
-                        <p class="text-green-200 mt-2">Profissionais conectados no sistema</p>
-                    </div>
-                    
-                    <div class="space-y-3">
-                        ${usuariosOnlineHTML}
-                    </div>
-                    
-                    <div class="text-center mt-6">
-                        <button onclick="this.closest('.fixed').remove()" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-3 px-6 rounded-lg transition-all">
-                            ❌ Fechar
-                        </button>
-                    </div>
-                </div>
-            `;
-            
-            document.body.appendChild(modal);
-        }
+        // Função removida - agora usamos lista fixa no header
         
         // Salvar dados no Firebase
         async function salvarDadosFirebase(colecao, documento, dados) {
@@ -3114,26 +3140,26 @@
             modal.innerHTML = `
                 <div class="bg-gradient-to-br from-green-600/30 to-blue-600/30 backdrop-blur-xl rounded-3xl p-8 border-2 border-green-500/60 shadow-2xl max-w-2xl w-full mx-4">
                     <div class="text-center mb-6">
-                        <h2 class="text-2xl font-bold text-white">👤 Cadastrar Novo Usuário</h2>
+                        <div class="w-16 h-16 bg-gradient-to-br from-green-600 to-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-2xl">
+                            <svg class="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                            </svg>
+                        </div>
+                        <h2 class="text-2xl font-bold text-white">🔑 Liberar Número OAB/Credencial</h2>
+                        <p class="text-green-200 mt-2">Autorize um número OAB para cadastro no sistema</p>
                     </div>
                     
-                    <form id="form-cadastro-admin" class="space-y-4">
+                    <form id="form-liberar-oab" class="space-y-4">
                         <div class="grid md:grid-cols-2 gap-4">
                             <div>
-                                <label class="block text-white font-bold mb-2">Nome Completo</label>
-                                <input type="text" id="admin-nome" class="w-full p-3 rounded-lg bg-gray-900 border border-green-500/50 text-white" required>
+                                <label class="block text-white font-bold mb-2">Número OAB/Credencial</label>
+                                <input type="text" id="admin-oab" placeholder="Ex: SP123456, STF001..." class="w-full p-3 rounded-lg bg-gray-900 border border-green-500/50 text-white placeholder-gray-400" required>
+                                <p class="text-green-300 text-xs mt-1">💡 Digite o número que será usado no cadastro</p>
                             </div>
                             <div>
-                                <label class="block text-white font-bold mb-2">Número OAB</label>
-                                <input type="text" id="admin-oab" class="w-full p-3 rounded-lg bg-gray-900 border border-green-500/50 text-white" required>
-                            </div>
-                        </div>
-                        
-                        <div class="grid md:grid-cols-2 gap-4">
-                            <div>
-                                <label class="block text-white font-bold mb-2">Cargo</label>
-                                <select id="admin-cargo" class="w-full p-3 rounded-lg bg-gray-900 border border-green-500/50 text-white" required>
-                                    <option value="">Selecione...</option>
+                                <label class="block text-white font-bold mb-2">Cargo Destinado</label>
+                                <select id="admin-cargo" class="w-full p-3 rounded-lg bg-gray-900 border border-green-500/50 text-white" required onchange="atualizarPreviewDominio()">
+                                    <option value="">Selecione o cargo...</option>
                                     <optgroup label="🏛️ PODER JUDICIÁRIO FEDERAL">
                                         <option value="2_juiz_federal">⚖️ 2º Juiz Federal</option>
                                         <option value="3_juiz_federal">⚖️ 3º Juiz Federal</option>
@@ -3171,10 +3197,30 @@
                                     </optgroup>
                                 </select>
                             </div>
-                            <div>
-                                <label class="block text-white font-bold mb-2">Email (Automático por Cargo)</label>
-                                <input type="email" id="admin-email" placeholder="Será gerado automaticamente..." class="w-full p-3 rounded-lg bg-gray-900 border border-green-500/50 text-white placeholder-gray-400">
-                                <p class="text-green-300 text-xs mt-1">💡 Deixe vazio para gerar automaticamente baseado no cargo</p>
+                        </div>
+                        
+                        <!-- Preview do Domínio -->
+                        <div id="preview-dominio" class="bg-blue-500/20 rounded-lg p-4 border border-blue-500/50 hidden">
+                            <h4 class="text-blue-300 font-bold mb-2">📧 Preview do Email</h4>
+                            <div class="text-white">
+                                <p class="text-sm mb-1">Quando o usuário se cadastrar com esta OAB:</p>
+                                <p class="font-mono bg-gray-900 p-2 rounded text-green-300">
+                                    <span class="text-gray-400">[nome.sobrenome]</span><span id="dominio-preview">@tjsp.jus.br</span>
+                                </p>
+                                <p class="text-xs text-blue-200 mt-2">
+                                    <span class="font-bold">Cargo:</span> <span id="cargo-preview">-</span><br>
+                                    <span class="font-bold">Hierarquia:</span> <span id="nivel-preview">-</span>
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-yellow-500/20 rounded-lg p-4 border border-yellow-500/50">
+                            <h4 class="text-yellow-300 font-bold mb-2">⚠️ Importante</h4>
+                            <div class="text-white text-sm space-y-1">
+                                <p>• Esta OAB poderá ser usada <strong>apenas uma vez</strong> para cadastro</p>
+                                <p>• O usuário digitará seu nome e o email será gerado automaticamente</p>
+                                <p>• O domínio será baseado no cargo selecionado</p>
+                                <p>• Após o cadastro, a OAB ficará vinculada ao usuário</p>
                             </div>
                         </div>
                         
@@ -3183,7 +3229,7 @@
                                 ❌ Cancelar
                             </button>
                             <button type="submit" class="flex-1 bg-green-600 hover:bg-green-500 text-white font-bold py-3 px-6 rounded-lg transition-all">
-                                ✅ Cadastrar
+                                🔑 Liberar OAB
                             </button>
                         </div>
                     </form>
@@ -3193,62 +3239,79 @@
             document.body.appendChild(modal);
             
             // Event listener para o formulário
-            document.getElementById('form-cadastro-admin').addEventListener('submit', function(e) {
+            document.getElementById('form-liberar-oab').addEventListener('submit', function(e) {
                 e.preventDefault();
-                processarCadastroAdmin();
+                processarLiberacaoOAB();
             });
         }
 
-        async function processarCadastroAdmin() {
-            const nome = document.getElementById('admin-nome').value.trim();
+        // Função para atualizar preview do domínio
+        function atualizarPreviewDominio() {
+            const cargo = document.getElementById('admin-cargo').value;
+            const previewDiv = document.getElementById('preview-dominio');
+            
+            if (cargo && estruturaJudicial[cargo]) {
+                const cargoInfo = estruturaJudicial[cargo];
+                
+                document.getElementById('dominio-preview').textContent = cargoInfo.dominio;
+                document.getElementById('cargo-preview').textContent = cargoInfo.nome;
+                document.getElementById('nivel-preview').textContent = `Nível ${cargoInfo.nivel}`;
+                
+                previewDiv.classList.remove('hidden');
+            } else {
+                previewDiv.classList.add('hidden');
+            }
+        }
+
+        async function processarLiberacaoOAB() {
             const oab = document.getElementById('admin-oab').value.trim();
             const cargo = document.getElementById('admin-cargo').value;
-            const emailManual = document.getElementById('admin-email').value.trim();
 
-            if (!nome || !oab || !cargo) {
+            if (!oab || !cargo) {
                 alert('⚠️ Preencha todos os campos obrigatórios!');
                 return;
             }
 
             // Verificar se OAB já existe
             if (registrosOAB[oab]) {
-                alert('⚠️ Este número OAB já está cadastrado!');
+                alert('⚠️ Este número OAB já foi liberado!');
                 return;
             }
 
             try {
-                // Gerar email automático baseado no cargo
-                const emailAutomatico = gerarEmailPorCargo(nome, cargo);
-                const emailFinal = emailManual || emailAutomatico;
-                
                 // Obter informações do cargo
                 const cargoInfo = estruturaJudicial[cargo];
                 
-                // Criar registro OAB
+                // Criar registro OAB liberada
                 registrosOAB[oab] = {
-                    nome: nome,
                     cargo: cargo,
-                    email: emailFinal,
+                    cargoNome: cargoInfo.nome,
                     dominio: cargoInfo.dominio,
-                    dataCadastro: new Date().toISOString(),
+                    nivel: cargoInfo.nivel,
+                    dataLiberacao: new Date().toISOString(),
+                    liberadoPor: usuarioLogado.email || usuarioLogado.nome,
                     ativo: true,
-                    primeiroAcesso: false
+                    utilizada: false
                 };
 
                 // Salvar dados no Firebase
                 await salvarDados();
 
                 // Registrar log
-                await registrarLog('cadastro_admin', `Usuário cadastrado pelo admin: ${nome} (${emailFinal})`);
+                await registrarLog('liberacao_oab', `OAB liberada: ${oab} para cargo ${cargoInfo.nome}`, {
+                    oab: oab,
+                    cargo: cargoInfo.nome,
+                    dominio: cargoInfo.dominio
+                });
 
-                alert(`✅ Usuário cadastrado com sucesso!\n\n👤 Nome: ${nome}\n📧 Email: ${emailFinal}\n🏛️ Cargo: ${cargoInfo.nome}\n📋 OAB: ${oab}\n\n🔑 O usuário pode agora fazer o primeiro acesso com este número OAB.`);
+                alert(`✅ OAB liberada com sucesso!\n\n🔑 Número: ${oab}\n🏛️ Cargo: ${cargoInfo.nome}\n📧 Domínio: ${cargoInfo.dominio}\n📊 Nível: ${cargoInfo.nivel}\n\n👤 Agora qualquer pessoa pode se cadastrar usando esta OAB na aba "Primeiro Acesso".`);
                 
                 // Fechar modal
                 document.querySelector('.fixed').remove();
                 
             } catch (error) {
-                console.error('❌ Erro ao cadastrar usuário:', error);
-                alert('❌ Erro ao cadastrar usuário. Tente novamente.');
+                console.error('❌ Erro ao liberar OAB:', error);
+                alert('❌ Erro ao liberar OAB. Tente novamente.');
             }
         }
 
@@ -4099,19 +4162,72 @@
             document.getElementById('primeiro-acesso').classList.add('hidden');
             // Limpar campos
             document.getElementById('oab-recebida').value = '';
-            document.getElementById('novo-usuario').value = '';
+            document.getElementById('nome-completo').value = '';
             document.getElementById('nova-senha').value = '';
             document.getElementById('confirmar-senha').value = '';
+            // Esconder previews
+            document.getElementById('info-cargo').classList.add('hidden');
+            document.getElementById('preview-email').classList.add('hidden');
+        }
+
+        // Verificar se OAB foi liberada pelo admin
+        function verificarOABLiberada() {
+            const oab = document.getElementById('oab-recebida').value.trim();
+            const infoCargoDiv = document.getElementById('info-cargo');
+            
+            if (!oab) {
+                infoCargoDiv.classList.add('hidden');
+                return;
+            }
+            
+            // Verificar se OAB existe e está ativa
+            if (registrosOAB[oab] && registrosOAB[oab].ativo && !registrosOAB[oab].utilizada) {
+                const dadosOAB = registrosOAB[oab];
+                
+                // Mostrar informações do cargo
+                document.getElementById('cargo-info').textContent = dadosOAB.cargoNome;
+                document.getElementById('nivel-info').textContent = `Nível ${dadosOAB.nivel}`;
+                document.getElementById('dominio-info').textContent = dadosOAB.dominio;
+                
+                infoCargoDiv.classList.remove('hidden');
+                
+                // Atualizar preview do email se nome já foi digitado
+                atualizarPreviewEmail();
+                
+            } else if (registrosOAB[oab] && registrosOAB[oab].utilizada) {
+                infoCargoDiv.classList.add('hidden');
+                mostrarMensagemPrimeiro('⚠️ Esta OAB já foi utilizada para cadastro!', 'erro');
+            } else {
+                infoCargoDiv.classList.add('hidden');
+                mostrarMensagemPrimeiro('❌ OAB não encontrada ou não liberada pelo administrador!', 'erro');
+            }
+        }
+
+        // Atualizar preview do email em tempo real
+        function atualizarPreviewEmail() {
+            const oab = document.getElementById('oab-recebida').value.trim();
+            const nome = document.getElementById('nome-completo').value.trim();
+            const previewDiv = document.getElementById('preview-email');
+            
+            if (oab && nome && registrosOAB[oab] && registrosOAB[oab].ativo && !registrosOAB[oab].utilizada) {
+                const dadosOAB = registrosOAB[oab];
+                const emailGerado = gerarEmailPorCargo(nome, dadosOAB.cargo);
+                
+                document.getElementById('email-preview').textContent = emailGerado;
+                previewDiv.classList.remove('hidden');
+            } else {
+                previewDiv.classList.add('hidden');
+            }
         }
 
         async function processarPrimeiroAcesso() {
             const oab = document.getElementById('oab-recebida').value.trim();
-            const usuario = document.getElementById('novo-usuario').value.trim();
+            const nomeCompleto = document.getElementById('nome-completo').value.trim();
             const senha = document.getElementById('nova-senha').value;
             const confirmarSenha = document.getElementById('confirmar-senha').value;
 
             // Validações
-            if (!oab || !usuario || !senha || !confirmarSenha) {
+            if (!oab || !nomeCompleto || !senha || !confirmarSenha) {
                 mostrarMensagemPrimeiro('⚠️ Preencha todos os campos!', 'erro');
                 return;
             }
@@ -4126,35 +4242,36 @@
                 return;
             }
 
-            // Verificar se OAB existe nos registros
-            if (!registrosOAB[oab]) {
-                mostrarMensagemPrimeiro('❌ Número OAB não encontrado! Verifique com o administrador.', 'erro');
+            // Verificar se OAB existe nos registros e está ativa
+            if (!registrosOAB[oab] || !registrosOAB[oab].ativo) {
+                mostrarMensagemPrimeiro('❌ Número OAB não encontrado ou não liberado pelo administrador!', 'erro');
                 return;
             }
 
             // Verificar se já foi usado
-            if (registrosOAB[oab].primeiroAcesso) {
+            if (registrosOAB[oab].utilizada) {
                 mostrarMensagemPrimeiro('⚠️ Este número OAB já foi utilizado para cadastro!', 'erro');
                 return;
             }
 
-            // Verificar se usuário já existe
-            if (usuariosCadastrados[usuario]) {
-                mostrarMensagemPrimeiro('⚠️ Este nome de usuário já existe! Escolha outro.', 'erro');
-                return;
-            }
-
             try {
-                // Criar usuário
+                // Obter dados da OAB liberada
                 const dadosOAB = registrosOAB[oab];
                 const cargoInfo = estruturaJudicial[dadosOAB.cargo];
                 
-                // Usar email já gerado no cadastro admin ou gerar automaticamente
-                const emailUsuario = dadosOAB.email || gerarEmailPorCargo(dadosOAB.nome, dadosOAB.cargo);
+                // Gerar email automaticamente baseado no nome e cargo
+                const emailUsuario = gerarEmailPorCargo(nomeCompleto, dadosOAB.cargo);
+                
+                // Verificar se email já existe
+                const emailJaExiste = Object.values(usuariosCadastrados).some(user => user.email === emailUsuario);
+                if (emailJaExiste) {
+                    mostrarMensagemPrimeiro('⚠️ Já existe um usuário com este email! Tente um nome diferente.', 'erro');
+                    return;
+                }
                 
                 // Tentar criar no Firebase Auth
                 const resultado = await cadastrarUsuarioFirebase({
-                    nome: dadosOAB.nome,
+                    nome: nomeCompleto,
                     email: emailUsuario,
                     senha: senha,
                     cargo: dadosOAB.cargo,
@@ -4167,33 +4284,40 @@
 
                 if (resultado.sucesso) {
                     // Adicionar aos usuários cadastrados
-                    usuariosCadastrados[usuario] = {
-                        nome: dadosOAB.nome,
+                    usuariosCadastrados[emailUsuario] = {
+                        nome: nomeCompleto,
                         email: emailUsuario,
                         cargo: dadosOAB.cargo,
                         oab: oab,
                         titulo: cargoInfo?.titulo || 'Profissional Jurídico',
                         permissoes: cargoInfo?.permissoes || ['basicas'],
                         dataCriacao: new Date().toISOString(),
-                        nomeado: false
+                        nomeado: false,
+                        nivel_hierarquico: dadosOAB.nivel
                     };
 
-                    // Marcar OAB como usado
-                    registrosOAB[oab].primeiroAcesso = true;
-                    registrosOAB[oab].usuario = usuario;
-                    registrosOAB[oab].email = emailUsuario;
+                    // Marcar OAB como utilizada
+                    registrosOAB[oab].utilizada = true;
+                    registrosOAB[oab].usuarioEmail = emailUsuario;
+                    registrosOAB[oab].nomeUsuario = nomeCompleto;
+                    registrosOAB[oab].dataUtilizacao = new Date().toISOString();
 
                     // Salvar dados no Firebase
                     await salvarDados();
 
                     // Registrar log
-                    await registrarLog('primeiro_acesso', `Primeiro acesso realizado: ${dadosOAB.nome} (${emailUsuario})`);
+                    await registrarLog('primeiro_acesso', `Primeiro acesso realizado: ${nomeCompleto} (${emailUsuario})`, {
+                        nome: nomeCompleto,
+                        email: emailUsuario,
+                        cargo: cargoInfo.nome,
+                        oab: oab
+                    });
 
-                    mostrarMensagemPrimeiro(`✅ Conta criada com sucesso!\n\n📧 Email: ${emailUsuario}\n🏛️ Cargo: ${cargoInfo.nome}\n\nVocê já pode fazer login.`, 'sucesso');
+                    mostrarMensagemPrimeiro(`✅ Conta criada com sucesso!\n\n👤 Nome: ${nomeCompleto}\n📧 Email: ${emailUsuario}\n🏛️ Cargo: ${cargoInfo.nome}\n📊 Nível: ${dadosOAB.nivel}\n\n🔑 Agora você pode fazer login com este email!`, 'sucesso');
 
                     setTimeout(() => {
                         fecharPrimeiroAcesso();
-                    }, 3000);
+                    }, 4000);
                 } else {
                     mostrarMensagemPrimeiro(`❌ Erro ao criar conta: ${resultado.erro}`, 'erro');
                 }
@@ -6343,5 +6467,5 @@
             document.head.appendChild(script);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ab3c8a30c627e5',t:'MTc1NDQ0ODcyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ab5ad3b1766f7f',t:'MTc1NDQ0OTk2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
