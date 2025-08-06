@@ -633,113 +633,60 @@
     </style>
 </head>
 <body class="bg-gradient-to-br from-slate-900 via-gray-800 to-slate-900 min-h-screen">
-    <!-- Header Principal -->
-    <div class="bg-gradient-to-br from-amber-400 via-yellow-500 to-amber-600 text-black py-4 px-4 md:py-6 md:px-8 shadow-2xl border-b-4 border-amber-500 relative overflow-hidden">
-        <!-- Efeitos de fundo -->
-        <div class="absolute inset-0 bg-gradient-to-r from-yellow-400/20 via-amber-500/10 to-yellow-600/20"></div>
-        <div class="absolute top-0 left-1/4 w-32 h-32 bg-white/10 rounded-full blur-3xl"></div>
-        <div class="absolute bottom-0 right-1/4 w-24 h-24 bg-black/10 rounded-full blur-2xl"></div>
-        
-        <div class="container mx-auto relative z-10">
-            <div class="header-content">
-                <div class="header-logos">
-                    <!-- Ícone do Ministério Público -->
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-gray-800 to-black rounded-xl flex items-center justify-center shadow-2xl border-2 border-gray-700">
-                        <svg class="w-6 h-6 md:w-8 md:h-8 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
+    <!-- Header Principal Moderno -->
+    <div class="bg-gradient-to-r from-slate-800 via-slate-900 to-slate-800 text-white py-3 px-4 shadow-xl border-b border-slate-700/50 backdrop-blur-lg">
+        <div class="container mx-auto">
+            <div class="flex items-center justify-between">
+                <!-- Logo e Título -->
+                <div class="flex items-center space-x-4">
+                    <div class="w-10 h-10 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center shadow-lg">
+                        <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2L2 7v10c0 5.55 3.84 9.74 9 11 5.16-1.26 9-5.45 9-11V7l-10-5z"/>
-                            <path d="M12 8v8m-4-4h8" stroke="currentColor" stroke-width="1" fill="none"/>
                         </svg>
                     </div>
-                    
-                    <div class="header-title">
-                        <h1 class="font-black bg-gradient-to-r from-black via-gray-800 to-black bg-clip-text text-transparent drop-shadow-lg">
-                            SISTEMA JURÍDICO COMPLETO
-                        </h1>
-                        <p class="font-bold text-gray-800 flex items-center">
-                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            Brasilândia RP - Poder Judiciário
-                        </p>
-                    </div>
-                    
-                    <!-- Ícone de Brasilândia -->
-                    <div class="w-12 h-12 md:w-16 md:h-16 bg-gradient-to-br from-blue-600 to-blue-800 rounded-xl flex items-center justify-center shadow-2xl border-2 border-blue-500 hidden-mobile">
-                        <svg class="w-6 h-6 md:w-8 md:h-8 text-yellow-400" fill="currentColor" viewBox="0 0 24 24">
-                            <path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
-                        </svg>
+                    <div>
+                        <h1 class="text-lg font-bold text-white">Sistema Jurídico</h1>
+                        <p class="text-xs text-slate-400">Brasilândia RP</p>
                     </div>
                 </div>
-                
-                <div class="header-status">
-                    <div class="flex flex-col sm:flex-row items-center gap-2 sm:gap-4">
-                        <!-- Status do Sistema -->
-                        <div class="bg-green-500/20 px-3 py-2 rounded-xl border border-green-500/50 backdrop-blur-sm shadow-lg">
-                            <span class="text-xs sm:text-sm font-bold text-green-800 flex items-center">
-                                <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse shadow-lg shadow-green-500/50"></div>
-                                <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
-                                </svg>
-                                <span class="hidden sm:inline">Sistema Online - </span>v2025.1
-                            </span>
-                        </div>
-                        
-                        <!-- Informações do Usuário -->
-                        <div id="usuario-logado" class="bg-gradient-to-r from-blue-500/20 to-indigo-500/20 px-4 py-2 rounded-xl border border-blue-500/50 backdrop-blur-sm shadow-lg hidden">
-                            <div class="flex items-center space-x-2">
-                                <div class="w-8 h-8 bg-gradient-to-br from-blue-600 to-indigo-600 rounded-lg flex items-center justify-center relative">
-                                    <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                                    </svg>
-                                    <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border border-white animate-pulse"></div>
-                                </div>
-                                <div class="text-left">
-                                    <div class="text-xs sm:text-sm font-bold text-blue-300" id="nome-usuario"></div>
-                                    <div class="text-xs text-blue-400" id="cargo-usuario"></div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <!-- Lista de Usuários Online -->
-                        <div id="usuarios-online-container" class="bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-xl border border-green-500/50 backdrop-blur-sm shadow-lg hidden">
-                            <div class="px-3 py-2 border-b border-green-500/30">
-                                <div class="flex items-center space-x-2">
-                                    <div class="w-6 h-6 bg-gradient-to-br from-green-600 to-emerald-600 rounded-lg flex items-center justify-center">
-                                        <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                            <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-1c0-2.66 5.33-4 8-4s8 1.34 8 4v1H4zM12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
-                                        </svg>
-                                    </div>
-                                    <div class="text-left">
-                                        <div class="text-xs font-bold text-green-300" id="contador-online">0 Online</div>
-                                    </div>
-                                    <button onclick="toggleListaOnline()" class="ml-auto text-green-300 hover:text-green-200 transition-colors">
-                                        <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" id="toggle-icon">
-                                            <path d="M7 14l5-5 5 5z"/>
-                                        </svg>
-                                    </button>
-                                </div>
-                            </div>
-                            <div id="lista-usuarios-online" class="max-h-64 overflow-y-auto hidden">
-                                <!-- Lista será preenchida dinamicamente -->
-                            </div>
-                        </div>
-                        
-                        <!-- Botão Admin (se aplicável) -->
-                        <button onclick="mostrarPainelAdmin()" class="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-500 hover:to-red-600 text-white px-3 py-2 rounded-xl transition-all hidden text-xs sm:text-sm shadow-lg" id="btn-admin">
-                            <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
-                            </svg>
-                            <span class="hidden sm:inline">Admin</span>
-                        </button>
-                        
-                        <!-- Botão Logout -->
-                        <button onclick="logout()" class="bg-gradient-to-r from-gray-600 to-gray-700 hover:from-gray-500 hover:to-gray-600 text-white px-3 py-2 rounded-xl transition-all hidden text-xs sm:text-sm shadow-lg" id="btn-logout">
-                            <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
-                                <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
-                            </svg>
-                            <span class="hidden sm:inline">Sair</span>
-                        </button>
+
+                <!-- Status e Controles -->
+                <div class="flex items-center space-x-3">
+                    <!-- Status Online -->
+                    <div class="flex items-center space-x-2 bg-green-500/10 px-3 py-1.5 rounded-lg border border-green-500/20">
+                        <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
+                        <span class="text-xs text-green-400 font-medium">Online</span>
                     </div>
+
+                    <!-- Informações do Usuário -->
+                    <div id="usuario-logado" class="flex items-center space-x-3 bg-slate-700/50 px-3 py-1.5 rounded-lg border border-slate-600/50 hidden">
+                        <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-indigo-600 rounded-lg flex items-center justify-center relative">
+                            <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                            </svg>
+                            <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border border-slate-800"></div>
+                        </div>
+                        <div>
+                            <div class="text-sm font-medium text-white" id="nome-usuario"></div>
+                            <div class="text-xs text-slate-400" id="cargo-usuario"></div>
+                        </div>
+                    </div>
+
+                    <!-- Botão Admin -->
+                    <button onclick="mostrarPainelAdmin()" class="bg-red-500/10 hover:bg-red-500/20 text-red-400 hover:text-red-300 px-3 py-1.5 rounded-lg border border-red-500/20 transition-all hidden text-sm" id="btn-admin">
+                        <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+                        </svg>
+                        <span class="hidden sm:inline">Admin</span>
+                    </button>
+
+                    <!-- Botão Logout -->
+                    <button onclick="logout()" class="bg-slate-600/50 hover:bg-slate-600 text-slate-300 hover:text-white px-3 py-1.5 rounded-lg border border-slate-600/50 transition-all hidden text-sm" id="btn-logout">
+                        <svg class="w-4 h-4 inline mr-1" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.59L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                        </svg>
+                        <span class="hidden sm:inline">Sair</span>
+                    </button>
                 </div>
             </div>
         </div>
@@ -890,6 +837,52 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- Sistema de Membros Online Lateral (estilo Discord) -->
+    <div id="membros-online-sidebar" class="fixed top-0 right-0 h-full w-80 bg-gradient-to-b from-slate-800 to-slate-900 border-l border-slate-700/50 shadow-2xl transform translate-x-full transition-transform duration-300 z-40 hidden">
+        <!-- Header do Sidebar -->
+        <div class="flex items-center justify-between p-4 border-b border-slate-700/50">
+            <div class="flex items-center space-x-2">
+                <div class="w-6 h-6 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                    <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-1c0-2.66 5.33-4 8-4s8 1.34 8 4v1H4zM12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
+                    </svg>
+                </div>
+                <h3 class="text-white font-semibold">Membros Online</h3>
+                <span class="bg-green-500/20 text-green-400 text-xs px-2 py-1 rounded-full font-medium" id="contador-membros">0</span>
+            </div>
+            <button onclick="fecharMembrosOnline()" class="text-slate-400 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                </svg>
+            </button>
+        </div>
+
+        <!-- Lista de Membros -->
+        <div class="flex-1 overflow-y-auto p-4" id="lista-membros-sidebar">
+            <!-- Membros serão inseridos aqui dinamicamente -->
+        </div>
+
+        <!-- Footer do Sidebar -->
+        <div class="p-4 border-t border-slate-700/50">
+            <div class="text-xs text-slate-400 text-center">
+                <p>Atualizado automaticamente</p>
+                <p>a cada 30 segundos</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Botão Flutuante para Abrir Membros Online -->
+    <div id="btn-membros-online" class="fixed top-20 right-4 z-30 hidden">
+        <button onclick="abrirMembrosOnline()" class="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-400 hover:to-emerald-500 text-white p-3 rounded-full shadow-lg transition-all hover:scale-110 group">
+            <div class="flex items-center space-x-2">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M16 4c0-1.11.89-2 2-2s2 .89 2 2-.89 2-2 2-2-.89-2-2zM4 18v-1c0-2.66 5.33-4 8-4s8 1.34 8 4v1H4zM12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4z"/>
+                </svg>
+                <span class="bg-green-400 text-green-900 text-xs px-2 py-1 rounded-full font-bold group-hover:bg-white group-hover:text-green-600 transition-colors" id="contador-btn">0</span>
+            </div>
+        </button>
     </div>
 
     <div class="container mx-auto px-4 py-8">
@@ -2791,111 +2784,137 @@
                 return usuario && (agora - usuario.lastSeen) < 300000; // 5 minutos
             });
             
-            const contadorEl = document.getElementById('contador-online');
-            const containerEl = document.getElementById('usuarios-online-container');
+            const totalOnline = usuariosAtivos.length;
             
-            if (contadorEl && containerEl) {
-                const totalOnline = usuariosAtivos.length;
-                contadorEl.textContent = `${totalOnline} Online`;
-                
+            // Atualizar contadores
+            const contadorMembros = document.getElementById('contador-membros');
+            const contadorBtn = document.getElementById('contador-btn');
+            const btnMembrosOnline = document.getElementById('btn-membros-online');
+            
+            if (contadorMembros) contadorMembros.textContent = totalOnline;
+            if (contadorBtn) contadorBtn.textContent = totalOnline;
+            
+            // Mostrar/esconder botão flutuante
+            if (btnMembrosOnline) {
                 if (totalOnline > 0) {
-                    containerEl.classList.remove('hidden');
-                    atualizarListaUsuariosOnline(usuariosAtivos);
+                    btnMembrosOnline.classList.remove('hidden');
                 } else {
-                    containerEl.classList.add('hidden');
+                    btnMembrosOnline.classList.add('hidden');
                 }
-                
-                console.log(`👥 ${totalOnline} usuários online`);
             }
+            
+            // Atualizar lista no sidebar
+            atualizarListaMembrosOnline(usuariosAtivos);
+            
+            console.log(`👥 ${totalOnline} usuários online`);
         }
 
-        function atualizarListaUsuariosOnline(usuariosAtivos) {
-            const listaEl = document.getElementById('lista-usuarios-online');
+        function atualizarListaMembrosOnline(usuariosAtivos) {
+            const listaEl = document.getElementById('lista-membros-sidebar');
             if (!listaEl) return;
             
             let listaHTML = '';
             
-            usuariosAtivos.forEach(userKey => {
-                const dados = usuariosOnline[userKey];
-                if (!dados) return;
-                
-                const cargoInfo = estruturaJudicial[dados.cargo] || { nome: 'Profissional', icon: '👤' };
-                const tempoOnline = Math.floor((Date.now() - (dados.loginTime || Date.now())) / 60000); // minutos
-                const tempoTexto = tempoOnline < 1 ? 'agora' : `${tempoOnline}min`;
-                
-                // Avatar baseado no cargo
-                const avatar = cargoInfo.icon || '👤';
-                const corAvatar = {
-                    '1_juiz_federal': 'from-yellow-600 to-yellow-800',
-                    '2_juiz_federal': 'from-yellow-500 to-yellow-700',
-                    '3_juiz_federal': 'from-yellow-500 to-yellow-700',
-                    '1_desembargador': 'from-blue-600 to-blue-800',
-                    '2_desembargador': 'from-blue-600 to-blue-800',
-                    '3_desembargador': 'from-blue-600 to-blue-800',
-                    '1_juiz_estadual': 'from-indigo-600 to-indigo-800',
-                    '2_juiz_estadual': 'from-indigo-600 to-indigo-800',
-                    '3_juiz_estadual': 'from-indigo-600 to-indigo-800',
-                    '4_juiz_estadual': 'from-indigo-600 to-indigo-800',
-                    '1_promotor': 'from-purple-600 to-purple-800',
-                    '2_promotor': 'from-purple-500 to-purple-700',
-                    '3_promotor': 'from-purple-500 to-purple-700',
-                    '4_promotor': 'from-purple-500 to-purple-700',
-                    '5_promotor': 'from-purple-500 to-purple-700',
-                    '6_promotor': 'from-purple-500 to-purple-700',
-                    'advogado': 'from-green-600 to-green-800'
-                }[dados.cargo] || 'from-gray-600 to-gray-800';
-                
-                listaHTML += `
-                    <div class="px-3 py-3 border-b border-green-500/20 hover:bg-green-500/10 transition-all duration-200 cursor-pointer">
-                        <div class="flex items-center space-x-3">
+            if (usuariosAtivos.length === 0) {
+                listaHTML = `
+                    <div class="text-center py-8">
+                        <div class="text-4xl mb-3">😴</div>
+                        <p class="text-slate-400 text-sm font-medium">Nenhum membro online</p>
+                        <p class="text-slate-500 text-xs mt-1">Aguardando conexões...</p>
+                    </div>
+                `;
+            } else {
+                // Organizar por cargo/hierarquia
+                const usuariosOrganizados = usuariosAtivos.map(userKey => {
+                    const dados = usuariosOnline[userKey];
+                    const cargoInfo = estruturaJudicial[dados.cargo] || { nome: 'Profissional', icon: '👤', nivel: 99 };
+                    return { userKey, dados, cargoInfo };
+                }).sort((a, b) => a.cargoInfo.nivel - b.cargoInfo.nivel);
+
+                usuariosOrganizados.forEach(({ userKey, dados, cargoInfo }) => {
+                    const tempoOnline = Math.floor((Date.now() - (dados.loginTime || Date.now())) / 60000);
+                    const tempoTexto = tempoOnline < 1 ? 'agora' : `${tempoOnline}min`;
+                    
+                    // Cores baseadas no cargo
+                    const corAvatar = {
+                        '1_juiz_federal': 'from-yellow-500 to-yellow-600',
+                        '2_juiz_federal': 'from-yellow-400 to-yellow-500',
+                        '3_juiz_federal': 'from-yellow-400 to-yellow-500',
+                        '1_desembargador': 'from-blue-500 to-blue-600',
+                        '2_desembargador': 'from-blue-500 to-blue-600',
+                        '3_desembargador': 'from-blue-500 to-blue-600',
+                        '1_juiz_estadual': 'from-indigo-500 to-indigo-600',
+                        '2_juiz_estadual': 'from-indigo-500 to-indigo-600',
+                        '3_juiz_estadual': 'from-indigo-500 to-indigo-600',
+                        '4_juiz_estadual': 'from-indigo-500 to-indigo-600',
+                        '1_promotor': 'from-purple-500 to-purple-600',
+                        '2_promotor': 'from-purple-400 to-purple-500',
+                        '3_promotor': 'from-purple-400 to-purple-500',
+                        '4_promotor': 'from-purple-400 to-purple-500',
+                        '5_promotor': 'from-purple-400 to-purple-500',
+                        '6_promotor': 'from-purple-400 to-purple-500',
+                        'advogado': 'from-green-500 to-green-600'
+                    }[dados.cargo] || 'from-slate-500 to-slate-600';
+                    
+                    listaHTML += `
+                        <div class="flex items-center space-x-3 p-3 rounded-lg hover:bg-slate-700/30 transition-all cursor-pointer group">
                             <div class="relative flex-shrink-0">
-                                <div class="w-10 h-10 bg-gradient-to-br ${corAvatar} rounded-xl flex items-center justify-center shadow-lg border border-white/20">
-                                    <span class="text-lg">${avatar}</span>
+                                <div class="w-10 h-10 bg-gradient-to-br ${corAvatar} rounded-lg flex items-center justify-center shadow-lg">
+                                    <span class="text-lg">${cargoInfo.icon}</span>
                                 </div>
-                                <div class="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-pulse shadow-lg"></div>
+                                <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-green-500 rounded-full border-2 border-slate-800 shadow-lg">
+                                    <div class="w-full h-full bg-green-400 rounded-full animate-pulse"></div>
+                                </div>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-white font-semibold text-sm truncate">${dados.nome}</p>
-                                <p class="text-green-300 text-xs truncate font-medium">${cargoInfo.nome}</p>
+                                <p class="text-white font-medium text-sm truncate group-hover:text-green-300 transition-colors">${dados.nome}</p>
+                                <p class="text-slate-400 text-xs truncate">${cargoInfo.nome}</p>
                                 <div class="flex items-center space-x-2 mt-1">
                                     <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
-                                    <p class="text-green-200 text-xs">${tempoTexto} online</p>
+                                    <p class="text-slate-500 text-xs">${tempoTexto}</p>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                `;
-            });
-            
-            if (!listaHTML) {
-                listaHTML = `
-                    <div class="px-4 py-6 text-center">
-                        <div class="text-4xl mb-2">😴</div>
-                        <p class="text-green-300 text-sm font-medium">Nenhum usuário online</p>
-                        <p class="text-green-200 text-xs mt-1">Seja o primeiro a se conectar!</p>
-                    </div>
-                `;
+                    `;
+                });
             }
             
             listaEl.innerHTML = listaHTML;
         }
 
-        function toggleListaOnline() {
-            const listaEl = document.getElementById('lista-usuarios-online');
-            const iconEl = document.getElementById('toggle-icon');
+        // Funções do sistema de membros online lateral
+        function abrirMembrosOnline() {
+            const sidebar = document.getElementById('membros-online-sidebar');
+            const btnFlutuante = document.getElementById('btn-membros-online');
             
-            if (!listaEl || !iconEl) return;
-            
-            if (listaEl.classList.contains('hidden')) {
-                listaEl.classList.remove('hidden');
-                listaEl.style.animation = 'slideDown 0.3s ease-out';
-                iconEl.innerHTML = '<path d="M7 10l5 5 5-5z"/>';
-            } else {
-                listaEl.style.animation = 'slideUp 0.3s ease-out';
+            if (sidebar) {
+                sidebar.classList.remove('hidden');
                 setTimeout(() => {
-                    listaEl.classList.add('hidden');
-                }, 250);
-                iconEl.innerHTML = '<path d="M7 14l5-5 5 5z"/>';
+                    sidebar.classList.remove('translate-x-full');
+                }, 10);
+            }
+            
+            if (btnFlutuante) {
+                btnFlutuante.classList.add('hidden');
+            }
+        }
+        
+        function fecharMembrosOnline() {
+            const sidebar = document.getElementById('membros-online-sidebar');
+            const btnFlutuante = document.getElementById('btn-membros-online');
+            
+            if (sidebar) {
+                sidebar.classList.add('translate-x-full');
+                setTimeout(() => {
+                    sidebar.classList.add('hidden');
+                }, 300);
+            }
+            
+            // Mostrar botão flutuante novamente se houver usuários online
+            if (btnFlutuante && Object.keys(usuariosOnline).length > 0) {
+                setTimeout(() => {
+                    btnFlutuante.classList.remove('hidden');
+                }, 300);
             }
         }
         
@@ -6563,5 +6582,5 @@
             document.head.appendChild(script);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ab6933400a6f85',t:'MTc1NDQ1MDU1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ab74f5d03a6f8f',t:'MTc1NDQ1MTAzOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
