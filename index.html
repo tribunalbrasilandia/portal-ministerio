@@ -2650,8 +2650,8 @@
             if (usuarioLogado) {
                 console.log('👤 Dados do usuário para interface:', usuarioLogado);
                 
-                // Marcar usuário como online
-                marcarUsuarioOnline();
+                // Iniciar sistema de usuários online
+                iniciarSistemaOnline();
                 
                 // Aguardar elementos DOM estarem disponíveis
                 const aguardarElementos = () => {
@@ -2707,28 +2707,31 @@
             }
         }
         
-        // Sistema de usuários online com Firebase
+        // Sistema de usuários online com Firebase - CORRIGIDO
+        let intervalOnline = null;
+        
         async function marcarUsuarioOnline() {
             if (usuarioLogado) {
                 try {
                     const userKey = usuarioLogado.email || usuarioLogado.usuario || 'unknown';
+                    const agora = Date.now();
+                    
                     usuariosOnline[userKey] = {
                         nome: usuarioLogado.nome,
                         cargo: usuarioLogado.cargo,
                         titulo: usuarioLogado.titulo,
-                        lastSeen: Date.now(),
-                        loginTime: usuarioLogado.loginTime || Date.now()
+                        lastSeen: agora,
+                        loginTime: usuarioLogado.loginTime || agora,
+                        avatar: getCargoIcon(usuarioLogado.cargo)
                     };
                     
                     // Salvar no Firebase
                     await salvarDados();
                     
-                    // Atualizar a cada 30 segundos
-                    setTimeout(() => {
-                        if (usuarioLogado) {
-                            marcarUsuarioOnline();
-                        }
-                    }, 30000);
+                    // Atualizar interface imediatamente
+                    atualizarContadorOnline();
+                    
+                    console.log('✅ Usuário marcado como online:', userKey);
                 } catch (error) {
                     console.error('❌ Erro ao marcar usuário online:', error);
                 }
@@ -2742,6 +2745,7 @@
                     if (usuariosOnline[userKey]) {
                         delete usuariosOnline[userKey];
                         await salvarDados();
+                        console.log('✅ Usuário marcado como offline:', userKey);
                     }
                 } catch (error) {
                     console.error('❌ Erro ao marcar usuário offline:', error);
@@ -2749,48 +2753,114 @@
             }
         }
         
+        function iniciarSistemaOnline() {
+            // Limpar interval anterior se existir
+            if (intervalOnline) {
+                clearInterval(intervalOnline);
+            }
+            
+            // Marcar como online imediatamente
+            marcarUsuarioOnline();
+            
+            // Atualizar a cada 30 segundos
+            intervalOnline = setInterval(() => {
+                if (usuarioLogado) {
+                    marcarUsuarioOnline();
+                } else {
+                    clearInterval(intervalOnline);
+                    intervalOnline = null;
+                }
+            }, 30000);
+            
+            console.log('🌐 Sistema de usuários online iniciado');
+        }
+        
+        function pararSistemaOnline() {
+            if (intervalOnline) {
+                clearInterval(intervalOnline);
+                intervalOnline = null;
+            }
+            marcarUsuarioOffline();
+            console.log('🌐 Sistema de usuários online parado');
+        }
+        
         function atualizarContadorOnline() {
             const agora = Date.now();
             const usuariosAtivos = Object.keys(usuariosOnline).filter(key => {
-                return (agora - usuariosOnline[key].lastSeen) < 300000; // 5 minutos
+                const usuario = usuariosOnline[key];
+                return usuario && (agora - usuario.lastSeen) < 300000; // 5 minutos
             });
             
             const contadorEl = document.getElementById('contador-online');
             const containerEl = document.getElementById('usuarios-online-container');
-            const listaEl = document.getElementById('lista-usuarios-online');
             
-            if (contadorEl && containerEl && listaEl) {
-                contadorEl.textContent = `${usuariosAtivos.length} Online`;
+            if (contadorEl && containerEl) {
+                const totalOnline = usuariosAtivos.length;
+                contadorEl.textContent = `${totalOnline} Online`;
                 
-                if (usuariosAtivos.length > 0) {
+                if (totalOnline > 0) {
                     containerEl.classList.remove('hidden');
                     atualizarListaUsuariosOnline(usuariosAtivos);
                 } else {
                     containerEl.classList.add('hidden');
                 }
+                
+                console.log(`👥 ${totalOnline} usuários online`);
             }
         }
 
         function atualizarListaUsuariosOnline(usuariosAtivos) {
             const listaEl = document.getElementById('lista-usuarios-online');
+            if (!listaEl) return;
+            
             let listaHTML = '';
             
             usuariosAtivos.forEach(userKey => {
                 const dados = usuariosOnline[userKey];
+                if (!dados) return;
+                
                 const cargoInfo = estruturaJudicial[dados.cargo] || { nome: 'Profissional', icon: '👤' };
-                const tempoOnline = Math.floor((Date.now() - dados.loginTime) / 60000); // minutos
+                const tempoOnline = Math.floor((Date.now() - (dados.loginTime || Date.now())) / 60000); // minutos
+                const tempoTexto = tempoOnline < 1 ? 'agora' : `${tempoOnline}min`;
+                
+                // Avatar baseado no cargo
+                const avatar = cargoInfo.icon || '👤';
+                const corAvatar = {
+                    '1_juiz_federal': 'from-yellow-600 to-yellow-800',
+                    '2_juiz_federal': 'from-yellow-500 to-yellow-700',
+                    '3_juiz_federal': 'from-yellow-500 to-yellow-700',
+                    '1_desembargador': 'from-blue-600 to-blue-800',
+                    '2_desembargador': 'from-blue-600 to-blue-800',
+                    '3_desembargador': 'from-blue-600 to-blue-800',
+                    '1_juiz_estadual': 'from-indigo-600 to-indigo-800',
+                    '2_juiz_estadual': 'from-indigo-600 to-indigo-800',
+                    '3_juiz_estadual': 'from-indigo-600 to-indigo-800',
+                    '4_juiz_estadual': 'from-indigo-600 to-indigo-800',
+                    '1_promotor': 'from-purple-600 to-purple-800',
+                    '2_promotor': 'from-purple-500 to-purple-700',
+                    '3_promotor': 'from-purple-500 to-purple-700',
+                    '4_promotor': 'from-purple-500 to-purple-700',
+                    '5_promotor': 'from-purple-500 to-purple-700',
+                    '6_promotor': 'from-purple-500 to-purple-700',
+                    'advogado': 'from-green-600 to-green-800'
+                }[dados.cargo] || 'from-gray-600 to-gray-800';
                 
                 listaHTML += `
-                    <div class="px-3 py-2 border-b border-green-500/20 hover:bg-green-500/10 transition-colors">
+                    <div class="px-3 py-3 border-b border-green-500/20 hover:bg-green-500/10 transition-all duration-200 cursor-pointer">
                         <div class="flex items-center space-x-3">
-                            <div class="w-8 h-8 bg-gradient-to-br from-green-600 to-emerald-600 rounded-lg flex items-center justify-center relative flex-shrink-0">
-                                <span class="text-sm">${cargoInfo.icon}</span>
-                                <div class="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full border border-white animate-pulse"></div>
+                            <div class="relative flex-shrink-0">
+                                <div class="w-10 h-10 bg-gradient-to-br ${corAvatar} rounded-xl flex items-center justify-center shadow-lg border border-white/20">
+                                    <span class="text-lg">${avatar}</span>
+                                </div>
+                                <div class="absolute -top-1 -right-1 w-4 h-4 bg-green-400 rounded-full border-2 border-white animate-pulse shadow-lg"></div>
                             </div>
                             <div class="flex-1 min-w-0">
-                                <p class="text-white font-medium text-sm truncate">${dados.nome}</p>
-                                <p class="text-green-300 text-xs truncate">${cargoInfo.nome}</p>
-                                <p class="text-green-200 text-xs">${tempoOnline}min online</p>
+                                <p class="text-white font-semibold text-sm truncate">${dados.nome}</p>
+                                <p class="text-green-300 text-xs truncate font-medium">${cargoInfo.nome}</p>
+                                <div class="flex items-center space-x-2 mt-1">
+                                    <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                                    <p class="text-green-200 text-xs">${tempoTexto} online</p>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -2798,7 +2868,13 @@
             });
             
             if (!listaHTML) {
-                listaHTML = '<div class="px-3 py-4 text-center text-green-300 text-sm">Nenhum usuário online</div>';
+                listaHTML = `
+                    <div class="px-4 py-6 text-center">
+                        <div class="text-4xl mb-2">😴</div>
+                        <p class="text-green-300 text-sm font-medium">Nenhum usuário online</p>
+                        <p class="text-green-200 text-xs mt-1">Seja o primeiro a se conectar!</p>
+                    </div>
+                `;
             }
             
             listaEl.innerHTML = listaHTML;
@@ -2808,14 +2884,34 @@
             const listaEl = document.getElementById('lista-usuarios-online');
             const iconEl = document.getElementById('toggle-icon');
             
+            if (!listaEl || !iconEl) return;
+            
             if (listaEl.classList.contains('hidden')) {
                 listaEl.classList.remove('hidden');
+                listaEl.style.animation = 'slideDown 0.3s ease-out';
                 iconEl.innerHTML = '<path d="M7 10l5 5 5-5z"/>';
             } else {
-                listaEl.classList.add('hidden');
+                listaEl.style.animation = 'slideUp 0.3s ease-out';
+                setTimeout(() => {
+                    listaEl.classList.add('hidden');
+                }, 250);
                 iconEl.innerHTML = '<path d="M7 14l5-5 5 5z"/>';
             }
         }
+        
+        // Adicionar animações CSS para a lista
+        const styleSheet = document.createElement('style');
+        styleSheet.textContent = `
+            @keyframes slideDown {
+                from { opacity: 0; transform: translateY(-10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes slideUp {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(-10px); }
+            }
+        `;
+        document.head.appendChild(styleSheet);
         
         // Função removida - agora usamos lista fixa no header
         
@@ -4407,8 +4503,8 @@
         async function logout() {
             if (confirm('🚪 Tem certeza que deseja sair do sistema?')) {
                 try {
-                    // Marcar usuário como offline
-                    await marcarUsuarioOffline();
+                    // Parar sistema de usuários online
+                    pararSistemaOnline();
                     
                     // Registrar log de logout
                     await registrarLog('logout', `Logout realizado por ${usuarioLogado ? usuarioLogado.email : 'Usuário'}`);
@@ -6467,5 +6563,5 @@
             document.head.appendChild(script);
         });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ab5ad3b1766f7f',t:'MTc1NDQ0OTk2OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96ab6933400a6f85',t:'MTc1NDQ1MDU1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
