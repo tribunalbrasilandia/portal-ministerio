@@ -422,15 +422,32 @@
             display: grid;
             grid-template-columns: 1fr;
             gap: 1rem;
+            max-height: min(600px, calc(100vh - 200px));
+            overflow: hidden;
+            padding: 1rem;
+        }
+        
+        @media (min-width: 640px) {
+            .responsive-grid-2 {
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
         }
         
         @media (min-width: 1024px) {
             .responsive-grid-2 {
                 grid-template-columns: repeat(2, 1fr);
                 gap: 2rem;
+                padding: 2rem;
             }
         }
         
+        @media (max-height: 800px) {
+            .responsive-grid-2 {
+                max-height: calc(100vh - 150px);
+            }
+        }
+
         /* Tabelas responsivas */
         .responsive-table {
             width: 100%;
